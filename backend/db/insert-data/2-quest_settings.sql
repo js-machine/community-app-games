@@ -1,0 +1,1 @@
+INSERT INTO `quest_settings` VALUES (1,45,'2017-06-17 05:47:27','2018-03-29 12:18:16');

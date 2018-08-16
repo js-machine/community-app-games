@@ -1,0 +1,6 @@
+{
+  "name": "JsMarathon",
+  "url": "http: //localhost:2018",
+  "redirectUrl": "http://localhost:2018/#/user/login",
+  "maxRoomPlayer": 5
+}

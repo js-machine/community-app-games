@@ -1,0 +1,48 @@
+{
+  "connection": {
+    "host": "localhost",
+    "user": "root",
+    "password": "password"
+  },
+  "defaultUser": {
+    "userName": "test",
+    "userPassword": "test",
+    "userRole": "user"
+  },
+  "defaultAdmin": {
+    "userName": "admin",
+    "userPassword": "admin",
+    "userRole": "admin"
+  },
+  "database": "js_marathon",
+  "usersTable": "users",
+  "usersModel": "users",
+  "rolesTable": "roles",
+  "rolesModel": "roles",
+  "userRolesTable": "user_roles",
+  "userRolesModel": "userRoles",
+  "quizQuestionsTable": "quiz_questions",
+  "quizQuestionsModel": "quizQuestions",
+  "quizAnswersTable": "quiz_answers",
+  "quizAnswersModel": "quizAnswers",
+  "quizUserAnswersTable": "quiz_user_answers",
+  "quizUserAnswersModel": "quizUserAnswers",
+  "quizUsersResultsTable": "quiz_users_results",
+  "quizUsersResultsModel": "quizUsersResults",
+  "questCategoriesTable": "quest_categories",
+  "questCategoriesModel": "questCategories",
+  "questTasksTable": "quest_tasks",
+  "questTasksModel": "questTasks",
+  "questTasksTestsTable": "quest_tasks_tests",
+  "questTasksTestsModel": "questTasksTests",
+  "questUserAnswersTable": "quest_user_answers",
+  "questUserAnswersModel": "questUserAnswers",
+  "quizSettingsTable": "quiz_settings",
+  "quizSettingsModel": "quizSettings",
+  "questSettingsTable": "quest_settings",
+  "questSettingsModel": "questSettings",
+  "roomTable": "room",
+  "roomModel": "room",
+  "appTokenTable": "app_token",
+  "appTokenModel": "appToken"
+}
