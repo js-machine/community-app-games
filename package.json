@@ -1,0 +1,14 @@
+{
+  "name": "js-marathon-v2",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "install": "node install.js",
+    "backend-start": "cd backend && npm start",
+    "client-start": "cd client && npm start -- --port 8000",
+    "admin-start": "cd admin && npm start"
+  },
+  "author": "",
+  "license": "ISC"
+}
