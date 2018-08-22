@@ -5,6 +5,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { HttpClientModule } from '@angular/common/http';
+import { MatButtonModule } from '@angular/material/button';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { TodoEffects, TodosService } from 'store/todo';
 
@@ -16,6 +18,7 @@ import { reducers } from '../store/store.config';
     AppComponent
   ],
   imports: [
+    MatButtonModule,
     BrowserModule,
     FormsModule,
     HttpClientModule,
@@ -25,7 +28,8 @@ import { reducers } from '../store/store.config';
     ]),
     StoreDevtoolsModule.instrument({
       maxAge: 25
-    })
+    }),
+    BrowserAnimationsModule
   ],
   providers: [
     TodosService,
