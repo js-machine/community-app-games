@@ -26,7 +26,11 @@
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/jquery.transit/jquery.transit.js",
+              "./node_modules/buzz/dist/buzz.min.js"
+            ]
           },
           "configurations": {
             "production": {

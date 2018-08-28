@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { TodosService } from 'store/todo';
+import { gameCore } from 'js/main';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
   public todo: string;
   public title = 'client';
 
@@ -14,5 +16,9 @@ export class AppComponent {
 
   public addTodo(): void {
     this.todosStoreService.addTodo(this.todo);
+  }
+
+  public ngAfterViewInit() {
+    gameCore();
   }
 }
