@@ -11,5 +11,5 @@ export * from './socket';
 export * from './statistic';
 export * from './timer';
 export * from './user-authentication';
-export * from './user-settings';
+// export * from './user-settings';
 export * from './services-registration';
