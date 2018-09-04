@@ -16,10 +16,10 @@ import { GamesRepository, GamesRepositoryImplementation } from './games';
 import { AppTokenRepository, AppTokenService } from './app-token';
 import { PlayersBindService } from './players-bind';
 import { StatisticService, StatisticRepositoryImplementation, StatisticRepository } from './statistic';
-import { MyGamesRepository } from './my-games/my-games.repository';
-import { MyGamesRepositoryImplementation } from './my-games/my-games.repository.implementation';
+// import { MyGamesRepository } from './my-games/my-games.repository';
+// import { MyGamesRepositoryImplementation } from './my-games/my-games.repository.implementation';
 // import { UserSettingsRepository, UserSettingsRepositoryImplementation } from './user-settings';
-import { MailerService } from './mailer';
+// import { MailerService } from './mailer';
 
 export const CONTAINER = new Container();
 
@@ -36,8 +36,8 @@ CONTAINER.bind<AppTokenRepository>(AppTokenRepository).to(AppTokenRepository);
 CONTAINER.bind<PlayersBindService>(PlayersBindService).to(PlayersBindService);
 CONTAINER.bind<StatisticRepository>(StatisticRepository).to(StatisticRepositoryImplementation);
 CONTAINER.bind<StatisticService>(StatisticService).to(StatisticService);
-CONTAINER.bind<MyGamesRepository>(MyGamesRepository).to(MyGamesRepositoryImplementation);
+// CONTAINER.bind<MyGamesRepository>(MyGamesRepository).to(MyGamesRepositoryImplementation);
 // CONTAINER.bind<UserSettingsRepository>(UserSettingsRepository).to(UserSettingsRepositoryImplementation);
-CONTAINER.bind<MailerService>(MailerService).to(MailerService);
+// CONTAINER.bind<MailerService>(MailerService).to(MailerService);
 
 export const inject = getDecorators(CONTAINER).lazyInject;

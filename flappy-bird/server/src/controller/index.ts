@@ -2,6 +2,6 @@
 export * from './game.controller';
 // export * from './register-app.controller';
 export * from './statistic.controller';
-export * from './restore-password.controller';
+// export * from './restore-password.controller';
 // export * from './user-settings.controller';
-export * from './my-game.controller';
+// export * from './my-game.controller';
