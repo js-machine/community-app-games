@@ -8,10 +8,10 @@ import { ErrorServiceImplementation, ErrorService } from './error';
 import { RoomService } from './room';
 import { TimerService } from './timer';
 import { ApiService, ApiServiceImplementation } from './api';
-import {
-    UserAuthenticationRepository,
-    UserAuthenticationRepositoryImplementation
-} from './user-authentication';
+// import {
+//     UserAuthenticationRepository,
+//     UserAuthenticationRepositoryImplementation
+// } from './user-authentication';
 import { GamesRepository, GamesRepositoryImplementation } from './games';
 import { AppTokenRepository, AppTokenService } from './app-token';
 import { PlayersBindService } from './players-bind';
@@ -29,7 +29,7 @@ CONTAINER.bind<ErrorService>(ErrorService).to(ErrorServiceImplementation);
 CONTAINER.bind<RoomService>(RoomService).to(RoomService);
 CONTAINER.bind<TimerService>(TimerService).to(TimerService);
 CONTAINER.bind<ApiService>(ApiService).to(ApiServiceImplementation);
-CONTAINER.bind<UserAuthenticationRepository>(UserAuthenticationRepository).to(UserAuthenticationRepositoryImplementation);
+// CONTAINER.bind<UserAuthenticationRepository>(UserAuthenticationRepository).to(UserAuthenticationRepositoryImplementation);
 CONTAINER.bind<GamesRepository>(GamesRepository).to(GamesRepositoryImplementation);
 CONTAINER.bind<AppTokenService>(AppTokenService).to(AppTokenService);
 CONTAINER.bind<AppTokenRepository>(AppTokenRepository).to(AppTokenRepository);
