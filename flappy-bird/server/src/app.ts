@@ -4,15 +4,12 @@ import { InversifyExpressServer } from 'inversify-express-utils';
 
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
-import SocketIO from 'socket.io';
 import passport from 'passport';
 import cors from 'cors';
 
 import {
     LoggerService,
     LoggerServiceImplementation,
-    SocketService,
-    SocketServiceImplementation
 } from './service';
 
 import './controller';
@@ -37,28 +34,26 @@ server.setConfig((app) => {
     app.use(bodyParser.json());
 });
 
-// makeAssosiations();
-
-db.connect.sync({
-    logging: console.log
-})
-    .then(() => {
-        return RoleModel.upsert({
-            name: Roles.User,
-            createAt: Date.now(),
-            updatedAt: Date.now()
-        });
-    })
-    .then(() => {
-        return RoleModel.upsert({
-            name: Roles.Admin,
-            createAt: Date.now(),
-            updatedAt: Date.now()
-        });
-    })
-    .catch((err) => {
-        logger.errorLog(err);
-    });
+// db.connect.sync({
+//     logging: console.log
+// })
+//     .then(() => {
+//         return RoleModel.upsert({
+//             name: Roles.User,
+//             createAt: Date.now(),
+//             updatedAt: Date.now()
+//         });
+//     })
+//     .then(() => {
+//         return RoleModel.upsert({
+//             name: Roles.Admin,
+//             createAt: Date.now(),
+//             updatedAt: Date.now()
+//         });
+//     })
+//     .catch((err) => {
+//         logger.errorLog(err);
+//     });
 
 const logger: LoggerService = new LoggerServiceImplementation();
 const application = server.build();
@@ -67,6 +62,3 @@ const serverInstance = application.listen(config.port, () => {
     logger.infoLog(`App is running at http://localhost:${config.port}`);
     logger.infoLog('Press CTRL+C to stop\n');
 });
-
-const socketService: SocketServiceImplementation = SocketServiceImplementation.getInstance();
-socketService.setSocket(SocketIO(serverInstance));
