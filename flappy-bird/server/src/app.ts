@@ -15,8 +15,6 @@ import {
 import './controller';
 import { CONTAINER } from './service/services-registration';
 
-import { db, RoleModel, Roles } from 'models';
-import { passportConfig } from './config/passport';
 
 const server = new InversifyExpressServer(CONTAINER);
 
@@ -30,35 +28,13 @@ server.setConfig((app) => {
         extended: true
     }));
     app.use(passport.initialize());
-    passportConfig(passport);
     app.use(bodyParser.json());
 });
-
-// db.connect.sync({
-//     logging: console.log
-// })
-//     .then(() => {
-//         return RoleModel.upsert({
-//             name: Roles.User,
-//             createAt: Date.now(),
-//             updatedAt: Date.now()
-//         });
-//     })
-//     .then(() => {
-//         return RoleModel.upsert({
-//             name: Roles.Admin,
-//             createAt: Date.now(),
-//             updatedAt: Date.now()
-//         });
-//     })
-//     .catch((err) => {
-//         logger.errorLog(err);
-//     });
 
 const logger: LoggerService = new LoggerServiceImplementation();
 const application = server.build();
 
-const serverInstance = application.listen(config.port, () => {
+application.listen(config.port, () => {
     logger.infoLog(`App is running at http://localhost:${config.port}`);
     logger.infoLog('Press CTRL+C to stop\n');
 });
