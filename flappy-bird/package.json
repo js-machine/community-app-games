@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "install": "node install.js",
-    "backend-start": "cd backend && npm start",
+    "server-start": "cd server && npm start",
     "client-start": "cd client && npm start -- --port 8000",
+    "start": "concurrently \"npm run client-start\" \"npm run server-start\"",
     "admin-start": "cd admin && npm start -- --port 4000",
     "all-start": "concurrently \"npm run backend-start\" \"npm run client-start\" \"npm run admin-start\""
   },
