@@ -35,3 +35,14 @@ export interface Room {
     players: Player[];
     status: RoomStatus;
 }
+
+export interface DbConfig {
+    connection: {
+        host: string;
+        user: string;
+        password: string;
+    };
+    database: string;
+    appTokenModel: string;
+    appTokenTable: string;
+}

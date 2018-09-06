@@ -14,12 +14,8 @@ export class RoomRepositoryImplementation implements RoomRepository {
   public createToken(): string {
     const roomToken = uuid();
 
-    if (roomToken) {
-      this.saveToken(roomToken);
-      return roomToken;
-    } else {
-      this.loggerService.errorLog(`Problem with creation roomToken`);
-    }
+    this.saveToken(roomToken);
+    return roomToken;
   }
 
   public saveToken(roomToken: string): void {
