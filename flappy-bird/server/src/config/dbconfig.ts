@@ -4,27 +4,7 @@ export const dbConfig = {
         user: 'root',
         password: 'password'
     },
-    defaultUser: {
-        userName: 'test',
-        userPassword: 'test',
-        userRole: 'user'
-    },
-    defaultAdmin: {
-        userName: 'admin',
-        userPassword: 'admin',
-        userRole: 'admin'
-    },
-    database: 'community-app',
-    usersModel: 'users',
-    usersTable: 'users',
-    rolesModel: 'roles',
-    rolesTable: 'roles',
-    appTokensModel: 'appTokens',
-    appTokensTable: 'app_tokens',
-    userRolesModel: 'userRoles',
-    userRolesTable: 'user_roles',
-    statisticModel: 'statistic',
-    statisticTable: 'statistic',
-    gamesModel: 'games',
-    gamesTable: 'games'
+    database: 'flappy-bird',
+    appTokenModel: 'app-token',
+    appTokenTable: 'app_token'
 };
