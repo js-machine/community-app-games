@@ -23,7 +23,7 @@ export class RoomRepositoryImplementation implements RoomRepository {
   }
 
   public saveToken(roomToken: string): void {
-    // Возможно уже больше эта логика не используется
+    // May be this logic doesn't use now
     rooms.push(roomToken);
   }
 }
