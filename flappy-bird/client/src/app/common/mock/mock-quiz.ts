@@ -1,6 +1,18 @@
-// import { Question } from '../../common/models/question';
+interface Answer {
+    id: number;
+    answerText: string;
+}
 
-export const QUESTIONS: any = [
+interface Question {
+    questionId: number;
+    questionText: string;
+    answers: Answer[];
+    questionType: string;
+    questionValue: number;
+    rightAnswers: Answer[] | Answer;
+}
+
+export const QUESTIONS: Question[] = [
     {
         'questionId' : 1,
         'questionText' : 'First question',
