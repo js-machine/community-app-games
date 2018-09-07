@@ -9,7 +9,7 @@ interface Question {
     answers: Answer[];
     questionType: string;
     questionValue: number;
-    rightAnswers: Answer[] | Answer;
+    rightAnswers: Answer[];
 }
 
 export const QUESTIONS: Question[] = [
