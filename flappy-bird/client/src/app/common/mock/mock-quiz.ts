@@ -1,16 +1,4 @@
-interface Answer {
-    id: number;
-    answerText: string;
-}
-
-interface Question {
-    questionId: number;
-    questionText: string;
-    answers: Answer[];
-    questionType: string;
-    questionValue: number;
-    rightAnswers: Answer[];
-}
+import { Question } from '../models/model';
 
 export const QUESTIONS: Question[] = [
     {
