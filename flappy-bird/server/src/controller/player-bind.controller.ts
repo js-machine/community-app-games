@@ -31,7 +31,7 @@ export class PlayerBindController {
                     response.status(200).send();
                 }
             } else {
-                response.status(401).send('You don`t have application token');
+                response.status(401).send('You don`t have application token!');
             }
         } catch (err) {
             return response.status(400).json(err);

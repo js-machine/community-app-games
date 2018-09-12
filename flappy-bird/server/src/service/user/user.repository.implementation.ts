@@ -26,4 +26,18 @@ export class UserRepositoryImplementation implements UserRepository {
       throw error;
     }
   }
+
+  public async addUserToUserTable(userToken: string): Promise<boolean> {
+    let isAdd: boolean = false;
+    try {
+      isAdd = await UserModel.upsert({
+        userToken
+      });
+
+      return isAdd;
+    } catch (error) {
+      this.loggerService.errorLog(error);
+      throw error;
+    }
+  }
 }

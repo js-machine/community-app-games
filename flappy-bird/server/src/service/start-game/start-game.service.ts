@@ -19,13 +19,28 @@ export class StartGameService {
         let userId: number;
         let count: number;
         let questionsId: number[];
-        let isAdd: boolean = false;
+        let isAddUserToQuestionMarkTable: boolean = false;
+        let isAddUserToUserTable: boolean = false;
 
         try {
             userId = (await this.userService.getUser(userToken)).id;
         } catch (error) {
             this.loggerService.errorLog(error);
-            throw error;
+        }
+        if (!userId) {
+            try {
+                isAddUserToUserTable = await this.userService.addUserToUserTable(userToken);
+            } catch (error) {
+                this.loggerService.errorLog(error);
+                throw error;
+            }
+
+            try {
+                userId = (await this.userService.getUser(userToken)).id;
+            } catch (error) {
+                this.loggerService.errorLog(error);
+                throw error;
+            }
         }
 
         try {
@@ -44,12 +59,12 @@ export class StartGameService {
             }
 
             try {
-                isAdd = await this.questionService.addUserToQuestionMarkTable(userId, questionsId);
+                isAddUserToQuestionMarkTable = await this.questionService.addUserToQuestionMarkTable(userId, questionsId);
             } catch (error) {
                 this.loggerService.errorLog(error);
                 throw error;
             }
         }
-        return isAdd;
+        return isAddUserToQuestionMarkTable;
     }
 }

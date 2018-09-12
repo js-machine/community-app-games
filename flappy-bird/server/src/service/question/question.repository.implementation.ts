@@ -120,4 +120,23 @@ export class QuestionRepositoryImplementation implements QuestionRepository {
       throw error;
     }
   }
+
+  public async refreshUserQuestionMarkTable(userId: number): Promise<boolean> {
+    try {
+      const isUpdate = await QuestionMarkModel.update({ status: 0 }, {
+        where: {
+          userId
+        }
+      });
+
+      if (isUpdate) {
+        return true;
+      }
+
+      return false;
+    } catch (error) {
+      this.loggerService.errorLog(error);
+      throw error;
+    }
+  }
 }

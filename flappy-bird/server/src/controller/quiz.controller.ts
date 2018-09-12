@@ -18,14 +18,10 @@ export class QuizController {
         const userToken = 'd3268a92-a650-4afa-9a86-9880611dc2d2';
         try {
             const quiz = await this.quizService.getQuiz(userToken);
-            if (quiz) {
-                response.status(200).send(quiz);
-            } else {
-                response.status(400).send(`Unauthorization user`);
-            }
 
+            return response.status(200).send(quiz);
         } catch (err) {
-            return response.status(400).json(err);
+            return response.status(400).json({status: 'error', message: `Unknown user!`});
         }
     }
 }

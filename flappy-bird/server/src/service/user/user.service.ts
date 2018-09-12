@@ -23,4 +23,15 @@ export class UserService {
             throw error;
         }
     }
+
+    public async addUserToUserTable(userToken: string): Promise<boolean> {
+        try {
+            const isAdd = await this.userRepository.addUserToUserTable(userToken);
+
+            return isAdd;
+        } catch (error) {
+            this.loggerService.errorLog(error);
+            throw error;
+        }
+    }
 }

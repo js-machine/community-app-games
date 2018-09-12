@@ -25,6 +25,7 @@ export class QuestionService {
 
     public async getQuestion(userId: number): Promise<Question> {
         let unAnsweredQuestions: UnAnsweredQuestion[];
+        let isRefresh: boolean;
 
         try {
             unAnsweredQuestions = await this.questionRepository.getUnansweredQuestions(userId);
@@ -33,15 +34,39 @@ export class QuestionService {
             throw error;
         }
 
-        const id = Math.floor(Math.random() * (unAnsweredQuestions.length));
+        if (unAnsweredQuestions.length !== 0) {
+            const id = Math.floor(Math.random() * (unAnsweredQuestions.length));
 
-        try {
-            const question = await this.questionRepository.getQuestion(unAnsweredQuestions[id].questionId);
+            try {
+                const question = await this.questionRepository.getQuestion(unAnsweredQuestions[id].questionId);
 
-            return question;
-        } catch (error) {
-            this.loggerService.errorLog(error);
-            throw error;
+                return question;
+            } catch (error) {
+                this.loggerService.errorLog(error);
+                throw error;
+            }
+        } else {
+            isRefresh = await this.questionRepository.refreshUserQuestionMarkTable(userId);
+
+            if (isRefresh) {
+                try {
+                    unAnsweredQuestions = await this.questionRepository.getUnansweredQuestions(userId);
+                } catch (error) {
+                    this.loggerService.errorLog(error);
+                    throw error;
+                }
+
+                const id = Math.floor(Math.random() * (unAnsweredQuestions.length));
+
+                try {
+                    const question = await this.questionRepository.getQuestion(unAnsweredQuestions[id].questionId);
+
+                    return question;
+                } catch (error) {
+                    this.loggerService.errorLog(error);
+                    throw error;
+                }
+            }
         }
     }
 

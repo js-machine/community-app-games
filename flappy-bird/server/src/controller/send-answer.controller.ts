@@ -20,9 +20,9 @@ export class SendAnswerController {
 
         try {
             const isRight = await this.sendAnswerService.sendAnswer(question, answers, userToken);
-            response.status(200).send(isRight);
+            response.status(200).send({status: isRight});
         } catch (err) {
-            return response.status(400).json(err);
+            return response.status(400).json({status: 'error', message: `Problem with send answer!`});
         }
     }
 }

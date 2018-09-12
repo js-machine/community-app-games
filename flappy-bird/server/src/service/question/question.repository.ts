@@ -8,4 +8,5 @@ export abstract class QuestionRepository {
     public abstract updateQuestionMarkTable(userId: number, questionId: number): Promise<boolean>;
     public abstract checkQuestionMarkTableForNewUser(userId: number): Promise<number>;
     public abstract addUserToQuestionMarkTable(userId: number, questionsId: number[]): Promise<boolean>;
+    public abstract refreshUserQuestionMarkTable(userId: number): Promise<boolean>;
 }
