@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { QUESTIONS } from '../common/mock/mock-quiz';
 
@@ -11,7 +11,6 @@ export class QuizComponent {
   form: FormGroup;
   questions = QUESTIONS;
   answers = this.questions[1].answers;
-  @Output() finishQuiz: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(private formBuilder: FormBuilder) {
     const controls = this.answers.map(c => new FormControl(false));
@@ -27,8 +26,5 @@ export class QuizComponent {
       .filter(v => v !== null);
 
     console.log(selectedOrderIds);
-
-    this.finishQuiz.emit(`END OF THE QUIZ`);
-    // this.zIndex = 0;
   }
 }

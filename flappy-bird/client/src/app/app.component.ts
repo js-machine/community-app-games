@@ -11,7 +11,7 @@ import { gameCore } from 'js/main';
 export class AppComponent implements AfterViewInit {
   public todo: string;
   public title = 'client';
-  public zIndex = 1;
+
   public constructor(private todosStoreService: TodosService) { }
 
   public addTodo(): void {
@@ -20,10 +20,5 @@ export class AppComponent implements AfterViewInit {
 
   public ngAfterViewInit() {
     gameCore();
-  }
-
-  public onFinishQuiz(text: string) {
-    console.log(text);
-    this.zIndex = 2;
   }
 }
