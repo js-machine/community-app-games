@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify';
 
-import { LoggerService } from '../logger';
+import { LoggerService } from '../logger/logger.service';
 import {
     PlayersBind,
     ParticipationStatus,

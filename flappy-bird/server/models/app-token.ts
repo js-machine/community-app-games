@@ -1,6 +1,6 @@
 import Sequelize from 'sequelize';
 import { db } from './SequelizeConnect';
-import { dbConfig } from '../config/dbconfig';
+import { dbConfig } from '../src/config/dbconfig';
 import { SequelizeStaticAndInstance } from 'sequelize';
 
 export interface AppToken {
@@ -11,14 +11,6 @@ export const AppTokenModel: SequelizeStaticAndInstance['Model'] = db.connect.def
     token: {
         type: Sequelize.STRING,
         primaryKey: true
-    },
-    createdAt: {
-        type: Sequelize.DATE,
-        allowNull: true
-    },
-    updatedAt: {
-        type: Sequelize.DATE,
-        allowNull: true
     }
 }, {
         // if freezeTableName is true, sequelize will not try to alter the DAO name to get the table name.
