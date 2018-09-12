@@ -40,7 +40,7 @@ export const gameCore = () => {
   var score = 0;
   var highscore = 0;
 
-  var pipeheight = 90;
+  var pipeheight = 120;
   var pipewidth = 52;
   var pipes = new Array();
 
@@ -58,6 +58,9 @@ export const gameCore = () => {
   //loops
   var loopGameloop;
   var loopPipeloop;
+
+  var isQuestion = false;
+  var isQuiz = false;
 
   $(document).ready(function() {
     if(window.location.search == "?debug")
@@ -144,7 +147,7 @@ export const gameCore = () => {
     //start up our loops
     var updaterate = 1000.0 / 60.0 ; //60 times a second
     loopGameloop = setInterval(gameloop, updaterate);
-    loopPipeloop = setInterval(updatePipes, 1400);
+    loopPipeloop = setInterval(updatePipes, 2000);
 
     //jump from the start!
     playerJump();
@@ -251,6 +254,9 @@ export const gameCore = () => {
 
         //and score a point
         playerScore();
+        console.log(isQuiz)
+        isQuiz ? quiz(): null;
+        isQuiz = !isQuiz;
     }
   }
 
@@ -283,6 +289,17 @@ export const gameCore = () => {
     {
         startGame();
     }
+  }
+
+  function quiz() {
+    document.getElementById("gamescreen").style.zIndex = "-1";
+    $(".animated").css('animation-play-state', 'paused');
+    $(".animated").css('-webkit-animation-play-state', 'paused');
+
+    clearInterval(loopGameloop);
+    clearInterval(loopPipeloop);
+    loopGameloop = null;
+    loopPipeloop = null;
   }
 
   function playerJump()
@@ -387,6 +404,13 @@ export const gameCore = () => {
           });
         });
     }
+
+    initialize();
+  }
+
+  function initialize() {
+      isQuestion = false;
+      isQuiz = false;
   }
 
   function showScore()
@@ -463,6 +487,9 @@ export const gameCore = () => {
     soundScore.stop();
     soundScore.play();
     setBigScore();
+    // var question = $('<img src="assets/question.png" class="question">');
+    // $("#flyarea").append(question);
+    // updatePipes()
   }
 
   function updatePipes()
@@ -475,8 +502,14 @@ export const gameCore = () => {
     var constraint = flyArea - pipeheight - (padding * 2); //double padding (for top and bottom)
     var topheight = Math.floor((Math.random()*constraint) + padding); //add lower padding
     var bottomheight = (flyArea - pipeheight) - topheight;
-    var newpipe = $('<div class="pipe animated"><div class="pipe_upper" style="height: ' + topheight + 'px;"></div><div class="pipe_lower" style="height: ' + bottomheight + 'px;"></div></div>');
+
+    var margin = (flyArea - topheight - bottomheight) / 2 + topheight - 25;
+    var question = isQuestion ? '<img src="assets/question.png" class="question" style="margin-top: ' + margin + 'px;">' : '';
+    isQuestion = !isQuestion;
+    var newpipe = $('<div class="pipe animated">' + question + '<div class="pipe_upper" style="height: ' + topheight + 'px;"></div><div class="pipe_lower" style="height: ' + bottomheight + 'px;"></div></div>');
+
     $("#flyarea").append(newpipe);
+
     pipes.push(newpipe);
   }
 

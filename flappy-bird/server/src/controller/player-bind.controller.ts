@@ -26,7 +26,6 @@ export class PlayerBindController {
                 }
 
                 if (errorMessage) {
-                    console.log(errorMessage);
                     response.status(400).send(errorMessage);
                 } else {
                     response.status(200).send();
