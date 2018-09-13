@@ -61,6 +61,8 @@ export const gameCore = () => {
   var loopPipeloop;
 
   var isQuestion = false;
+  var isAddQuestion = false; //(Valiantsin) add this global variable for control updating question variable 
+                             // IF we delete this variable, every time when you touch question picture, question variable will update so many time as you locate in her 
   var isQuiz = false;
 
   $(document).ready(function () {
@@ -163,7 +165,6 @@ export const gameCore = () => {
 
   function gameloop() {
     var player = $("#player");
-
     //update the player speed/position
     velocity += gravity;
     position += velocity;
@@ -269,15 +270,20 @@ export const gameCore = () => {
       var pictureTop = pictureBottom - 60;
 
       var pictureLeft = nextQuestion.offset().left - 2;
+      var pictureRight = pipeleft + 60;
 
-      if (boxleft > pictureLeft) {
-        if (boxtop < pictureBottom && boxtop > pictureTop) {
-          playerGetQuestion();
+      if(!isAddQuestion) {
+        if (boxleft > pictureLeft) {
+          if (boxtop < pictureBottom && boxtop > pictureTop) {
+            playerGetQuestion();
+            isAddQuestion = true;
+          }
         }
       }
 
-      if (boxleft > pictureLeft) {
+      if (boxleft > pictureLeft + 60) {
         pipes.splice(0, 1);
+        isAddQuestion = false;
       }
     }
   }
