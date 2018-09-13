@@ -3,7 +3,7 @@
     min-height: 100vh;
     min-width: 100vw;
     position: absolute;
-    z-index: 3;
+    z-index: 0;
 }
 
 

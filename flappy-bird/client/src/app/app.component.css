@@ -205,7 +205,15 @@ Screen - Game
 {
   position: absolute;
   top: 20px;
-  left: 150px;
+  left: 20px;
+  z-index: 100;
+}
+
+#questions
+{
+  position: absolute;
+  top: 20px;
+  left: 100px;
   z-index: 100;
 }
 
@@ -390,4 +398,19 @@ Screen - Game
   padding: 2px;
   text-decoration: none;
   color: #fff;
+}
+
+.question {
+  width: 60px;
+  height:60px;
+}
+
+.questionScore {
+  display: none;
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  top: 25px;
+  left: 130px;
+  z-index: 100;
 }
