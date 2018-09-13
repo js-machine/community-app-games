@@ -152,6 +152,7 @@ export const gameCore = () => {
     //jump from the start!
     playerJump();
     $(".questionScore").css("display", "block");
+    $(".pipeScoreImages").css("display", "block");
   }
 
 
@@ -276,6 +277,7 @@ export const gameCore = () => {
         if (boxleft > pictureLeft) {
           if (boxtop < pictureBottom && boxtop > pictureTop) {
             playerGetQuestion();
+            nextQuestion.css("display", "none");
             isAddQuestion = true;
           }
         }
@@ -445,6 +447,7 @@ export const gameCore = () => {
     //unhide us
     $("#scoreboard").css("display", "block");
     $(".questionScore").css("display", "none");
+    $(".pipeScoreImages").css("display", "none");
 
     //remove the big score
     setBigScore(true);
