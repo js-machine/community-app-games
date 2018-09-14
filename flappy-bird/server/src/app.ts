@@ -17,12 +17,12 @@ import { CONTAINER } from './service/services-registration';
 
 const server = new InversifyExpressServer(CONTAINER);
 
-import { db } from '../models/SequelizeConnect';
+import { db } from '../models';
 import config from './config/app.config.json';
 
 db.connect.sync({
     logging: console.log
-});
+})
 
 server.setConfig((app) => {
     process.env.NODE_ENV !== config.production ? app.use(morgan('dev')) : app.use(morgan('prod'));

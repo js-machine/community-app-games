@@ -45,4 +45,49 @@ export interface DbConfig {
     database: string;
     appTokenModel: string;
     appTokenTable: string;
+    quizSettingsModel: string;
+    quizSettingsTable: string;
+    quizQuestionsModel: string;
+    quizQuestionsTable: string;
+    quizUserAnswersModel: string;
+    quizUserAnswersTable: string;
+    quizAnswersModel: string;
+    quizAnswersTable: string;
+    questionMarkModel: string;
+    questionMarkTable: string;
+    UserModel: string;
+    UserTable: string;
+}
+
+export interface Question {
+    id: number;
+    question: string;
+    points: number;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export interface Answer {
+    id: number;
+    questionId: number;
+    answer: string;
+    isCorrect: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export interface User {
+    id: number;
+    userToken: number;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export interface UnAnsweredQuestion {
+    id: number;
+    userId: number;
+    questionId: number;
+    status: boolean;
+    createdAt: Date;
+    updatedAt: Date;
 }

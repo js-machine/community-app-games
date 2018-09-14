@@ -1,0 +1,22 @@
+{
+  "connection": {
+    "host": "localhost",
+    "user": "root",
+    "password": "password"
+  },
+  "database": "flappy-bird",
+  "appTokenModel": "appToken",
+  "appTokenTable": "app-token",
+  "quizSettingsModel": "quizSettings",
+  "quizSettingsTable": "quiz-settings",
+  "quizQuestionsModel": "quizQuestions",
+  "quizQuestionsTable": "quiz-questions",
+  "quizUserAnswersModel": "quizUserAnswers",
+  "quizUserAnswersTable": "quiz-user-answers",
+  "quizAnswersModel": "quizAnswers",
+  "quizAnswersTable": "quiz-answers",
+  "questionMarkModel": "questionMark",
+  "questionMarkTable": "question_mark",
+  "UserModel": "users",
+  "UserTable": "users"
+}
