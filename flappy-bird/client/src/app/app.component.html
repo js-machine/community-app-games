@@ -1,6 +1,6 @@
 <!-- <div> -->
 <div id="gamecontainer">
-  <div id="gamescreen">
+  <div id="gamescreen" [style.z-index]="zIndex">
     <div id="sky" class="animated">
       <div id="flyarea">
         <div id="ceiling" class="animated"></div>
@@ -38,7 +38,7 @@
       <div id="debug"></div>
     </div>
   </div>
-  <app-quiz></app-quiz>
+  <app-quiz (finishQuiz)="onFinishQuiz($event)" id="quiz"></app-quiz>
 </div>
 <!-- <div id="footer">
   <a href="http://www.dotgears.com/">original game/concept/art by dong nguyen</a>

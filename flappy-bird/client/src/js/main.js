@@ -317,17 +317,6 @@ export const gameCore = () => {
     }
   }
 
-  function quiz() {
-    document.getElementById("gamescreen").style.zIndex = "-1";
-    $(".animated").css('animation-play-state', 'paused');
-    $(".animated").css('-webkit-animation-play-state', 'paused');
-
-    clearInterval(loopGameloop);
-    clearInterval(loopPipeloop);
-    loopGameloop = null;
-    loopPipeloop = null;
-  }
-
   function playerJump() {
     velocity = jump;
     //play jump sound
