@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
-import { QUESTIONS } from '../common/mock/mock-quiz';
+import { QUESTIONS } from '../../common/mock/mock-quiz';
 
 @Component({
   selector: 'app-quiz',

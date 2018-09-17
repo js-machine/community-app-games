@@ -1,3 +1,4 @@
+export * from './game.controller';
 export * from './player-bind.controller';
 export * from './quiz.controller';
 export * from './room.controller';

@@ -4,7 +4,7 @@ import { LoggerService } from '../logger';
 import { Question, UnAnsweredQuestion } from '../../model';
 
 import { QuestionRepository } from './question.repository';
-
+import { technicalErr } from '../../../errors';
 @injectable()
 export class QuestionService {
     constructor(
@@ -17,9 +17,11 @@ export class QuestionService {
             const questions = await this.questionRepository.getQuestions();
 
             return questions;
-        } catch (error) {
+        } catch {
+            const error = technicalErr.questionRepository.getQuestions.msg;
+
             this.loggerService.errorLog(error);
-            throw error;
+            throw new Error(error);
         }
     }
 
@@ -29,9 +31,11 @@ export class QuestionService {
 
         try {
             unAnsweredQuestions = await this.questionRepository.getUnansweredQuestions(userId);
-        } catch (error) {
+        } catch {
+            const error = technicalErr.questionRepository.getUnansweredQuestions.msg;
+
             this.loggerService.errorLog(error);
-            throw error;
+            throw new Error(error);
         }
 
         if (unAnsweredQuestions.length !== 0) {
@@ -41,19 +45,31 @@ export class QuestionService {
                 const question = await this.questionRepository.getQuestion(unAnsweredQuestions[id].questionId);
 
                 return question;
-            } catch (error) {
+            } catch {
+                const error = technicalErr.questionRepository.getQuestion.msg;
+
                 this.loggerService.errorLog(error);
-                throw error;
+                throw new Error(error);
             }
         } else {
-            isRefresh = await this.questionRepository.refreshUserQuestionMarkTable(userId);
+            try {
+                isRefresh = await this.questionRepository.refreshUserAnswersQuestionMarkTable(userId);
+            } catch {
+                const error = technicalErr.questionRepository.refreshUserAnswersQuestionMarkTable.msg;
+
+                this.loggerService.errorLog(error);
+                throw new Error(error);
+            }
+
 
             if (isRefresh) {
                 try {
                     unAnsweredQuestions = await this.questionRepository.getUnansweredQuestions(userId);
-                } catch (error) {
+                } catch {
+                    const error = technicalErr.questionRepository.getUnansweredQuestions.msg;
+
                     this.loggerService.errorLog(error);
-                    throw error;
+                    throw new Error(error);
                 }
 
                 const id = Math.floor(Math.random() * (unAnsweredQuestions.length));
@@ -62,9 +78,11 @@ export class QuestionService {
                     const question = await this.questionRepository.getQuestion(unAnsweredQuestions[id].questionId);
 
                     return question;
-                } catch (error) {
+                } catch {
+                    const error = technicalErr.questionRepository.getQuestion.msg;
+
                     this.loggerService.errorLog(error);
-                    throw error;
+                    throw new Error(error);
                 }
             }
         }
@@ -73,20 +91,24 @@ export class QuestionService {
     public async getQuestionId(question: string): Promise<number> {
         try {
             return (await this.questionRepository.getQuestionId(question)).id;
-        } catch (error) {
+        } catch {
+            const error = technicalErr.questionRepository.getQuestionId.msg;
+
             this.loggerService.errorLog(error);
-            throw error;
+            throw new Error(error);
         }
     }
 
-    public async updateQuestionMarkTable(userid: number, questionId: number): Promise<boolean> {
+    public async updateQuestionMarkTable(userId: number, questionId: number): Promise<boolean> {
         try {
-            const isUpdate = await this.questionRepository.updateQuestionMarkTable(userid, questionId);
+            const isUpdate = await this.questionRepository.updateQuestionMarkTable(userId, questionId);
 
             return isUpdate;
-        } catch (error) {
+        } catch {
+            const error = technicalErr.questionRepository.updateQuestionMarkTable.msg;
+
             this.loggerService.errorLog(error);
-            throw error;
+            throw new Error(error);
         }
     }
 
@@ -95,9 +117,11 @@ export class QuestionService {
             const count = await this.questionRepository.checkQuestionMarkTableForNewUser(userId);
 
             return count;
-        } catch (error) {
+        } catch {
+            const error = technicalErr.questionRepository.checkQuestionMarkTableForNewUser.msg;
+
             this.loggerService.errorLog(error);
-            throw error;
+            throw new Error(error);
         }
     }
 
@@ -106,9 +130,11 @@ export class QuestionService {
             const isAdd = await this.questionRepository.addUserToQuestionMarkTable(userId, questionsId);
 
             return isAdd;
-        } catch (error) {
+        } catch {
+            const error = technicalErr.questionRepository.addUserToQuestionMarkTable.msg;
+
             this.loggerService.errorLog(error);
-            throw error;
+            throw new Error(error);
         }
     }
 }

@@ -4,7 +4,7 @@ import { LoggerService } from '../logger';
 import { Answer } from '../../model';
 
 import { AnswerRepository } from './answer.repository';
-
+import { technicalErr } from './../../../errors';
 @injectable()
 export class AnswerService {
     constructor(
@@ -17,9 +17,11 @@ export class AnswerService {
             const questions = await this.answerRepository.getAnswers(questionId);
 
             return questions;
-        } catch (error) {
+        } catch {
+            const error = technicalErr.answerRepository.getAnswers.msg;
+
             this.loggerService.errorLog(error);
-            throw error;
+            throw new Error(error);
         }
     }
 
@@ -28,9 +30,11 @@ export class AnswerService {
             const questions = await this.answerRepository.getRightAnswers(questionId);
 
             return questions;
-        } catch (error) {
+        } catch {
+            const error = technicalErr.answerRepository.getRightAnswers.msg;
+
             this.loggerService.errorLog(error);
-            throw error;
+            throw new Error(error);
         }
     }
 }

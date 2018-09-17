@@ -9,15 +9,21 @@ import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { TodoEffects, TodosService } from 'store/todo';
+import { Router } from '@angular/router';
 
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { QuizComponent } from './quiz/quiz.component';
 import { reducers } from '../store/store.config';
+
+import { HomeComponent, PathNotFoundComponent, QuizComponent, ResultComponent } from './components';
 
 @NgModule({
   declarations: [
     AppComponent,
-    QuizComponent
+    HomeComponent,
+    PathNotFoundComponent,
+    QuizComponent,
+    ResultComponent
   ],
   imports: [
     MatButtonModule,
@@ -33,11 +39,16 @@ import { reducers } from '../store/store.config';
       maxAge: 25
     }),
     BrowserAnimationsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AppRoutingModule
   ],
   providers: [
     TodosService,
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(router: Router) {
+    console.log('Routes', JSON.stringify(router.config, undefined, 2));
+  }
+}

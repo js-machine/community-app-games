@@ -18,5 +18,7 @@ export const dbConfig = {
     questionMarkModel: 'questionMark',
     questionMarkTable: 'question_mark',
     UserModel: 'users',
-    UserTable: 'users'
+    UserTable: 'users',
+    GameModel: 'game',
+    GameTable: 'game'
 };

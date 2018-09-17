@@ -1,8 +1,9 @@
-import { controller, httpGet } from 'inversify-express-utils';
+import { controller, httpPost } from 'inversify-express-utils';
 import { Request, Response } from 'express';
 import { StartGameService } from 'service/start-game';
 
 import { inject } from 'inversify';
+import { technicalErr } from './../../errors';
 
 @controller('/api')
 export class StartGameController {
@@ -10,17 +11,22 @@ export class StartGameController {
         @inject(StartGameService) private startGameService: StartGameService) {
     }
 
-    @httpGet('/start-game')
+    @httpPost('/start-game')
     public async startGame(request: Request, response: Response): Promise<void | Response> {
-        const userToken = 'daaaad8a92-a650-4afa-9a8-9880611dc2d2';
-
-        // const userToken = request.body;
+        const userToken = request.body.userToken;
 
         try {
             const isAdd = await this.startGameService.startGame(userToken);
-            response.status(200).send({status: isAdd});
-        } catch (err) {
-            response.status(400).json({status: 'error', message: err});
+
+            if (isAdd) {
+                response.status(200).send(isAdd);
+            }
+
+        } catch {
+            response.status(400).json({
+                status: 'error',
+                message: technicalErr.startGameService.startGame.msg
+            });
         }
     }
 }

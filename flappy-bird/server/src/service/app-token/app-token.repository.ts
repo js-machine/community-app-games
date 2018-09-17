@@ -3,6 +3,7 @@ import { injectable, inject } from 'inversify';
 import { LoggerService } from '../logger/logger.service';
 import { AppTokenModel } from '../../../models';
 
+import { technicalErr } from '../../../errors';
 @injectable()
 export class AppTokenRepository {
 
@@ -18,8 +19,11 @@ export class AppTokenRepository {
             } else {
                 return 'Bearer ' + token[0].dataValues.token;
             }
-        } catch (error) {
+        } catch {
+            const error = technicalErr.applicationTokenRepository.getAppToken.msg;
+
             this.loggerService.errorLog(error);
+            throw new Error(error);
         }
     }
 }

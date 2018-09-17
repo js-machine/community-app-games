@@ -1,6 +1,5 @@
 import { inject, injectable } from 'inversify';
 
-import { LoggerService } from '../logger';
 import {
     PlayersBind,
     ParticipationStatus,
@@ -8,6 +7,7 @@ import {
     RoomStatus,
     Room
 } from './../../model';
+
 import { RoomRepository } from 'service/room/room.repository';
 
 const rooms: Room[] = [];
@@ -15,7 +15,6 @@ const rooms: Room[] = [];
 @injectable()
 export class RoomService {
     constructor(
-        @inject(LoggerService) private loggerService: LoggerService,
         @inject(RoomRepository) private roomRepository: RoomRepository
     ) { }
 
@@ -30,6 +29,7 @@ export class RoomService {
             participationStatus: ParticipationStatus.INIT,
             resultStatus: ResultStatus.INIT
         }));
+
         rooms.push({
             roomToken: playersBind.room,
             players,

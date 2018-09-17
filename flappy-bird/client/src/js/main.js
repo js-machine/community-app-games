@@ -18,6 +18,8 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+import { Subject } from 'rxjs';
+export const onGameEnd = new Subject();
 
 export const gameCore = () => {
   var debugmode = false;
@@ -276,8 +278,8 @@ export const gameCore = () => {
       if(!isAddQuestion) {
         if (boxleft > pictureLeft) {
           if (boxtop < pictureBottom && boxtop > pictureTop) {
-            playerGetQuestion();
             nextQuestion.css("display", "none");
+            playerGetQuestion();
             isAddQuestion = true;
           }
         }
@@ -338,14 +340,16 @@ export const gameCore = () => {
 
   function setQuestions(erase) {
     var elemscore = $("#questions");
+
     elemscore.empty();
 
     if (erase)
       return;
 
     var digits = question.toString().split('');
-    for (var i = 0; i < digits.length; i++)
-      elemscore.append("<img src='assets/font_big_" + digits[i] + ".png' alt='" + digits[i] + "'>");
+    for (var i = 0; i < digits.length; i++) {
+      elemscore.append("<img src='assets/font_big_" + digits[i] + ".png' alt='" + digits[i] + "'>")
+    }
   }
 
   function setSmallScore() {
@@ -364,6 +368,20 @@ export const gameCore = () => {
     var digits = highscore.toString().split('');
     for (var i = 0; i < digits.length; i++)
       elemscore.append("<img src='assets/font_small_" + digits[i] + ".png' alt='" + digits[i] + "'>");
+  }
+
+  function setAvailableQuestions(erase) {
+    var questionsScore = $("#questionCount");
+
+    questionsScore.empty();
+
+    if (erase)
+      return;
+
+    var digits = question.toString().split('');
+    for (var i = 0; i < digits.length; i++) {
+      questionsScore.append("<img src='assets/font_big_" + digits[i] + ".png' alt='" + digits[i] + "'>");
+    }
   }
 
   function setMedal() {
@@ -425,6 +443,7 @@ export const gameCore = () => {
     }
 
     initialize();
+    onGameEnd.next({score, question})
   }
 
   function initialize() {
@@ -454,6 +473,8 @@ export const gameCore = () => {
     //update the scoreboard
     setSmallScore();
     setHighScore();
+    setAvailableQuestions();
+
     var wonmedal = setMedal();
 
     //SWOOSH!
@@ -463,11 +484,13 @@ export const gameCore = () => {
     //show the scoreboard
     $("#scoreboard").css({ y: '40px', opacity: 0 }); //move it down so we can slide it up
     $("#replay").css({ y: '40px', opacity: 0 });
+    $("#startQuiz").css({ y: '40px', opacity: 0 });
     $("#scoreboard").transition({ y: '0px', opacity: 1 }, 600, 'ease', function () {
       //When the animation is done, animate in the replay button and SWOOSH!
       soundSwoosh.stop();
       soundSwoosh.play();
       $("#replay").transition({ y: '0px', opacity: 1 }, 600, 'ease');
+      $("#startQuiz").transition({ y: '0px', opacity: 1 }, 600, 'ease');
 
       //also animate in the MEDAL! WOO!
       if (wonmedal) {

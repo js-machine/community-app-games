@@ -5,12 +5,33 @@ import { Question, UnAnsweredQuestion } from '../../model';
 import { QuestionMarkModel, QuizQuestionsModel } from 'models';
 
 import { QuestionRepository } from './question.repository';
-
+import { technicalErr } from './../../../errors';
 @injectable()
 export class QuestionRepositoryImplementation implements QuestionRepository {
   constructor(
     @inject(LoggerService) private loggerService: LoggerService,
   ) { }
+
+  public async addUserToQuestionMarkTable(userId: number, questionsId: number[]): Promise<boolean> {
+    const dataToDB = questionsId.map((questionId) => {
+      return {
+        userId,
+        questionId,
+        status: false
+      };
+    });
+
+    try {
+      await QuestionMarkModel.bulkCreate(dataToDB);
+
+      return true;
+    } catch {
+      const error = technicalErr.questionRepository_Implementation.addUserToQuestionMarkTable.msg;
+
+      this.loggerService.errorLog(error);
+      throw new Error(error);
+    }
+  }
 
   public async checkQuestionMarkTableForNewUser(userId: number): Promise<number> {
     try {
@@ -21,9 +42,11 @@ export class QuestionRepositoryImplementation implements QuestionRepository {
       });
 
       return count;
-    } catch (error) {
+    } catch {
+      const error = technicalErr.questionRepository_Implementation.checkQuestionMarkTableForNewUser.msg;
+
       this.loggerService.errorLog(error);
-      throw error;
+      throw new Error(error);
     }
   }
 
@@ -37,9 +60,11 @@ export class QuestionRepositoryImplementation implements QuestionRepository {
       });
 
       return questions;
-    } catch (error) {
+    } catch {
+      const error = technicalErr.questionRepository_Implementation.getUnansweredQuestions.msg;
+
       this.loggerService.errorLog(error);
-      throw error;
+      throw new Error(error);
     }
   }
 
@@ -48,9 +73,11 @@ export class QuestionRepositoryImplementation implements QuestionRepository {
       const questions: Question[] = await QuizQuestionsModel.findAll();
 
       return questions;
-    } catch (error) {
+    } catch {
+      const error = technicalErr.questionRepository_Implementation.getQuestions.msg;
+
       this.loggerService.errorLog(error);
-      throw error;
+      throw new Error(error);
     }
   }
 
@@ -61,9 +88,11 @@ export class QuestionRepositoryImplementation implements QuestionRepository {
       });
 
       return question;
-    } catch (error) {
+    } catch {
+      const error = technicalErr.questionRepository_Implementation.getQuestion.msg;
+
       this.loggerService.errorLog(error);
-      throw error;
+      throw new Error(error);
     }
   }
 
@@ -76,9 +105,32 @@ export class QuestionRepositoryImplementation implements QuestionRepository {
       });
 
       return necessaryQuestion;
-    } catch (error) {
+    } catch {
+      const error = technicalErr.questionRepository_Implementation.getQuestionId.msg;
+
       this.loggerService.errorLog(error);
-      throw error;
+      throw new Error(error);
+    }
+  }
+
+  public async refreshUserAnswersQuestionMarkTable(userId: number): Promise<boolean> {
+    try {
+      const isUpdate = await QuestionMarkModel.update({ status: 0 }, {
+        where: {
+          userId
+        }
+      });
+
+      if (isUpdate) {
+        return true;
+      }
+
+      return false;
+    } catch {
+      const error = technicalErr.questionRepository_Implementation.refreshUserAnswersQuestionMarkTable.msg;
+
+      this.loggerService.errorLog(error);
+      throw new Error(error);
     }
   }
 
@@ -96,47 +148,11 @@ export class QuestionRepositoryImplementation implements QuestionRepository {
       }
 
       return false;
-    } catch (error) {
+    } catch {
+      const error = technicalErr.questionRepository_Implementation.updateQuestionMarkTable.msg;
+
       this.loggerService.errorLog(error);
-      throw error;
-    }
-  }
-
-  public async addUserToQuestionMarkTable(userId: number, questionsId: number[]): Promise<boolean> {
-    const dataToDB = questionsId.map((questionId) => {
-      return {
-        userId,
-        questionId,
-        status: false
-      };
-    });
-
-    try {
-      await QuestionMarkModel.bulkCreate(dataToDB);
-
-      return true;
-    } catch (error) {
-      this.loggerService.errorLog(error);
-      throw error;
-    }
-  }
-
-  public async refreshUserQuestionMarkTable(userId: number): Promise<boolean> {
-    try {
-      const isUpdate = await QuestionMarkModel.update({ status: 0 }, {
-        where: {
-          userId
-        }
-      });
-
-      if (isUpdate) {
-        return true;
-      }
-
-      return false;
-    } catch (error) {
-      this.loggerService.errorLog(error);
-      throw error;
+      throw new Error(error);
     }
   }
 }

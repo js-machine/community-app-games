@@ -1,4 +1,5 @@
 export * from './app-token';
+export * from './game';
 export * from './quiz-answers';
 export * from './quiz-questions';
 export * from './quiz-settings';
