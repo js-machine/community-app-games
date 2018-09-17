@@ -11,7 +11,7 @@ interface Quiz {
     question: string;
     answers: string[];
 }
-
+import { technicalErr } from './../../../errors';
 @injectable()
 export class QuizService {
     constructor(
@@ -28,29 +28,36 @@ export class QuizService {
 
         try {
             userId = (await this.userService.getUser(userToken)).id;
-        } catch (error) {
+        } catch {
+            const error = technicalErr.userService.getUser.msg;
+
             this.loggerService.errorLog(error);
-            throw error;
+            throw new Error(error);
         }
 
         try {
             question = await this.questionService.getQuestion(userId);
-        } catch (error) {
+        } catch {
+            const error = technicalErr.questionService.getQuestion.msg;
+
             this.loggerService.errorLog(error);
-            throw error;
+            throw new Error(error);
         }
 
         try {
             answers = await this.answerService.getAnswers(question.id);
-        } catch (error) {
+        } catch {
+            const error = technicalErr.answerService.getAnswers.msg;
+
             this.loggerService.errorLog(error);
-            throw error;
+            throw new Error(error);
         }
 
         const quiz: Quiz = {
             question: question.question,
             answers: answers.map((answer) => answer.answer)
         };
+
         return quiz;
     }
 }

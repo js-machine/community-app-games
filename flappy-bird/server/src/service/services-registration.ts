@@ -4,6 +4,8 @@ import getDecorators from 'inversify-inject-decorators';
 import { AnswerRepository, AnswerRepositoryImplementation, AnswerService } from './answer';
 
 import { AppTokenService, AppTokenRepository } from './app-token';
+import { GameRepository, GameRepositoryImplementation, GameService } from './game';
+
 import { LoggerService, LoggerServiceImplementation } from './logger';
 import { PlayerBindRepository, PlayerBindRepositoryImplementation, PlayersBindService} from './players-bind';
 import { QuestionRepository, QuestionRepositoryImplementation, QuestionService} from './question';
@@ -17,6 +19,7 @@ export const CONTAINER = new Container();
 
 CONTAINER.bind<AnswerService>(AnswerService).to(AnswerService);
 CONTAINER.bind<AppTokenService>(AppTokenService).to(AppTokenService);
+CONTAINER.bind<GameService>(GameService).to(GameService);
 CONTAINER.bind<LoggerService>(LoggerService).to(LoggerServiceImplementation);
 CONTAINER.bind<PlayersBindService>(PlayersBindService).to(PlayersBindService);
 CONTAINER.bind<QuestionService>(QuestionService).to(QuestionService);
@@ -28,6 +31,7 @@ CONTAINER.bind<UserService>(UserService).to(UserService);
 
 CONTAINER.bind<AnswerRepository>(AnswerRepository).to(AnswerRepositoryImplementation);
 CONTAINER.bind<AppTokenRepository>(AppTokenRepository).to(AppTokenRepository);
+CONTAINER.bind<GameRepository>(GameRepository).to(GameRepositoryImplementation);
 CONTAINER.bind<PlayerBindRepository>(PlayerBindRepository).to(PlayerBindRepositoryImplementation);
 CONTAINER.bind<QuestionRepository>(QuestionRepository).to(QuestionRepositoryImplementation);
 CONTAINER.bind<QuizRepository>(QuizRepository).to(QuizRepositoryImplementation);

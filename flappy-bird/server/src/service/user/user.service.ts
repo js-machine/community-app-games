@@ -6,6 +6,7 @@ import { UserRepository } from './user.repository';
 
 import { User} from '../../model';
 
+import { technicalErr } from './../../../errors';
 @injectable()
 export class UserService {
     constructor(
@@ -18,9 +19,11 @@ export class UserService {
             const userId = await this.userRepository.getUser(userToken);
 
             return userId;
-        } catch (error) {
+        } catch {
+            const error = technicalErr.userRepository.getUser.msg;
+
             this.loggerService.errorLog(error);
-            throw error;
+            throw new Error(error);
         }
     }
 
@@ -29,9 +32,11 @@ export class UserService {
             const isAdd = await this.userRepository.addUserToUserTable(userToken);
 
             return isAdd;
-        } catch (error) {
+        } catch {
+            const error = technicalErr.userRepository.addUserToUserTable.msg;
+
             this.loggerService.errorLog(error);
-            throw error;
+            throw new Error(error);
         }
     }
 }

@@ -5,6 +5,7 @@ import { inject } from 'inversify';
 import { AppTokenRepository } from 'service/app-token';
 import { PlayersBindService } from '../service/players-bind/players-bind.service';
 
+import { technicalErr } from './../../errors';
 @controller('/api')
 export class PlayerBindController {
     public constructor(
@@ -31,10 +32,11 @@ export class PlayerBindController {
                     response.status(200).send();
                 }
             } else {
-                response.status(401).send('You don`t have application token!');
+                response.status(401).send(technicalErr.differentToken.msg);
             }
         } catch (err) {
-            return response.status(400).json(err);
+            return response.status(400)
+                .json(technicalErr.applicationTokenRepository.getAppToken.msg);
         }
     }
 }

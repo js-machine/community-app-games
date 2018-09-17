@@ -1,10 +1,12 @@
 import { injectable, inject } from 'inversify';
 import { LoggerService } from '../logger';
 
-import { UserModel, QuestionMarkModel } from 'models';
+import { UserModel } from 'models';
 import { User } from '../../model';
 
 import { UserRepository } from './user.repository';
+
+import { technicalErr } from './../../../errors';
 
 @injectable()
 export class UserRepositoryImplementation implements UserRepository {
@@ -21,9 +23,11 @@ export class UserRepositoryImplementation implements UserRepository {
       });
 
       return user;
-    } catch (error) {
+    } catch {
+      const error = technicalErr.userRepository_Implementation.getUser.msg;
+
       this.loggerService.errorLog(error);
-      throw error;
+      throw new Error(error);
     }
   }
 
@@ -35,9 +39,11 @@ export class UserRepositoryImplementation implements UserRepository {
       });
 
       return isAdd;
-    } catch (error) {
+    } catch {
+      const error = technicalErr.userRepository_Implementation.addUserToUserTable.msg;
+
       this.loggerService.errorLog(error);
-      throw error;
+      throw new Error(error);
     }
   }
 }

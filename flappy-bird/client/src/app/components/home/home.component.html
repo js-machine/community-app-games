@@ -1,0 +1,89 @@
+<!-- <div> -->
+    <div id="gamecontainer">
+        <div id="gamescreen" [style.z-index]="zIndex">
+          <div id="sky" class="animated">
+            <div id="flyarea">
+              <div id="ceiling" class="animated"></div>
+              <!-- This is the flying and pipe area container -->
+              <div id="player" class="bird animated"></div>
+      
+              <div>
+                <div id="bigscore"></div>
+                <div class="pipeScoreImages">
+                  <img src="../../../assets/pipe-up.png" class="pipeUpScore">
+                  <img src="../../../assets/pipe.png" class="pipeScore">
+                </div>
+              </div>
+      
+              <div>
+                <div id="questions"></div>
+                <img src="../../../assets/question.png" class="questionScore">
+              </div>
+      
+              <div id="splash"></div>
+      
+              <div id="scoreboard">
+                <div id="medal"></div>
+                <div id="currentscore"></div>
+                <div id="highscore"></div>
+      
+                <div id="questionStatistic">
+                  <h3>Available Questions:</h3>
+                  <div id="questionCount"></div>
+                </div>
+                <div id="actions-buttons">
+                  <div id="replay">
+                    <h3>Retry</h3>
+                  </div>
+                  <div id="startQuiz">
+                    <h3>Start Quiz</h3>
+                  </div>
+                </div>
+              </div>
+      
+      
+              <!-- Pipes go here! -->
+            </div>
+          </div>
+          <div id="land" class="animated">
+            <div id="debug"></div>
+          </div>
+        </div>
+        <app-quiz (finishQuiz)="onFinishQuiz($event)" id="quiz"></app-quiz>
+      </div>
+      <!-- <div id="footer">
+        <a href="http://www.dotgears.com/">original game/concept/art by dong nguyen</a>
+        <a href="http://nebezb.com/">recreated by nebez briefkani</a>
+        <a href="http://github.com/nebez/floppybird/">view github project</a>
+      </div> -->
+      <div class="boundingbox" id="playerbox"></div>
+      <div class="boundingbox" id="pipebox"></div>
+      <!-- </div> -->
+      <!-- <script src="js/jquery.min.js"></script>
+         <script src="js/jquery.transit.min.js"></script>
+         <script src="js/buzz.min.js"></script>
+         <script src="js/main.js"></script> -->
+      
+      <!--The content below is only a placeholder and can be replaced.-->
+      <!-- <div style="text-align:center">
+        <h1>
+          Welcome to {{ title }}!
+        </h1>
+        <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+      </div>
+      <div>
+        <input [(ngModel)]="todo" placeholder="Todo">
+        <button (click)="addTodo()" mat-stroked-button>Add</button>
+      </div>
+      <h2>Here are some links to help you start: </h2>
+      <ul>
+        <li>
+          <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
+        </li>
+        <li>
+          <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
+        </li>
+        <li>
+          <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
+        </li>
+      </ul> -->

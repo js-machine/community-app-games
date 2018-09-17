@@ -6,6 +6,7 @@ import { PlayersBind } from './../../model';
 import { PlayerBindRepository } from './players-bind.repository';
 import { RoomService } from 'service/room';
 
+import { technicalErr } from './../../../errors';
 @injectable()
 export class PlayersBindService {
     constructor(
@@ -13,7 +14,8 @@ export class PlayersBindService {
         @inject(PlayerBindRepository) private playerBindRepository: PlayerBindRepository,
         @inject(RoomService) private roomService: RoomService
 
-      ) { }
+    ) { }
+
     public savePlayersBind(playersBind: PlayersBind): void {
         if (this.checkPlayersBind(playersBind)) {
             this.playerBindRepository.savePlayersBind(playersBind);
@@ -23,11 +25,16 @@ export class PlayersBindService {
 
     public checkPlayersBind(playersBind: PlayersBind): boolean {
         if (!playersBind.room) {
-            throw new Error(`Request body don't have 'room' property`);
+            const error = technicalErr.playerBindService.noRoomToken.msg;
+
+            this.loggerService.errorLog(error);
+            throw new Error(error);
         } else if (!playersBind.players) {
-            throw new Error(`Request body don't have 'players' property`);
-        }
-        else {
+            const error = technicalErr.playerBindService.noPlayers.msg;
+
+            this.loggerService.errorLog(error);
+            throw new Error(error);
+        } else {
             return true;
         }
     }

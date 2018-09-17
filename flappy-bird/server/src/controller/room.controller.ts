@@ -4,6 +4,7 @@ import { AppTokenRepository } from 'service/app-token';
 import { RoomService } from 'service/room';
 
 import { inject } from 'inversify';
+import { technicalErr } from './../../errors';
 
 @controller('/api')
 export class RoomController {
@@ -21,10 +22,11 @@ export class RoomController {
                 const roomToken = this.roomService.createToken();
                 response.status(200).send(roomToken);
             } else {
-                response.status(401).send('You don`t have application token');
+                response.status(401).send(technicalErr.differentToken.msg);
             }
         } catch (err) {
-            return response.status(400).json(err);
+            return response.status(400)
+                .json(technicalErr.applicationTokenRepository.getAppToken.msg);
         }
     }
 }
