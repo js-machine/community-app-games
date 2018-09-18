@@ -25,7 +25,7 @@ export class QuestionService {
         }
     }
 
-    public async getQuestion(userId: number): Promise<Question> {
+    public async getQuestion(userId: number, countOfQuestion: number): Promise<Question> {
         let unAnsweredQuestions: UnAnsweredQuestion[];
         let isRefresh: boolean;
 
@@ -39,10 +39,10 @@ export class QuestionService {
         }
 
         if (unAnsweredQuestions.length !== 0) {
-            const id = Math.floor(Math.random() * (unAnsweredQuestions.length));
+            const id = Math.floor(Math.random() * unAnsweredQuestions.length);
 
             try {
-                const question = await this.questionRepository.getQuestion(unAnsweredQuestions[id].questionId);
+                const question = await this.questionRepository.getQuestion(unAnsweredQuestions[id].questionId, userId);
 
                 return question;
             } catch {
@@ -61,7 +61,6 @@ export class QuestionService {
                 throw new Error(error);
             }
 
-
             if (isRefresh) {
                 try {
                     unAnsweredQuestions = await this.questionRepository.getUnansweredQuestions(userId);
@@ -75,7 +74,7 @@ export class QuestionService {
                 const id = Math.floor(Math.random() * (unAnsweredQuestions.length));
 
                 try {
-                    const question = await this.questionRepository.getQuestion(unAnsweredQuestions[id].questionId);
+                    const question = await this.questionRepository.getQuestion(unAnsweredQuestions[id].questionId,  userId);
 
                     return question;
                 } catch {

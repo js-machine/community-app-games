@@ -9,6 +9,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { TodoEffects, TodosService } from 'store/todo';
+import { QuizEffects, QuizService } from 'store/quiz';
+
 import { Router } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -33,7 +35,8 @@ import { HomeComponent, PathNotFoundComponent, QuizComponent, ResultComponent } 
     HttpClientModule,
     StoreModule.forRoot(reducers, {}),
     EffectsModule.forRoot([
-      TodoEffects
+      TodoEffects,
+      QuizEffects
     ]),
     StoreDevtoolsModule.instrument({
       maxAge: 25
@@ -44,6 +47,7 @@ import { HomeComponent, PathNotFoundComponent, QuizComponent, ResultComponent } 
   ],
   providers: [
     TodosService,
+    QuizService
   ],
   bootstrap: [AppComponent]
 })

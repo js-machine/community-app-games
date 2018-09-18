@@ -1,7 +1,10 @@
-import { Component, ViewEncapsulation, AfterViewInit, OnInit } from '@angular/core';
-import { gameCore, onGameEnd } from 'js/main';
-import { DataService } from '../../services';
+import { Component, ViewEncapsulation, AfterViewInit, OnInit, OnDestroy } from '@angular/core';
+import { gameCore, onGameEnd, onGetQuiz } from 'js/main';
 import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+
+import { State } from 'store';
+import { StartGame, SaveGameResults, GetQuiz } from 'store/quiz/quiz.action';
 
 interface EndGameData {
   score: number;
@@ -12,22 +15,26 @@ interface EndGameData {
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  encapsulation : ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None
 })
 
-export class HomeComponent implements AfterViewInit, OnInit  {
+export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
   private userToken: string;
+  private onGameEndSubscription;
+  private onGetQuizSubscription;
+
+
 
   public constructor(
-    private dataService: DataService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private store: Store<State>
   ) { }
 
   public ngOnInit() {
     this.route.paramMap.subscribe(params => {
       this.userToken = params.get('userToken');
     });
-    this.startGame();
+    this.store.dispatch(new StartGame(this.userToken));
     this.endGame();
   }
 
@@ -35,18 +42,24 @@ export class HomeComponent implements AfterViewInit, OnInit  {
     gameCore();
   }
 
-  private startGame() {
-    this.dataService.startGame(this.userToken);
+  private endGame() {
+    this.onGameEndSubscription = onGameEnd
+      .subscribe((data: EndGameData) =>
+        this.store.dispatch(new SaveGameResults({
+          userToken: this.userToken,
+          score: data.score,
+          question: data.question
+        }))
+      );
+
+    this.onGetQuizSubscription = onGetQuiz.subscribe(() =>
+      this.store.dispatch(new GetQuiz(this.userToken))
+    );
   }
 
-  private endGame() {
-    onGameEnd.subscribe((data: EndGameData) =>
-      this.dataService.saveGameResults(
-        this.userToken,
-        data.score,
-        data.question
-      )
-    );
+  ngOnDestroy() {
+    this.onGameEndSubscription.unsubscribe();
+    this.onGetQuizSubscription.unsubscribe();
   }
 }
 

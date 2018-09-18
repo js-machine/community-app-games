@@ -4,6 +4,7 @@ import { LoggerService } from '../logger';
 import { UserService } from '../user';
 
 import { technicalErr } from './../../../errors';
+import { Game } from '../../model';
 
 import { GameRepository } from './game.repository';
 
@@ -17,7 +18,7 @@ export class GameService {
 
     public async saveGameResult(userToken: string, score: number, question: number): Promise<boolean> {
         let userId: number;
-        console.log(`SERVICE`)
+
         try {
             userId = (await this.userService.getUser(userToken)).id;
         } catch {
@@ -33,6 +34,19 @@ export class GameService {
             return isAdd;
         } catch {
             const error = technicalErr.gameRepository.saveGameResults.msg;
+
+            this.loggerService.errorLog(error);
+            throw new Error(error);
+        }
+    }
+
+    public async getLastGame(userId: number): Promise<Game> {
+        try {
+            const lastGame = await this.gameRepository.getLastGame(userId);
+
+            return lastGame;
+        } catch {
+            const error = technicalErr.gameRepository.getLastGame.msg;
 
             this.loggerService.errorLog(error);
             throw new Error(error);

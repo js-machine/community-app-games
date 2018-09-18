@@ -4,3 +4,20 @@ export enum TodoStatus {
   ADDED,
   ERROR
 }
+
+export enum Status {
+  Init,
+  Fetching,
+  Success,
+  Error
+}
+
+export interface EndGameStatistic {
+  userToken: string;
+  score: number;
+  question: number;
+}
+export interface Quiz {
+  question: string;
+  answers: string[];
+}

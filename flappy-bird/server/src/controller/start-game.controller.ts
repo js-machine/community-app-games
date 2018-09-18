@@ -13,13 +13,15 @@ export class StartGameController {
 
     @httpPost('/start-game')
     public async startGame(request: Request, response: Response): Promise<void | Response> {
-        const userToken = request.body.userToken;
+        const userToken: string = request.body.userToken;
 
         try {
             const isAdd = await this.startGameService.startGame(userToken);
 
             if (isAdd) {
-                response.status(200).send(isAdd);
+                return response.status(200).send(isAdd);
+            } else {
+                return response.status(400).send(isAdd);
             }
 
         } catch {

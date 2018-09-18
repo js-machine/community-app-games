@@ -19,6 +19,10 @@ export const technicalErr = {
         saveResults: {
             code: technicalErrCodes.gameService.saveResults.code,
             msg: 'Problem with Game Service [saveResults]'
+        },
+        getLastGame: {
+            code: technicalErrCodes.gameService.getLastGame.code,
+            msg: 'Problem with Game Service [getLastGame]'
         }
     },
     playerBindService: {
@@ -105,6 +109,10 @@ export const technicalErr = {
         saveGameResults: {
             code: technicalErrCodes.gameRepository.saveGameResults.code,
             msg: 'Problem with  Game Repository [saveGameResults]'
+        },
+        getLastGame: {
+            code: technicalErrCodes.gameRepository.getLastGame.code,
+            msg: 'Problem with  Game Repository [getLastGame]'
         }
     },
     questionRepository: {
@@ -165,6 +173,10 @@ export const technicalErr = {
         saveGameResults: {
             code: technicalErrCodes.gameRepository_Implementation.saveGameResults.code,
             msg: 'Problem with adding user session to game table',
+        },
+        getLastGame: {
+            code: technicalErrCodes.gameRepository_Implementation.getLastGame.code,
+            msg: 'Problem with getting last user session from game table',
         }
     },
     questionRepository_Implementation: {
