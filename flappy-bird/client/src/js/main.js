@@ -492,7 +492,7 @@ export const gameCore = () => {
       soundSwoosh.stop();
       soundSwoosh.play();
       $("#replay").transition({ y: '0px', opacity: 1 }, 600, 'ease');
-      $("#startQuiz").transition({ y: '0px', opacity: 1 }, 600, 'ease');
+      question ? $("#startQuiz").transition({ y: '0px', opacity: 1 }, 600, 'ease') : null;
 
       //also animate in the MEDAL! WOO!
       if (wonmedal) {
