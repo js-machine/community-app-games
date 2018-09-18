@@ -20,6 +20,8 @@
 */
 import { Subject } from 'rxjs';
 export const onGameEnd = new Subject();
+export const onGetQuiz = new Subject();
+
 
 export const gameCore = () => {
   var debugmode = false;
@@ -521,6 +523,10 @@ export const gameCore = () => {
       //start the game over!
       showSplash();
     });
+  });
+
+  $("#startQuiz").click(function () {
+    onGetQuiz.next()
   });
 
   function playerScore() {

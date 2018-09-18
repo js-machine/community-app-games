@@ -1,12 +1,10 @@
 import { Component, ViewEncapsulation, AfterViewInit, OnInit } from '@angular/core';
-import { gameCore, onGameEnd } from 'js/main';
+import { gameCore, onGameEnd, onGetQuiz } from 'js/main';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { State, /* QuizActions */ } from 'store';
-import { StartGame, SaveGameResults } from 'store/quiz/quiz.action';
-
-
+import { State } from 'store';
+import { StartGame, SaveGameResults, GetQuiz } from 'store/quiz/quiz.action';
 
 interface EndGameData {
   score: number;
@@ -42,11 +40,15 @@ export class HomeComponent implements AfterViewInit, OnInit {
 
   private endGame() {
     onGameEnd.subscribe((data: EndGameData) =>
-      this.store.dispatch(new SaveGameResults (
-        this.userToken,
-        data.score,
-        data.question
-      ))
+      this.store.dispatch(new SaveGameResults ({
+        userToken: this.userToken,
+        score: data.score,
+        question: data.question
+      }))
+    );
+
+    onGetQuiz.subscribe(() =>
+      this.store.dispatch(new GetQuiz(this.userToken))
     );
   }
 }

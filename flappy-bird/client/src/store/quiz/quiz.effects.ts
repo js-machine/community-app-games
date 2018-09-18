@@ -10,16 +10,20 @@ import {
     SaveGameResultError,
     StartGameSuccess,
     StartGameError,
-    StartGame
+    StartGame,
+    GetQuiz,
+    GetQuizSuccess,
+    GetQuizError
 } from './quiz.action';
 
 import { QuizService } from './quiz.service';
+import { Quiz } from 'models';
 
 @Injectable()
 export class QuizEffects {
     @Effect() public saveGameResults$: Observable<SaveGameResultSuccess | SaveGameResultError> = this.actions$.pipe(
         ofType<SaveGameResults>(QuizActionTypes.SaveGameResult),
-        switchMap(({ userToken, score, question }) => this.quizService.saveGameResults(
+        switchMap(({ payload: { userToken, score, question } }) => this.quizService.saveGameResults(
             userToken,
             score,
             question
@@ -37,6 +41,16 @@ export class QuizEffects {
                 map((isStart: boolean) => new StartGameSuccess(isStart)),
                 catchError((error: Error) => of(new StartGameError(error))
                 )
+            )
+        )
+    );
+
+    @Effect() public getQuiz$: Observable<GetQuizSuccess | GetQuizError> = this.actions$.pipe(
+        ofType<GetQuiz>(QuizActionTypes.GetQuiz),
+        switchMap(({ userToken }) => this.quizService.getQuiz(userToken)
+            .pipe(
+                map((quiz: Quiz[]) => new GetQuizSuccess(quiz)),
+                catchError((error: Error) => of(new GetQuizError(error)))
             )
         )
     );

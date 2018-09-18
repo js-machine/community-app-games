@@ -13,6 +13,9 @@ export const technicalErrCodes = {
   gameService: {
     saveResults: {
       code: 8041
+    },
+    getLastGame: {
+      code: 8044
     }
   },
   playerBindService: {
@@ -69,7 +72,6 @@ export const technicalErrCodes = {
   answerRepository: {
     getAnswers: {
       code: 8016
-    
     },
     getRightAnswers: {
       code: 8017
@@ -83,6 +85,9 @@ export const technicalErrCodes = {
   gameRepository: {
     saveGameResults: {
       code: 8042
+    },
+    getLastGame: {
+      code: 8046
     }
   },
   questionRepository: {
@@ -130,6 +135,9 @@ export const technicalErrCodes = {
   gameRepository_Implementation: {
     saveGameResults: {
       code: 8043
+    },
+    getLastGame: {
+      code: 8045
     }
   },
   questionRepository_Implementation: {

@@ -17,7 +17,8 @@ export class QuestionRepositoryImplementation implements QuestionRepository {
       return {
         userId,
         questionId,
-        status: false
+        status: false,
+        session: false
       };
     });
 
@@ -55,7 +56,8 @@ export class QuestionRepositoryImplementation implements QuestionRepository {
       const questions: UnAnsweredQuestion[] = await QuestionMarkModel.findAll({
         where: {
           userId,
-          status: 0
+          status: 0,
+          session: 0
         }
       });
 
@@ -81,13 +83,23 @@ export class QuestionRepositoryImplementation implements QuestionRepository {
     }
   }
 
-  public async getQuestion(id: number): Promise<Question> {
+  public async getQuestion(questionId: number, userId: number): Promise<Question> {
     try {
       const question: Question = await QuizQuestionsModel.findOne({
-        where: { id }
+        where: { id: questionId }
       });
 
-      return question;
+      const isUpdate = await QuestionMarkModel.update({ status: 1, session: 1 }, {
+        where: {
+          userId,
+          questionId
+        }
+      });
+
+      if (isUpdate) {
+        return question;
+      }
+
     } catch {
       const error = technicalErr.questionRepository_Implementation.getQuestion.msg;
 

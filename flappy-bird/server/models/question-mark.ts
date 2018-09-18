@@ -29,6 +29,21 @@ export const QuestionMarkModel: SequelizeStaticAndInstance['Model'] = db.connect
         validate: {
             notEmpty: true
         }
+    },
+    session: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
+    },
+    createdAt: {
+        type: Sequelize.DATE,
+        allowNull: true
+    },
+    updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: true
     }
 }, {
         // if freezeTableName is true, sequelize will not try to alter the DAO name to get the table name.

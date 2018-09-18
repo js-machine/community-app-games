@@ -7,6 +7,7 @@ type State = QuizState;
 export const initialState: State = {
     saveGameResultsStatus: Status.INIT,
     startGameStatus: Status.INIT,
+    getQuizStatus: Status.INIT,
     quiz: [
         {
             question: '2 + 2',

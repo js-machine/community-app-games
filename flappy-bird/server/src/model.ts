@@ -91,3 +91,12 @@ export interface UnAnsweredQuestion {
     createdAt: Date;
     updatedAt: Date;
 }
+
+export interface Game {
+    id: number;
+    userId: number;
+    score: number;
+    question: number;
+    createdAt: Date;
+    updatedAt: Date;
+}

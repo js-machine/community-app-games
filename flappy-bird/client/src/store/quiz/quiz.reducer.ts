@@ -1,6 +1,6 @@
 import { QuizState } from './interfaces';
 import { initialState } from './quiz.initial';
-import { QuizActionTypes, QuizActions } from './quiz.action';
+import { QuizActionTypes, QuizActions, GetQuiz } from './quiz.action';
 import { Status } from 'models';
 
 type State = QuizState;
@@ -14,6 +14,7 @@ export const quizReducer = (state: State = initialState, action: QuizActions): S
             };
         }
         case QuizActionTypes.SaveGameResultSuccess: {
+
             return {
                 ...state,
                 saveGameResultsStatus: Status.SUCCESS
@@ -41,6 +42,27 @@ export const quizReducer = (state: State = initialState, action: QuizActions): S
             return {
                 ...state,
                 startGameStatus: Status.ERROR
+            };
+        }
+        case QuizActionTypes.GetQuiz: {
+            return {
+                ...state,
+                getQuizStatus: Status.FETCHING
+            };
+        }
+        case QuizActionTypes.GetQuizSuccess: {
+            const quiz = action.payload;
+
+            return {
+                ...state,
+                quiz,
+                getQuizStatus: Status.SUCCESS
+            };
+        }
+        case QuizActionTypes.GetQuizError: {
+            return {
+                ...state,
+                getQuizStatus: Status.ERROR
             };
         }
         default: {
