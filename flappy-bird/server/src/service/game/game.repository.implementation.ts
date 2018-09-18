@@ -14,16 +14,20 @@ export class GameRepositoryImplementation implements GameRepository {
     ) { }
 
     public async saveGameResults(userId: number, score: number, question: number): Promise<boolean> {
-        let isAdd: boolean = false;
 
         try {
-            isAdd = await GameModel.upsert({
+            const isAdd = await GameModel.upsert({
                 userId,
                 score,
                 question
             });
 
-            return isAdd;
+            if (isAdd) {
+                return true;
+            } else {
+                return false;
+            }
+
         } catch {
             const error = technicalErr.gameRepository_Implementation.saveGameResults.msg;
 

@@ -1,7 +1,12 @@
 import { Component, ViewEncapsulation, AfterViewInit, OnInit } from '@angular/core';
 import { gameCore, onGameEnd } from 'js/main';
-import { DataService } from '../../services';
 import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+
+import { State, /* QuizActions */ } from 'store';
+import { StartGame, SaveGameResults } from 'store/quiz/quiz.action';
+
+
 
 interface EndGameData {
   score: number;
@@ -12,22 +17,22 @@ interface EndGameData {
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  encapsulation : ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None
 })
 
-export class HomeComponent implements AfterViewInit, OnInit  {
+export class HomeComponent implements AfterViewInit, OnInit {
   private userToken: string;
 
   public constructor(
-    private dataService: DataService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private store: Store<State>
   ) { }
 
   public ngOnInit() {
     this.route.paramMap.subscribe(params => {
       this.userToken = params.get('userToken');
     });
-    this.startGame();
+    this.store.dispatch(new StartGame(this.userToken));
     this.endGame();
   }
 
@@ -35,17 +40,13 @@ export class HomeComponent implements AfterViewInit, OnInit  {
     gameCore();
   }
 
-  private startGame() {
-    this.dataService.startGame(this.userToken);
-  }
-
   private endGame() {
     onGameEnd.subscribe((data: EndGameData) =>
-      this.dataService.saveGameResults(
+      this.store.dispatch(new SaveGameResults (
         this.userToken,
         data.score,
         data.question
-      )
+      ))
     );
   }
 }

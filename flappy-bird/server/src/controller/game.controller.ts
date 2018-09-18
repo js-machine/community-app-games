@@ -14,8 +14,10 @@ export class GameController {
 
     @httpPost('/save-game-results')
     public async saveGameResult(request: Request, response: Response): Promise<void | Response> {
-        const { userToken, score, question } = request.body;
-        console.log(`CONTROLLER`)
+        const userToken: string = request.body.userToken;
+        const score: number = request.body.score;
+        const question: number = request.body.question;
+
         try {
             const isSaveResults = await this.gameService.saveGameResult(userToken, score, question);
 

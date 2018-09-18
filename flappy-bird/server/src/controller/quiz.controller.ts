@@ -14,7 +14,7 @@ export class QuizController {
 
     @httpGet('/get-quiz')
     public async getQuiz(request: Request, response: Response): Promise<void | Response> {
-        // const userToken = request.body;
+        // const userToken: string = request.body.userToken;
         const userToken = 'daaaad8a92-a650-4afa-9a8-9880611dc2d2';
         try {
             const quiz = await this.quizService.getQuiz(userToken);

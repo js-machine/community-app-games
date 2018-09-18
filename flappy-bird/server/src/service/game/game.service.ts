@@ -17,7 +17,7 @@ export class GameService {
 
     public async saveGameResult(userToken: string, score: number, question: number): Promise<boolean> {
         let userId: number;
-        console.log(`SERVICE`)
+
         try {
             userId = (await this.userService.getUser(userToken)).id;
         } catch {
