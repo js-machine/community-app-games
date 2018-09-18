@@ -23,14 +23,11 @@ import { Quiz } from 'models';
 export class QuizEffects {
     @Effect() public saveGameResults$: Observable<SaveGameResultSuccess | SaveGameResultError> = this.actions$.pipe(
         ofType<SaveGameResults>(QuizActionTypes.SaveGameResult),
-        switchMap(({ payload: { userToken, score, question } }) => this.quizService.saveGameResults(
-            userToken,
-            score,
-            question
-        ).pipe(
-            map((isSave: boolean) => new SaveGameResultSuccess(isSave)),
-            catchError((error: Error) => of(new SaveGameResultError(error))
-            ))
+        switchMap(({ payload: { userToken, score, question } }) => this.quizService.saveGameResults(userToken, score, question)
+            .pipe(
+                map(() => new SaveGameResultSuccess()),
+                catchError((error: Error) => of(new SaveGameResultError(error)))
+            )
         )
     );
 
@@ -38,9 +35,8 @@ export class QuizEffects {
         ofType<StartGame>(QuizActionTypes.StartGame),
         switchMap(({ payload }) => this.quizService.startGame(payload)
             .pipe(
-                map((isStart: boolean) => new StartGameSuccess(isStart)),
-                catchError((error: Error) => of(new StartGameError(error))
-                )
+                map(() => new StartGameSuccess()),
+                catchError((error: Error) => of(new StartGameError(error)))
             )
         )
     );

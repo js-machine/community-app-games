@@ -19,7 +19,9 @@ export class StartGameController {
             const isAdd = await this.startGameService.startGame(userToken);
 
             if (isAdd) {
-                response.status(200).send(isAdd);
+                return response.status(200).send(isAdd);
+            } else {
+                return response.status(400).send(isAdd);
             }
 
         } catch {

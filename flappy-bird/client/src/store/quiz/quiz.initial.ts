@@ -5,9 +5,9 @@ import { QuizState } from './interfaces';
 type State = QuizState;
 
 export const initialState: State = {
-    saveGameResultsStatus: Status.INIT,
-    startGameStatus: Status.INIT,
-    getQuizStatus: Status.INIT,
+    saveGameResultsStatus: Status.Init,
+    startGameStatus: Status.Init,
+    getQuizStatus: Status.Init,
     quiz: [
         {
             question: '2 + 2',

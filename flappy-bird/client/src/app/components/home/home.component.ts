@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, AfterViewInit, OnInit } from '@angular/core';
+import { Component, ViewEncapsulation, AfterViewInit, OnInit, OnDestroy } from '@angular/core';
 import { gameCore, onGameEnd, onGetQuiz } from 'js/main';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -18,8 +18,12 @@ interface EndGameData {
   encapsulation: ViewEncapsulation.None
 })
 
-export class HomeComponent implements AfterViewInit, OnInit {
+export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
   private userToken: string;
+  private onGameEndSubscription;
+  private onGetQuizSubscription;
+
+
 
   public constructor(
     private route: ActivatedRoute,
@@ -39,17 +43,23 @@ export class HomeComponent implements AfterViewInit, OnInit {
   }
 
   private endGame() {
-    onGameEnd.subscribe((data: EndGameData) =>
-      this.store.dispatch(new SaveGameResults ({
-        userToken: this.userToken,
-        score: data.score,
-        question: data.question
-      }))
-    );
+    this.onGameEndSubscription = onGameEnd
+      .subscribe((data: EndGameData) =>
+        this.store.dispatch(new SaveGameResults({
+          userToken: this.userToken,
+          score: data.score,
+          question: data.question
+        }))
+      );
 
-    onGetQuiz.subscribe(() =>
+    this.onGetQuizSubscription = onGetQuiz.subscribe(() =>
       this.store.dispatch(new GetQuiz(this.userToken))
     );
+  }
+
+  ngOnDestroy() {
+    this.onGameEndSubscription.unsubscribe();
+    this.onGetQuizSubscription.unsubscribe();
   }
 }
 

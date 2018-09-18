@@ -4,14 +4,14 @@ import { Quiz, EndGameStatistic } from 'models';
 
 export enum QuizActionTypes {
     StartGame = '[quiz] Start Game',
-    StartGameSuccess = '[quiz] Start Game Success',
-    StartGameError = '[quiz] Start Game Error',
+    StartGameSuccess = '[quiz] Start Game (Success)',
+    StartGameError = '[quiz] Start Game (Error)',
     SaveGameResult = '[quiz] Save Game Results',
-    SaveGameResultSuccess = '[quiz] Save Game Results Success',
-    SaveGameResultError = '[quiz] Save Game Results Error',
+    SaveGameResultSuccess = '[quiz] Save Game Results (Success)',
+    SaveGameResultError = '[quiz] Save Game Results (Error)',
     GetQuiz = '[quiz] Get Quiz',
-    GetQuizSuccess = '[quiz] Get Quiz Success',
-    GetQuizError = '[quiz] Get Quiz Error'
+    GetQuizSuccess = '[quiz] Get Quiz (Success)',
+    GetQuizError = '[quiz] Get Quiz (Error)'
 }
 
 export class SaveGameResults implements Action {
@@ -22,8 +22,6 @@ export class SaveGameResults implements Action {
 
 export class SaveGameResultSuccess implements Action {
     public readonly type = QuizActionTypes.SaveGameResultSuccess;
-
-    constructor(public payload: boolean) { }
 }
 
 export class SaveGameResultError implements Action {
@@ -40,8 +38,6 @@ export class StartGame implements Action {
 
 export class StartGameSuccess implements Action {
     public readonly type = QuizActionTypes.StartGameSuccess;
-
-    constructor(public payload: boolean) { }
 }
 
 export class StartGameError implements Action {

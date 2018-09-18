@@ -21,7 +21,12 @@ export class GameController {
         try {
             const isSaveResults = await this.gameService.saveGameResult(userToken, score, question);
 
-            return response.status(200).send(isSaveResults);
+            if (isSaveResults) {
+                return response.status(200).send(isSaveResults);
+            } else {
+                return response.status(400).send(isSaveResults);
+            }
+
         } catch {
             return response.status(400).json({
                 status: 'error',

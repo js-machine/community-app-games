@@ -6,10 +6,10 @@ export enum TodoStatus {
 }
 
 export enum Status {
-  INIT,
-  FETCHING,
-  SUCCESS,
-  ERROR
+  Init,
+  Fetching,
+  Success,
+  Error
 }
 
 export interface EndGameStatistic {

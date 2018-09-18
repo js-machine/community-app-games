@@ -10,44 +10,44 @@ export const quizReducer = (state: State = initialState, action: QuizActions): S
         case QuizActionTypes.SaveGameResult: {
             return {
                 ...state,
-                saveGameResultsStatus: Status.FETCHING
+                saveGameResultsStatus: Status.Fetching
             };
         }
         case QuizActionTypes.SaveGameResultSuccess: {
 
             return {
                 ...state,
-                saveGameResultsStatus: Status.SUCCESS
+                saveGameResultsStatus: Status.Success
             };
         }
         case QuizActionTypes.SaveGameResultError: {
             return {
                 ...state,
-                saveGameResultsStatus: Status.ERROR
+                saveGameResultsStatus: Status.Error
             };
         }
         case QuizActionTypes.StartGame: {
             return {
                 ...state,
-                startGameStatus: Status.FETCHING
+                startGameStatus: Status.Fetching
             };
         }
         case QuizActionTypes.StartGameSuccess: {
             return {
                 ...state,
-                startGameStatus: Status.SUCCESS
+                startGameStatus: Status.Success
             };
         }
         case QuizActionTypes.StartGameError: {
             return {
                 ...state,
-                startGameStatus: Status.ERROR
+                startGameStatus: Status.Error
             };
         }
         case QuizActionTypes.GetQuiz: {
             return {
                 ...state,
-                getQuizStatus: Status.FETCHING
+                getQuizStatus: Status.Fetching
             };
         }
         case QuizActionTypes.GetQuizSuccess: {
@@ -56,13 +56,13 @@ export const quizReducer = (state: State = initialState, action: QuizActions): S
             return {
                 ...state,
                 quiz,
-                getQuizStatus: Status.SUCCESS
+                getQuizStatus: Status.Success
             };
         }
         case QuizActionTypes.GetQuizError: {
             return {
                 ...state,
-                getQuizStatus: Status.ERROR
+                getQuizStatus: Status.Error
             };
         }
         default: {

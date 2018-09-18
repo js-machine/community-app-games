@@ -13,24 +13,20 @@ export class QuizService {
         private http: HttpClient
     ) { }
 
-    saveGameResults(userToken: string, score: number, question: number): Observable<boolean> {
+    saveGameResults(userToken: string, score: number, question: number): Observable<Object> {
         const body = {
             userToken,
             score,
             question
         };
 
-        return this.http.post(this.serverUrl + 'save-game-results', body).pipe(
-            map<Response, boolean>(response => !!response)
-        );
+        return this.http.post(this.serverUrl + 'save-game-results', body);
     }
 
-    startGame(userToken: string): Observable<boolean> {
+    startGame(userToken: string): Observable<Object> {
         const body = { userToken };
 
-        return this.http.post(this.serverUrl + 'start-game', body).pipe(
-            map<Response, boolean>(response => !!response)
-        );
+        return this.http.post(this.serverUrl + 'start-game', body);
     }
 
     getQuiz(userToken: string): Observable<Quiz[]> {
