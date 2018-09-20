@@ -22,7 +22,7 @@ import config from './config/app.config.json';
 
 db.connect.sync({
     logging: console.log
-})
+});
 
 server.setConfig((app) => {
     process.env.NODE_ENV !== config.production ? app.use(morgan('dev')) : app.use(morgan('prod'));

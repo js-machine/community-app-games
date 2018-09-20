@@ -90,7 +90,7 @@ export class QuestionRepositoryImplementation implements QuestionRepository {
         where: {
           id
         }
-      })
+      });
 
       return question;
     } catch {
@@ -149,7 +149,7 @@ export class QuestionRepositoryImplementation implements QuestionRepository {
         where: {
           isRight: 1
         }
-      })
+      });
 
       await QuestionMarkModel.update({ session: 0, isRight: 0 }, {
         where: {

@@ -6,7 +6,6 @@ import { QuestionService } from '../question';
 import { AnswerService } from '../answer';
 import { GameService } from '../game';
 
-
 import { Answer, Quiz, QuestionMarkTableRow, FinalResult } from 'model';
 import { technicalErr } from '../../../errors';
 @injectable()
