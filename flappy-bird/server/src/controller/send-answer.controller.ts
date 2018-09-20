@@ -4,7 +4,7 @@ import { SendAnswerService } from 'service/send-answer';
 
 import { inject } from 'inversify';
 import { technicalErr } from 'errors';
-import { Quiz } from '../model';
+import { Quiz } from 'model';
 
 @controller('/api')
 export class SendAnswerController {

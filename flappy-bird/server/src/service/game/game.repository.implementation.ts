@@ -6,7 +6,7 @@ import { GameModel } from 'models';
 import { GameRepository } from './game.repository';
 
 import { technicalErr } from 'errors';
-import { Game } from '../../model';
+import { Game } from 'model';
 
 @injectable()
 export class GameRepositoryImplementation implements GameRepository {

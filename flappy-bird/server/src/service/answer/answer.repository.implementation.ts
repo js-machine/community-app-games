@@ -2,7 +2,7 @@ import { injectable, inject } from 'inversify';
 
 import { QuizAnswersModel } from 'models';
 import { LoggerService } from '../logger';
-import { Answer } from '../../model';
+import { Answer } from 'model';
 
 import { AnswerRepository } from './answer.repository';
 import { technicalErr } from 'errors';

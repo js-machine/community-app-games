@@ -1,4 +1,4 @@
-import { Question, QuestionMarkTableRow } from '../../model';
+import { Question, QuestionMarkTableRow } from 'model';
 
 export abstract class QuestionRepository {
     public abstract addUserToQuestionMarkTable(userId: number, questionsId: number[]): Promise<boolean>;

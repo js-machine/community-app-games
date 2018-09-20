@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify';
 
 import { LoggerService } from '../logger';
-import { Answer } from '../../model';
+import { Answer } from 'model';
 
 import { AnswerRepository } from './answer.repository';
 import { technicalErr } from 'errors';

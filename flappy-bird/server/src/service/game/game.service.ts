@@ -4,7 +4,7 @@ import { LoggerService } from '../logger';
 import { UserService } from '../user';
 
 import { technicalErr } from 'errors';
-import { Game } from '../../model';
+import { Game } from 'model';
 
 import { GameRepository } from './game.repository';
 

@@ -2,7 +2,7 @@ import { injectable, inject } from 'inversify';
 import { LoggerService } from '../logger';
 
 import { UserModel } from 'models';
-import { User } from '../../model';
+import { User } from 'model';
 
 import { UserRepository } from './user.repository';
 

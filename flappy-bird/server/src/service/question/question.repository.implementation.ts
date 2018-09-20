@@ -1,7 +1,7 @@
 import { injectable, inject } from 'inversify';
 
 import { LoggerService } from '../logger';
-import { Question, QuestionMarkTableRow } from '../../model';
+import { Question, QuestionMarkTableRow } from 'model';
 import { QuestionMarkModel, QuizQuestionsModel } from 'models';
 
 import { QuestionRepository } from './question.repository';

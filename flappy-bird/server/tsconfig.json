@@ -70,6 +70,9 @@
       "validation/*": [
         "src/validation/*"
       ],
+      "model": [
+        "src/model"
+      ]
     },
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,

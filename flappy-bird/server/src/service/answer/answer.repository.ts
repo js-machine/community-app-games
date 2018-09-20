@@ -1,4 +1,4 @@
-import { Answer } from '../../model';
+import { Answer } from 'model';
 
 export abstract class AnswerRepository {
     public abstract getAnswers(questionId: number): Promise<Answer[]>;
