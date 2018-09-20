@@ -32,7 +32,7 @@ export class QuizComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.createControls();
+    this.createControls([]);
 
     this.route.paramMap.subscribe(params => {
       this.userToken = params.get('userToken');
@@ -44,7 +44,7 @@ export class QuizComponent implements OnInit {
       if (this.quiz[this.currentQuiz]) {
         this.answers = this.quiz[this.currentQuiz].answers;
         this.question = this.quiz[this.currentQuiz].question;
-        this.createControls();
+        this.createControls(this.answers);
       }
     });
   }
@@ -64,7 +64,7 @@ export class QuizComponent implements OnInit {
       this.answers = [...this.quiz[this.currentQuiz].answers];
       this.question = this.quiz[this.currentQuiz].question;
 
-      this.createControls();
+      this.createControls(this.answers);
     } else {
       this.store.dispatch(new SendQuizAnswers({
         userToken: this.userToken,
@@ -75,8 +75,9 @@ export class QuizComponent implements OnInit {
     }
   }
 
-  private createControls() {
-    const controls = (this.answers && this.answers.length) ? this.answers.map(c => new FormControl(false)) : [];
+  private createControls(answers: string[]) {
+    // const controls = (this.answers && this.answers.length) ? this.answers.map(c => new FormControl(false)) : [];
+    const controls = answers.map(c => new FormControl(false));
 
     this.form = this.formBuilder.group({
       answers: new FormArray(controls)
