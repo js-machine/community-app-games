@@ -8,10 +8,7 @@ export const initialState: State = {
     saveGameResultsStatus: Status.Init,
     startGameStatus: Status.Init,
     getQuizStatus: Status.Init,
-    quiz: [
-        {
-            question: '2 + 2',
-            answers: ['2', '3', '4']
-        }
-    ]
+    sendAnswersStatus: Status.Init,
+    quiz: [],
+    lastSessionResults: null
 };

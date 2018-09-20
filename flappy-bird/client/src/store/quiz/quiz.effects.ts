@@ -13,11 +13,14 @@ import {
     StartGame,
     GetQuiz,
     GetQuizSuccess,
-    GetQuizError
+    GetQuizError,
+    SendQuizAnswers,
+    SendQuizAnswersSuccess,
+    SendQuizAnswersError
 } from './quiz.action';
 
 import { QuizService } from './quiz.service';
-import { Quiz } from 'models';
+import { Quiz, FinalResult } from 'models';
 
 @Injectable()
 export class QuizEffects {
@@ -47,6 +50,16 @@ export class QuizEffects {
             .pipe(
                 map((quiz: Quiz[]) => new GetQuizSuccess(quiz)),
                 catchError((error: Error) => of(new GetQuizError(error)))
+            )
+        )
+    );
+
+    @Effect() public sendQuizAnswer: Observable<SendQuizAnswersSuccess | SendQuizAnswersError> = this.actions$.pipe(
+        ofType<SendQuizAnswers>(QuizActionTypes.SendQuizAnswers),
+        switchMap(({ quizAnswers }) => this.quizService.sendQuizAnswers(quizAnswers)
+            .pipe(
+                map((finalResult: FinalResult) => new SendQuizAnswersSuccess(finalResult)),
+                catchError((error: Error) => of(new SendQuizAnswersError(error)))
             )
         )
     );

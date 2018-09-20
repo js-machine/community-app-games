@@ -54,6 +54,12 @@ export const technicalErrCodes = {
     },
     updateQuestionMarkTable: {
       code: 8012
+    },
+    getMyRightAnswers: {
+      code: 8049
+    },
+    getQuestionById: {
+      code: 8050
     }
   },
   quizService: {
@@ -114,6 +120,12 @@ export const technicalErrCodes = {
     },
     updateQuestionMarkTable: {
       code: 8026
+    },
+    getMyRightAnswers: {
+      code: 8047
+    },
+    getQuestionById: {
+      code: 8051
     }
   },
   userRepository: {
@@ -164,6 +176,12 @@ export const technicalErrCodes = {
     },
     updateQuestionMarkTable: {
       code: 8038
+    },
+    getMyRightAnswers: {
+      code: 8048
+    },
+    getQuestionById: {
+      code: 8052
     }
   },
   userRepository_Implementation: {

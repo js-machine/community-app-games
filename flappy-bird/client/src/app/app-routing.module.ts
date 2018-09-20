@@ -9,11 +9,11 @@ const routes: Routes = [
         component: HomeComponent
     },
     {
-        path: 'quiz',
+        path: 'quiz/:userToken',
         component: QuizComponent
     },
     {
-        path: 'result',
+        path: 'result/:userToken',
         component: ResultComponent
     },
     {

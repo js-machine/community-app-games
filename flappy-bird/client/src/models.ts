@@ -21,3 +21,14 @@ export interface Quiz {
   question: string;
   answers: string[];
 }
+
+export interface QuizAnswers {
+  userToken: string;
+  quiz: Quiz[];
+}
+
+export interface FinalResult {
+  totalScore: number;
+  totalQuestions: number;
+  correctAnswers: number;
+}

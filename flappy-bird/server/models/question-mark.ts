@@ -37,6 +37,13 @@ export const QuestionMarkModel: SequelizeStaticAndInstance['Model'] = db.connect
             notEmpty: true
         }
     },
+    isRight: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
+    },
     createdAt: {
         type: Sequelize.DATE,
         allowNull: true

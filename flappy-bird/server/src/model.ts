@@ -83,11 +83,12 @@ export interface User {
     updatedAt: Date;
 }
 
-export interface UnAnsweredQuestion {
+export interface QuestionMarkTableRow {
     id: number;
     userId: number;
     questionId: number;
     status: boolean;
+    isRight: boolean;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -99,4 +100,15 @@ export interface Game {
     question: number;
     createdAt: Date;
     updatedAt: Date;
+}
+
+export interface Quiz {
+    question: string;
+    answers: string[];
+}
+
+export interface FinalResult {
+    totalScore: number;
+    totalQuestions: number;
+    correctAnswers: number;
 }

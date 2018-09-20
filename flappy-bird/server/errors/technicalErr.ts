@@ -71,6 +71,14 @@ export const technicalErr = {
         updateQuestionMarkTable: {
             code: technicalErrCodes.questionService.updateQuestionMarkTable.code,
             msg: 'Problem with Question Service [updateQuestionMarkTable]'
+        },
+        getMyRightAnswers: {
+            code: technicalErrCodes.questionService.getMyRightAnswers.code,
+            msg: 'Problem with Question Service [getMyRightAnswers]'
+        },
+        getQuestionById: {
+            code: technicalErrCodes.questionService.getQuestionById.code,
+            msg: 'Problem with Question Service [getQuestionById]'
         }
     },
     quizService: {
@@ -147,6 +155,14 @@ export const technicalErr = {
         updateQuestionMarkTable: {
             code: technicalErrCodes.questionRepository.updateQuestionMarkTable.code,
             msg: 'Problem with Question Repository [updateQuestionMarkTable]'
+        },
+        getMyRightAnswers: {
+            code: technicalErrCodes.questionRepository.getMyRightAnswers.code,
+            msg: 'Problem with Question Repository [getMyRightAnswers]'
+        },
+        getQuestionById: {
+            code: technicalErrCodes.questionRepository.getQuestionById.code,
+            msg: 'Problem with Question Repository [getQuestionById]'
         }
     },
     userRepository: {
@@ -211,6 +227,14 @@ export const technicalErr = {
         updateQuestionMarkTable: {
             code: technicalErrCodes.questionRepository_Implementation.updateQuestionMarkTable.code,
             msg: 'Problem with update question_mark table'
+        },
+        getMyRightAnswers: {
+            code: technicalErrCodes.questionRepository_Implementation.getMyRightAnswers.code,
+            msg: 'Problem with getting my right answers from question_mark table'
+        },
+        getQuestionById: {
+            code: technicalErrCodes.questionRepository_Implementation.getQuestionById.code,
+            msg: 'Problem with getting question by id from quiz_questions table'
         }
     },
     userRepository_Implementation: {

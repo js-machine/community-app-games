@@ -1,3 +1,17 @@
-<p>
-  result works!
-</p>
+<div class="result__container">
+  <div class="result__content-container">
+
+    <h2 class="result__content-title">YOUR SCORE</h2>
+    <div class="result__total-score">{{totalScore}}</div>
+
+    <h3 class="result__statistics">Total Questions : {{totalQuestions}}</h3>
+    <h3 class="result__statistics">Correct Answers : {{correctAnswers}}</h3>
+
+    <h3 class="result__content">
+      If you answered all the questions correctly or learned from your mistakes then you understand the basic rules. If not, please
+      go back and try again or review your answers with your parents.
+    </h3>
+  </div>
+
+  <button mat-button class="form__submit" (click)="onClick()">Try Again</button>
+</div>

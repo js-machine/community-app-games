@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation, AfterViewInit, OnInit, OnDestroy } from '@angular/core';
 import { gameCore, onGameEnd, onGetQuiz } from 'js/main';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { State } from 'store';
@@ -23,11 +23,10 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
   private onGameEndSubscription;
   private onGetQuizSubscription;
 
-
-
   public constructor(
     private route: ActivatedRoute,
-    private store: Store<State>
+    private store: Store<State>,
+    private router: Router
   ) { }
 
   public ngOnInit() {
@@ -52,9 +51,10 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
         }))
       );
 
-    this.onGetQuizSubscription = onGetQuiz.subscribe(() =>
-      this.store.dispatch(new GetQuiz(this.userToken))
-    );
+    this.onGetQuizSubscription = onGetQuiz.subscribe(() => {
+      this.store.dispatch(new GetQuiz(this.userToken));
+      this.router.navigate(['./quiz', this.userToken]);
+    });
   }
 
   ngOnDestroy() {
