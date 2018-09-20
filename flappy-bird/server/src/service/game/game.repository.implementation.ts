@@ -5,7 +5,7 @@ import { GameModel } from 'models';
 
 import { GameRepository } from './game.repository';
 
-import { technicalErr } from './../../../errors';
+import { technicalErr } from 'errors';
 import { Game } from '../../model';
 
 @injectable()

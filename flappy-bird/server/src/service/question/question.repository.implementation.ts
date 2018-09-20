@@ -1,11 +1,11 @@
 import { injectable, inject } from 'inversify';
 
-import { LoggerService } from '../logger/logger.service';
+import { LoggerService } from '../logger';
 import { Question, QuestionMarkTableRow } from '../../model';
 import { QuestionMarkModel, QuizQuestionsModel } from 'models';
 
 import { QuestionRepository } from './question.repository';
-import { technicalErr } from './../../../errors';
+import { technicalErr } from 'errors';
 @injectable()
 export class QuestionRepositoryImplementation implements QuestionRepository {
   constructor(

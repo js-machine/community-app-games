@@ -2,9 +2,9 @@ import { controller, httpPost } from 'inversify-express-utils';
 import { Request, Response } from 'express';
 
 import { inject } from 'inversify';
-import { QuizService } from '../service/quiz';
+import { QuizService } from 'service/quiz';
 
-import { technicalErr } from './../../errors';
+import { technicalErr } from 'errors';
 
 @controller('/api')
 export class QuizController {

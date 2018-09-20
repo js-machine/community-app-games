@@ -1,9 +1,9 @@
 import { injectable, inject } from 'inversify';
 
-import { LoggerService } from '../logger/logger.service';
+import { LoggerService } from '../logger';
 import { AppTokenModel } from '../../../models';
 
-import { technicalErr } from '../../../errors';
+import { technicalErr } from 'errors';
 @injectable()
 export class AppTokenRepository {
 

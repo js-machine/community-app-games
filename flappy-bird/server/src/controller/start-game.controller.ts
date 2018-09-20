@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { StartGameService } from 'service/start-game';
 
 import { inject } from 'inversify';
-import { technicalErr } from './../../errors';
+import { technicalErr } from 'errors';
 
 @controller('/api')
 export class StartGameController {

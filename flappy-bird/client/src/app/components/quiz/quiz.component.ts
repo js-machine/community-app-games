@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Quiz } from '../../../models';
+import { Quiz } from 'models';
 
 import { State } from 'store';
 import { SendQuizAnswers } from 'store/quiz/quiz.action';

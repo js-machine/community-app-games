@@ -4,7 +4,7 @@ import { LoggerService } from '../logger';
 import { Question, QuestionMarkTableRow } from '../../model';
 
 import { QuestionRepository } from './question.repository';
-import { technicalErr } from '../../../errors';
+import { technicalErr } from 'errors';
 @injectable()
 export class QuestionService {
     constructor(

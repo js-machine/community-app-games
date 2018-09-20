@@ -6,7 +6,7 @@ import { UserRepository } from './user.repository';
 
 import { User} from '../../model';
 
-import { technicalErr } from './../../../errors';
+import { technicalErr } from 'errors';
 @injectable()
 export class UserService {
     constructor(

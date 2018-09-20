@@ -3,9 +3,9 @@ import { Request, Response } from 'express';
 import { inject } from 'inversify';
 
 import { AppTokenRepository } from 'service/app-token';
-import { PlayersBindService } from '../service/players-bind/players-bind.service';
+import { PlayersBindService } from 'service/players-bind/players-bind.service';
 
-import { technicalErr } from './../../errors';
+import { technicalErr } from 'errors';
 @controller('/api')
 export class PlayerBindController {
     public constructor(

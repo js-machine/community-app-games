@@ -5,7 +5,7 @@ import { LoggerService } from '../logger';
 import { Answer } from '../../model';
 
 import { AnswerRepository } from './answer.repository';
-import { technicalErr } from './../../../errors';
+import { technicalErr } from 'errors';
 @injectable()
 export class AnswerRepositoryImplementation implements AnswerRepository {
   constructor(

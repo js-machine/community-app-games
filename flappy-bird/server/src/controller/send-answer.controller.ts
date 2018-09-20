@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { SendAnswerService } from 'service/send-answer';
 
 import { inject } from 'inversify';
-import { technicalErr } from './../../errors';
+import { technicalErr } from 'errors';
 import { Quiz } from '../model';
 
 @controller('/api')
