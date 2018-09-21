@@ -13,13 +13,16 @@ export class SendAnswerController {
     }
 
     @httpPost('/send-quiz-answer')
-    public async startGame(request: Request, response: Response): Promise<void | Response> {
+    public async sendQuizAnswers(request: Request, response: Response): Promise<void | Response> {
         const userToken: string = request.body.userToken;
         const quiz: Quiz[] = request.body.quiz;
 
         try {
-            const finalResult = await this.sendAnswerService.sendAnswers(userToken, quiz);
-            return response.send(finalResult);
+            const isSave = await this.sendAnswerService.sendAnswers(userToken, quiz);
+
+            if (isSave) {
+                return response.json(userToken);
+            }
 
         } catch (err) {
             return response.status(400).json({

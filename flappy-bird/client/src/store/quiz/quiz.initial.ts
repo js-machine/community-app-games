@@ -9,6 +9,7 @@ export const initialState: State = {
     startGameStatus: Status.Init,
     getQuizStatus: Status.Init,
     sendAnswersStatus: Status.Init,
+    getResultStatus: Status.Init,
     quiz: [],
     lastSessionResults: null
 };

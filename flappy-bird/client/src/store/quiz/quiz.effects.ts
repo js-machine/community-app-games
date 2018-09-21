@@ -16,7 +16,11 @@ import {
     GetQuizError,
     SendQuizAnswers,
     SendQuizAnswersSuccess,
-    SendQuizAnswersError
+    SendQuizAnswersError,
+    GetResult,
+    GetResultSuccess,
+    GetResultError
+
 } from './quiz.action';
 
 import { QuizService } from './quiz.service';
@@ -54,15 +58,35 @@ export class QuizEffects {
         )
     );
 
-    @Effect() public sendQuizAnswer: Observable<SendQuizAnswersSuccess | SendQuizAnswersError> = this.actions$.pipe(
+    @Effect() public sendQuizAnswer$: Observable<SendQuizAnswersSuccess | SendQuizAnswersError> = this.actions$.pipe(
         ofType<SendQuizAnswers>(QuizActionTypes.SendQuizAnswers),
         switchMap(({ quizAnswers }) => this.quizService.sendQuizAnswers(quizAnswers)
             .pipe(
-                map((finalResult: FinalResult) => new SendQuizAnswersSuccess(finalResult)),
+                map((userToken: string) => new SendQuizAnswersSuccess(userToken)),
                 catchError((error: Error) => of(new SendQuizAnswersError(error)))
             )
         )
     );
+
+    @Effect() public sendQuizAnswerSuccess$: Observable<GetResultSuccess | GetResultError> = this.actions$.pipe(
+        ofType<SendQuizAnswersSuccess>(QuizActionTypes.SendQuizAnswersSuccess),
+        switchMap(({ userToken }) => this.quizService.getResult(userToken)
+            .pipe(
+                map((result: FinalResult) => new GetResultSuccess(result)),
+                catchError((error: Error) => of(new GetResultError(error)))
+            )
+        )
+    );
+
+    // @Effect() public getResult$: Observable<GetResultSuccess | GetResultError> = this.actions$.pipe(
+    //     ofType<GetResult>(QuizActionTypes.GetResult),
+    //     switchMap(({ userToken }) => this.quizService.getResult(userToken)
+    //         .pipe(
+    //             map((result: FinalResult) => new GetResultSuccess(result)),
+    //             catchError((error: Error) => of(new GetResultError(error)))
+    //         )
+    //     )
+    // );
 
     public constructor(
         private actions$: Actions,

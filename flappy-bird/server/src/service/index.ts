@@ -1,5 +1,7 @@
 export * from './answer';
 export * from './app-token';
+export * from './game';
+export * from './get-result';
 export * from './logger';
 export * from './players-bind';
 export * from './question';

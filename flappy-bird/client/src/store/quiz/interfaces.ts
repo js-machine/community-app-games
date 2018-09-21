@@ -5,6 +5,7 @@ export interface QuizState {
     startGameStatus: Status;
     getQuizStatus: Status;
     sendAnswersStatus: Status;
+    getResultStatus: Status;
     quiz: Quiz[];
     lastSessionResults: FinalResult;
 }

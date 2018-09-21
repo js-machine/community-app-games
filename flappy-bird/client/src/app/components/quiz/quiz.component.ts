@@ -3,20 +3,22 @@ import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Quiz } from 'models';
+import { Quiz, Status } from 'models';
 
 import { State } from 'store';
-import { SendQuizAnswers } from 'store/quiz/quiz.action';
+import { SendQuizAnswers, GetResult, GetQuiz } from 'store/quiz/quiz.action';
 
 @Component({
   selector: 'app-quiz',
   templateUrl: './quiz.component.html',
-  styleUrls: ['./quiz.component.css']
+  styleUrls: ['./quiz.component.css'],
 })
+
 export class QuizComponent implements OnInit {
   public form: FormGroup;
   public question: string;
   public answers: string[];
+  public status: Status = Status.Init;
 
   public quiz: Quiz[] = [];
   private currentQuiz = 0;
@@ -32,14 +34,18 @@ export class QuizComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(`ONINIT QUIZ`);
     this.createControls([]);
 
     this.route.paramMap.subscribe(params => {
       this.userToken = params.get('userToken');
+
+
     });
 
     this.store.select('quiz').subscribe((quiz) => {
       this.quiz = quiz.quiz;
+      this.status = quiz.getQuizStatus;
 
       if (this.quiz[this.currentQuiz]) {
         this.answers = this.quiz[this.currentQuiz].answers;
@@ -76,7 +82,6 @@ export class QuizComponent implements OnInit {
   }
 
   private createControls(answers: string[]) {
-    // const controls = (this.answers && this.answers.length) ? this.answers.map(c => new FormControl(false)) : [];
     const controls = answers.map(c => new FormControl(false));
 
     this.form = this.formBuilder.group({

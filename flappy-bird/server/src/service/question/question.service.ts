@@ -124,6 +124,19 @@ export class QuestionService {
         }
     }
 
+    public async getSizeOfQuiz(userId: number): Promise<number> {
+        try {
+            const size = await this.questionRepository.getSizeOfQuiz(userId);
+
+            return size;
+        } catch {
+            const error = technicalErr.questionRepository.getSizeOfQuiz.msg;
+
+            this.loggerService.errorLog(error);
+            throw new Error(error);
+        }
+    }
+
     public async updateQuestionMarkTable(userId: number, questionId: number): Promise<boolean> {
         try {
             const isUpdate = await this.questionRepository.updateQuestionMarkTable(userId, questionId);

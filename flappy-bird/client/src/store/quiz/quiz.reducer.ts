@@ -1,6 +1,6 @@
 import { QuizState } from './interfaces';
 import { initialState } from './quiz.initial';
-import { QuizActionTypes, QuizActions } from './quiz.action';
+import { QuizActionTypes, QuizActions, GetResultError } from './quiz.action';
 import { Status } from 'models';
 
 type State = QuizState;
@@ -29,7 +29,12 @@ export const quizReducer = (state: State = initialState, action: QuizActions): S
         case QuizActionTypes.StartGame:
             return {
                 ...state,
-                startGameStatus: Status.Fetching
+                saveGameResultsStatus: Status.Init,
+                getQuizStatus: Status.Init,
+                startGameStatus: Status.Fetching,
+                getResultStatus: Status.Init,
+                sendAnswersStatus: Status.Init,
+                lastSessionResults: null
             };
 
         case QuizActionTypes.StartGameSuccess:
@@ -55,6 +60,8 @@ export const quizReducer = (state: State = initialState, action: QuizActions): S
             return {
                 ...state,
                 quiz,
+                startGameStatus: Status.Init,
+                saveGameResultsStatus: Status.Init,
                 getQuizStatus: Status.Success
             };
 
@@ -74,14 +81,34 @@ export const quizReducer = (state: State = initialState, action: QuizActions): S
         case QuizActionTypes.SendQuizAnswersSuccess:
             return {
                 ...state,
-                lastSessionResults: action.finalResults,
-                sendAnswersStatus: Status.Success
+                sendAnswersStatus: Status.Success,
+                getQuizStatus: Status.Init
             };
 
         case QuizActionTypes.SendQuizAnswersError:
             return {
                 ...state,
                 sendAnswersStatus: Status.Error
+            };
+
+        case QuizActionTypes.GetResult:
+            return {
+                ...state,
+                getResultStatus: Status.Fetching
+            };
+
+        case QuizActionTypes.GetResultSuccess:
+            return {
+                ...state,
+                lastSessionResults: action.result,
+                getResultStatus: Status.Success,
+                getQuizStatus: Status.Init
+            };
+
+        case QuizActionTypes.GetResultError:
+            return {
+                ...state,
+                getResultStatus: Status.Error
             };
 
         default:

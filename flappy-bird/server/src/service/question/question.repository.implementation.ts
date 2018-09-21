@@ -147,11 +147,12 @@ export class QuestionRepositoryImplementation implements QuestionRepository {
     try {
       const myRightAnswers = await QuestionMarkModel.findAll({
         where: {
+          userId,
           isRight: 1
         }
       });
 
-      await QuestionMarkModel.update({ session: 0, isRight: 0 }, {
+      const update = await QuestionMarkModel.update({ session: 0, isRight: 0 }, {
         where: {
           userId
         }
@@ -160,6 +161,23 @@ export class QuestionRepositoryImplementation implements QuestionRepository {
       return myRightAnswers;
     } catch {
       const error = technicalErr.questionRepository_Implementation.getMyRightAnswers.msg;
+
+      this.loggerService.errorLog(error);
+      throw new Error(error);
+    }
+  }
+
+  public async getSizeOfQuiz(userId: number): Promise<number> {
+    try {
+      const sizeOfQuiz = await QuestionMarkModel.count({
+        where: {
+          session: 1
+        }
+      });
+
+      return sizeOfQuiz;
+    } catch {
+      const error = technicalErr.questionRepository_Implementation.getSizeOfQuiz.msg;
 
       this.loggerService.errorLog(error);
       throw new Error(error);

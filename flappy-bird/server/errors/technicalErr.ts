@@ -25,6 +25,12 @@ export const technicalErr = {
             msg: 'Problem with Game Service [getLastGame]'
         }
     },
+    getResultService: {
+        getResult: {
+            code: technicalErrCodes.getResultService.getResult.code,
+            msg: 'Problem with Get Result Service [getResult]'
+        },
+    },
     playerBindService: {
         noRoomToken: {
             code: technicalErrCodes.playerBindService.noRoomToken.code,
@@ -79,6 +85,10 @@ export const technicalErr = {
         getQuestionById: {
             code: technicalErrCodes.questionService.getQuestionById.code,
             msg: 'Problem with Question Service [getQuestionById]'
+        },
+        getSizeOfQuiz: {
+            code: technicalErrCodes.questionService.getSizeOfQuiz.code,
+            msg: 'Problem with Question Service [getSizeOfQuiz]'
         }
     },
     quizService: {
@@ -163,6 +173,10 @@ export const technicalErr = {
         getQuestionById: {
             code: technicalErrCodes.questionRepository.getQuestionById.code,
             msg: 'Problem with Question Repository [getQuestionById]'
+        },
+        getSizeOfQuiz: {
+            code: technicalErrCodes.questionRepository.getSizeOfQuiz.code,
+            msg: 'Problem with Question Repository [getSizeOfQuiz]'
         }
     },
     userRepository: {
@@ -235,6 +249,10 @@ export const technicalErr = {
         getQuestionById: {
             code: technicalErrCodes.questionRepository_Implementation.getQuestionById.code,
             msg: 'Problem with getting question by id from quiz_questions table'
+        },
+        getSizeOfQuiz: {
+            code: technicalErrCodes.questionRepository_Implementation.getSizeOfQuiz.code,
+            msg: 'Problem with getting size of quiz from quiz_questions table'
         }
     },
     userRepository_Implementation: {

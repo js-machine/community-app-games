@@ -19,14 +19,11 @@ export class SendAnswerService {
 
     ) { }
 
-    public async sendAnswers(userToken: string, quiz: Quiz[]): Promise<FinalResult> {
+    public async sendAnswers(userToken: string, quiz: Quiz[]): Promise<boolean> {
         let questionId: number;
         let rightAnswers: string[];
         let userId: number;
         let isUpdateQuestionMarkTable: boolean;
-        let myRightAnswers: number[];
-        let score: number;
-        let scoreFromQuiz: number = 0;
 
         try {
             userId = (await this.userService.getUser(userToken)).id;
@@ -74,46 +71,9 @@ export class SendAnswerService {
                     throw new Error(error);
                 }
             }
+
         }
 
-        try {
-            myRightAnswers = (await this.questionService.getMyRightAnswers(userId)).map((row: QuestionMarkTableRow) => row.questionId);
-        } catch {
-            const error = technicalErr.questionService.getMyRightAnswers.msg;
-
-            this.loggerService.errorLog(error);
-            throw new Error(error);
-        }
-
-        try {
-            score = (await this.gameService.getLastGame(userId)).score;
-        } catch {
-            const error = technicalErr.gameService.getLastGame.msg;
-
-            this.loggerService.errorLog(error);
-            throw new Error(error);
-        }
-
-        if (myRightAnswers.length > 0) {
-            for (let i = 0; i < myRightAnswers.length; i++) {
-                try {
-                    const scoreFromQuestion = (await this.questionService.getQuestionById(myRightAnswers[i])).points;
-                    scoreFromQuiz += scoreFromQuestion;
-                } catch {
-                    const error = technicalErr.questionService.getQuestionById.msg;
-
-                    this.loggerService.errorLog(error);
-                    throw new Error(error);
-                }
-            }
-        }
-
-        const result: FinalResult = {
-            totalScore: score + scoreFromQuiz,
-            totalQuestions: quiz.length,
-            correctAnswers: myRightAnswers.length
-        };
-
-        return result;
+        return true;
     }
 }

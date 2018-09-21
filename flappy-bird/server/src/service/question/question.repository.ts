@@ -11,4 +11,5 @@ export abstract class QuestionRepository {
     public abstract refreshUserAnswersQuestionMarkTable(userId: number): Promise<boolean>;
     public abstract updateQuestionMarkTable(userId: number, questionId: number): Promise<boolean>;
     public abstract getMyRightAnswers(userId: number): Promise<QuestionMarkTableRow[]>;
+    public abstract getSizeOfQuiz(userId: number): Promise<number>;
 }

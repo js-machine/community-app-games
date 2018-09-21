@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, } from '@angular/common/http';
 import { Response } from '@angular/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Quiz, QuizAnswers, FinalResult } from 'models';
 
@@ -46,5 +46,11 @@ export class QuizService {
         };
 
         return this.http.post(this.serverUrl + 'send-quiz-answer', body);
+    }
+
+    getResult(userToken: string): Observable<Object> {
+        const body = { userToken };
+
+        return this.http.post(this.serverUrl + 'get-result', body);
     }
 }
