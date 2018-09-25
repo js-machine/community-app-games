@@ -5,6 +5,7 @@
 }
 
 .quiz-form__container {
+  overflow: scroll;
   width: 100%;
   height: 100vh;
   text-align: center;
@@ -12,6 +13,13 @@
   background-color: #4ec0ca;
   font-size: 22px;
   font-weight: bold;
+}
+
+.timer {
+  z-index: 100;
+  font-size: 40px;
+  color: #fff;
+  padding-top: 10px;
 }
 
 .quiz-form__answer-container {
@@ -37,6 +45,7 @@
 
 .mat-button {
   margin-top: 10px;
+  margin-bottom: 10px;
   padding: 20px;
   width: 80%;
   margin: 0 auto;

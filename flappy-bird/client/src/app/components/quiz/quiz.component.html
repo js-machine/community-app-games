@@ -1,6 +1,7 @@
 <div class="quiz-container" >
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="quiz-form" *ngIf="status === 2">
     <div class="quiz-form__container">
+      <div class="timer">{{currentTime}}</div>
       <div class="quiz-form__question-text" formQuestionName="questions">{{question}}</div>
       <label formArrayName="answers" *ngFor="let answer of form.controls.answers.controls; let i = index">
         <div class="quiz-form__answer-container">
@@ -11,6 +12,7 @@
       </label>
       <button mat-button class="quiz-form__submit">submit</button>
     </div>
+    
   </form>
   <div class="sk-cube-grid" *ngIf="status !== 2">
     <div class="sk-cube sk-cube1"></div>

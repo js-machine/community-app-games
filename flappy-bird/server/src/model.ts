@@ -112,3 +112,18 @@ export interface FinalResult {
     totalQuestions: number;
     correctAnswers: number;
 }
+
+export interface GameResult {
+    userToken: string;
+    playedTime: number;
+    scores: number;
+    resultStatus: ResultStatus;
+    participationStatus: ParticipationStatus;
+}
+
+export interface AppToken {
+    id: number;
+    token: string;
+    createdAt: Date;
+    updatedAt: Date;
+}

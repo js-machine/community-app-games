@@ -4,7 +4,7 @@ export interface QuizState {
     saveGameResultsStatus: Status;
     startGameStatus: Status;
     getQuizStatus: Status;
-    sendAnswersStatus: Status;
+    saveQuizAnswersStatus: Status;
     getResultStatus: Status;
     quiz: Quiz[];
     lastSessionResults: FinalResult;

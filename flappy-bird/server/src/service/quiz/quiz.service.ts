@@ -12,7 +12,7 @@ interface Quiz {
     question: string;
     answers: string[];
 }
-import { technicalErr } from './../../../errors';
+import { technicalErr } from 'errors';
 @injectable()
 export class QuizService {
     constructor(
@@ -29,6 +29,7 @@ export class QuizService {
         let answers: Answer[];
         let userId: number;
         let countOfQuestion: number;
+        let isRefreshSession: boolean;
 
         try {
             userId = (await this.userService.getUser(userToken)).id;
@@ -48,10 +49,19 @@ export class QuizService {
             throw new Error(error);
         }
 
+        try {
+            isRefreshSession = await this.questionService.refreshSession(userId);
+        } catch {
+            const error = technicalErr.questionService.refreshSession.msg;
+
+            this.loggerService.errorLog(error);
+            throw new Error(error);
+        }
+
         for (let i = 0; i < countOfQuestion; i++) {
 
             try {
-                question = await this.questionService.getQuestion(userId, countOfQuestion);
+                question = await this.questionService.getQuestion(userId);
             } catch {
                 const error = technicalErr.questionService.getQuestion.msg;
 

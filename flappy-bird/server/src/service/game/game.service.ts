@@ -16,7 +16,7 @@ export class GameService {
         @inject(GameRepository) private gameRepository: GameRepository
     ) { }
 
-    public async saveGameResult(userToken: string, score: number, question: number): Promise<boolean> {
+    public async saveGameResult(userToken: string, score: number, question: number, createdAt: Date): Promise<boolean> {
         let userId: number;
 
         try {
@@ -29,7 +29,7 @@ export class GameService {
         }
 
         try {
-            const isAdd = await this.gameRepository.saveGameResults(userId, score, question);
+            const isAdd = await this.gameRepository.saveGameResults(userId, score, question, createdAt);
 
             return isAdd;
         } catch {
@@ -47,6 +47,19 @@ export class GameService {
             return lastGame;
         } catch {
             const error = technicalErr.gameRepository.getLastGame.msg;
+
+            this.loggerService.errorLog(error);
+            throw new Error(error);
+        }
+    }
+
+    public async updateGameSession(updatedAt: Date, userId: number): Promise<boolean> {
+        try {
+            const isUpdate = await this.gameRepository.updateGameSession(updatedAt, userId);
+
+            return isUpdate;
+        } catch {
+            const error = technicalErr.gameRepository.updateGameSession.msg;
 
             this.loggerService.errorLog(error);
             throw new Error(error);

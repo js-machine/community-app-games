@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of, Observable } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 
 import {
     QuizActionTypes,
@@ -14,12 +14,14 @@ import {
     GetQuiz,
     GetQuizSuccess,
     GetQuizError,
-    SendQuizAnswers,
-    SendQuizAnswersSuccess,
-    SendQuizAnswersError,
-    GetResult,
+    SaveQuizAnswers,
+    SaveQuizAnswersSuccess,
+    SaveQuizAnswersError,
     GetResultSuccess,
-    GetResultError
+    GetResultError,
+    SendResult,
+    SendResultSuccess,
+    SendResultError
 
 } from './quiz.action';
 
@@ -30,11 +32,12 @@ import { Quiz, FinalResult } from 'models';
 export class QuizEffects {
     @Effect() public saveGameResults$: Observable<SaveGameResultSuccess | SaveGameResultError> = this.actions$.pipe(
         ofType<SaveGameResults>(QuizActionTypes.SaveGameResult),
-        switchMap(({ payload: { userToken, score, question } }) => this.quizService.saveGameResults(userToken, score, question)
-            .pipe(
-                map(() => new SaveGameResultSuccess()),
-                catchError((error: Error) => of(new SaveGameResultError(error)))
-            )
+        switchMap(({ payload:
+            { userToken, score, question, createdAt } }) => this.quizService.saveGameResults(userToken, score, question, createdAt)
+                .pipe(
+                    map(() => new SaveGameResultSuccess()),
+                    catchError((error: Error) => of(new SaveGameResultError(error)))
+                )
         )
     );
 
@@ -58,18 +61,38 @@ export class QuizEffects {
         )
     );
 
-    @Effect() public sendQuizAnswer$: Observable<SendQuizAnswersSuccess | SendQuizAnswersError> = this.actions$.pipe(
-        ofType<SendQuizAnswers>(QuizActionTypes.SendQuizAnswers),
-        switchMap(({ quizAnswers }) => this.quizService.sendQuizAnswers(quizAnswers)
+    @Effect() public saveQuizAnswer$: Observable<SaveQuizAnswersSuccess | SaveQuizAnswersError> = this.actions$.pipe(
+        ofType<SaveQuizAnswers>(QuizActionTypes.SaveQuizAnswers),
+        switchMap(({ quizAnswers }) => this.quizService.saveQuizAnswers(quizAnswers)
             .pipe(
-                map((userToken: string) => new SendQuizAnswersSuccess(userToken)),
-                catchError((error: Error) => of(new SendQuizAnswersError(error)))
+                map((userToken: string) => new SaveQuizAnswersSuccess(userToken)),
+                catchError((error: Error) => of(new SaveQuizAnswersError(error)))
             )
         )
     );
 
-    @Effect() public sendQuizAnswerSuccess$: Observable<GetResultSuccess | GetResultError> = this.actions$.pipe(
-        ofType<SendQuizAnswersSuccess>(QuizActionTypes.SendQuizAnswersSuccess),
+    @Effect() public saveQuizAnswerSuccess$: Observable<SendResult | SendResultError> = this.actions$.pipe(
+        ofType<SaveQuizAnswersSuccess>(QuizActionTypes.SaveQuizAnswersSuccess),
+        switchMap(({ userToken }) => this.quizService.sendResult({userToken, isAfterQuiz: true})
+            .pipe(
+                map((token: string) => new SendResult({userToken: token, isAfterQuiz: true})),
+                catchError((error: Error) => of(new SendResultError(error)))
+            )
+        )
+    );
+
+    @Effect() public sendResult$: Observable<SendResultSuccess | SendResultError> = this.actions$.pipe(
+        ofType<SendResult>(QuizActionTypes.SendResult),
+        switchMap(({ payload }) => this.quizService.sendResult(payload)
+            .pipe(
+                map((token: string) => new SendResultSuccess(token)),
+                catchError((error: Error) => of(new SendResultError(error)))
+            )
+        )
+    );
+
+    @Effect() public sendResultSuccess$: Observable<GetResultSuccess | GetResultError> = this.actions$.pipe(
+        ofType<SendResultSuccess>(QuizActionTypes.SendResultSuccess),
         switchMap(({ userToken }) => this.quizService.getResult(userToken)
             .pipe(
                 map((result: FinalResult) => new GetResultSuccess(result)),
@@ -78,8 +101,9 @@ export class QuizEffects {
         )
     );
 
-    // @Effect() public getResult$: Observable<GetResultSuccess | GetResultError> = this.actions$.pipe(
-    //     ofType<GetResult>(QuizActionTypes.GetResult),
+
+    // @Effect() public saveQuizAnswerSuccess$: Observable<GetResultSuccess | GetResultError> = this.actions$.pipe(
+    //     ofType<SaveQuizAnswersSuccess>(QuizActionTypes.SaveQuizAnswersSuccess),
     //     switchMap(({ userToken }) => this.quizService.getResult(userToken)
     //         .pipe(
     //             map((result: FinalResult) => new GetResultSuccess(result)),

@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 
-import { Quiz, EndGameStatistic, QuizAnswers, FinalResult } from 'models';
+import { Quiz, EndGameStatistic, QuizAnswers, FinalResult, Result } from 'models';
 
 export enum QuizActionTypes {
     StartGame = '[quiz] Start Game',
@@ -12,12 +12,15 @@ export enum QuizActionTypes {
     GetQuiz = '[quiz] Get Quiz',
     GetQuizSuccess = '[quiz] Get Quiz (Success)',
     GetQuizError = '[quiz] Get Quiz (Error)',
-    SendQuizAnswers = '[quiz] Send Quiz Answers',
-    SendQuizAnswersSuccess = '[quiz] Send Quiz Answers (Success)',
-    SendQuizAnswersError = '[quiz] Send Quiz Answers (Error)',
+    SaveQuizAnswers = '[quiz] Save Quiz Answers',
+    SaveQuizAnswersSuccess = '[quiz] Save Quiz Answers (Success)',
+    SaveQuizAnswersError = '[quiz] Save Quiz Answers (Error)',
     GetResult = '[quiz] Send Get Result',
     GetResultSuccess = '[quiz] Get Result (Success)',
-    GetResultError = '[quiz] Get Result (Error)'
+    GetResultError = '[quiz] Get Result (Error)',
+    SendResult = '[quiz] Send Result',
+    SendResultSuccess = '[quiz] Send Result (Success)',
+    SendResultError = '[quiz] Send Result (Error)'
 }
 
 export class SaveGameResults implements Action {
@@ -70,20 +73,20 @@ export class GetQuizError implements Action {
     constructor(public payload: Error) { }
 }
 
-export class SendQuizAnswers implements Action {
-    public readonly type = QuizActionTypes.SendQuizAnswers;
+export class SaveQuizAnswers implements Action {
+    public readonly type = QuizActionTypes.SaveQuizAnswers;
 
     constructor(public quizAnswers: QuizAnswers) { }
 }
 
-export class SendQuizAnswersSuccess implements Action {
-    public readonly type = QuizActionTypes.SendQuizAnswersSuccess;
+export class SaveQuizAnswersSuccess implements Action {
+    public readonly type = QuizActionTypes.SaveQuizAnswersSuccess;
 
-    constructor(public userToken: string) {}
+    constructor(public userToken: string) { }
 }
 
-export class SendQuizAnswersError implements Action {
-    public readonly type = QuizActionTypes.SendQuizAnswersError;
+export class SaveQuizAnswersError implements Action {
+    public readonly type = QuizActionTypes.SaveQuizAnswersError;
 
     constructor(public payload: Error) { }
 }
@@ -106,6 +109,24 @@ export class GetResultError implements Action {
     constructor(public payload: Error) { }
 }
 
+export class SendResult implements Action {
+    public readonly type = QuizActionTypes.SendResult;
+
+    constructor(public payload: Result) { }
+}
+
+export class SendResultSuccess implements Action {
+    public readonly type = QuizActionTypes.SendResultSuccess;
+
+    constructor(public userToken: string) {}
+}
+
+export class SendResultError implements Action {
+    public readonly type = QuizActionTypes.SendResultError;
+
+    constructor(public payload: Error) { }
+}
+
 export type QuizActions =
     | SaveGameResults
     | SaveGameResultSuccess
@@ -116,9 +137,12 @@ export type QuizActions =
     | GetQuiz
     | GetQuizSuccess
     | GetQuizError
-    | SendQuizAnswers
-    | SendQuizAnswersSuccess
-    | SendQuizAnswersError
+    | SaveQuizAnswers
+    | SaveQuizAnswersSuccess
+    | SaveQuizAnswersError
     | GetResult
     | GetResultSuccess
-    | GetResultError;
+    | GetResultError
+    | SendResult
+    | SendResultSuccess
+    | SendResultError;

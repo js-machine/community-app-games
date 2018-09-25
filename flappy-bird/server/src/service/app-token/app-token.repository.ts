@@ -4,6 +4,7 @@ import { LoggerService } from '../logger';
 import { AppTokenModel } from '../../../models';
 
 import { technicalErr } from 'errors';
+import { AppToken } from 'model';
 @injectable()
 export class AppTokenRepository {
 
@@ -11,14 +12,15 @@ export class AppTokenRepository {
         @inject(LoggerService) private loggerService: LoggerService,
     ) { }
 
-    public async getAppToken(): Promise<string> {
+    public async getAppToken(): Promise<AppToken> {
         try {
-            const token = await AppTokenModel.findAll();
-            if (token.length !== 1) {
-                throw new Error(`Application doesn't have unique token`);
-            } else {
-                return 'Bearer ' + token[0].dataValues.token;
-            }
+            const token = await AppTokenModel.findOne({
+                where: {
+                    id: 1
+                }
+            });
+
+            return token;
         } catch {
             const error = technicalErr.applicationTokenRepository.getAppToken.msg;
 

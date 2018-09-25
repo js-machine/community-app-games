@@ -57,6 +57,9 @@
       ],
       "service/*": [
         "src/service/*"
+      ],  
+      "answer": [
+        "src/service/answer/*"
       ],
       "typing": [
         "src/typing"

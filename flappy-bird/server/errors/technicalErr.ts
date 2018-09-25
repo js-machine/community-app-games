@@ -23,6 +23,10 @@ export const technicalErr = {
         getLastGame: {
             code: technicalErrCodes.gameService.getLastGame.code,
             msg: 'Problem with Game Service [getLastGame]'
+        },
+        updateGameSession: {
+            code: technicalErrCodes.gameService.updateGameSession.code,
+            msg: 'Problem with Game Service [updateGameSession]'
         }
     },
     getResultService: {
@@ -45,6 +49,12 @@ export const technicalErr = {
         sendAnswer: {
             code: technicalErrCodes.sendAnswerService.sendAnswer.code,
             msg: 'Problem with Send Answer Service [sendAnswer]'
+        }
+    },
+    sendResultService: {
+        sendResult: {
+            code: technicalErrCodes.sendResultService.sendResult.code,
+            msg: 'Problem with Send Result Service [sendResult]'
         }
     },
     startGameService: {
@@ -74,13 +84,13 @@ export const technicalErr = {
             code: technicalErrCodes.questionService.getQuestionId.code,
             msg: 'Problem with Question Service [getQuestionId]'
         },
-        updateQuestionMarkTable: {
-            code: technicalErrCodes.questionService.updateQuestionMarkTable.code,
-            msg: 'Problem with Question Service [updateQuestionMarkTable]'
+        markCorrectAnswer: {
+            code: technicalErrCodes.questionService.markCorrectAnswer.code,
+            msg: 'Problem with Question Service [markCorrectAnswer]'
         },
-        getMyRightAnswers: {
-            code: technicalErrCodes.questionService.getMyRightAnswers.code,
-            msg: 'Problem with Question Service [getMyRightAnswers]'
+        getUserRightAnswers: {
+            code: technicalErrCodes.questionService.getUserRightAnswers.code,
+            msg: 'Problem with Question Service [getUserRightAnswers]'
         },
         getQuestionById: {
             code: technicalErrCodes.questionService.getQuestionById.code,
@@ -89,6 +99,10 @@ export const technicalErr = {
         getSizeOfQuiz: {
             code: technicalErrCodes.questionService.getSizeOfQuiz.code,
             msg: 'Problem with Question Service [getSizeOfQuiz]'
+        },
+        refreshSession: {
+            code: technicalErrCodes.questionService.refreshSession.code,
+            msg: 'Problem with Question Service [refreshSession]'
         }
     },
     quizService: {
@@ -131,6 +145,10 @@ export const technicalErr = {
         getLastGame: {
             code: technicalErrCodes.gameRepository.getLastGame.code,
             msg: 'Problem with  Game Repository [getLastGame]'
+        },
+        updateGameSession: {
+            code: technicalErrCodes.gameRepository.updateGameSession.code,
+            msg: 'Problem with  Game Repository [updateGameSession]'
         }
     },
     questionRepository: {
@@ -162,13 +180,13 @@ export const technicalErr = {
             code: technicalErrCodes.questionRepository.refreshUserAnswersQuestionMarkTable.code,
             msg: 'Problem with Question Repository [refreshUserQuestionMarkTable]'
         },
-        updateQuestionMarkTable: {
-            code: technicalErrCodes.questionRepository.updateQuestionMarkTable.code,
+        markCorrectAnswer: {
+            code: technicalErrCodes.questionRepository.markCorrectAnswer.code,
             msg: 'Problem with Question Repository [updateQuestionMarkTable]'
         },
-        getMyRightAnswers: {
-            code: technicalErrCodes.questionRepository.getMyRightAnswers.code,
-            msg: 'Problem with Question Repository [getMyRightAnswers]'
+        getUserRightAnswers: {
+            code: technicalErrCodes.questionRepository.getUserRightAnswers.code,
+            msg: 'Problem with Question Repository [getUserRightAnswers]'
         },
         getQuestionById: {
             code: technicalErrCodes.questionRepository.getQuestionById.code,
@@ -177,6 +195,10 @@ export const technicalErr = {
         getSizeOfQuiz: {
             code: technicalErrCodes.questionRepository.getSizeOfQuiz.code,
             msg: 'Problem with Question Repository [getSizeOfQuiz]'
+        },
+        refreshSession: {
+            code: technicalErrCodes.questionRepository.refreshSession.code,
+            msg: 'Problem with Question Repository [refreshSession]'
         }
     },
     userRepository: {
@@ -207,6 +229,10 @@ export const technicalErr = {
         getLastGame: {
             code: technicalErrCodes.gameRepository_Implementation.getLastGame.code,
             msg: 'Problem with getting last user session from game table',
+        },
+        updateGameSession: {
+            code: technicalErrCodes.gameRepository_Implementation.updateGameSession.code,
+            msg: 'Problem with updating last user session in game table',
         }
     },
     questionRepository_Implementation: {
@@ -242,8 +268,8 @@ export const technicalErr = {
             code: technicalErrCodes.questionRepository_Implementation.updateQuestionMarkTable.code,
             msg: 'Problem with update question_mark table'
         },
-        getMyRightAnswers: {
-            code: technicalErrCodes.questionRepository_Implementation.getMyRightAnswers.code,
+        getUserRightAnswers: {
+            code: technicalErrCodes.questionRepository_Implementation.getUserRightAnswers.code,
             msg: 'Problem with getting my right answers from question_mark table'
         },
         getQuestionById: {
@@ -253,7 +279,11 @@ export const technicalErr = {
         getSizeOfQuiz: {
             code: technicalErrCodes.questionRepository_Implementation.getSizeOfQuiz.code,
             msg: 'Problem with getting size of quiz from quiz_questions table'
-        }
+        },
+        refreshSession: {
+            code: technicalErrCodes.questionRepository_Implementation.refreshSession.code,
+            msg: 'Problem with updating user session in question_mark table'
+        },
     },
     userRepository_Implementation: {
         getUser: {

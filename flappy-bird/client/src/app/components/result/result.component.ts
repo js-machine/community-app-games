@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -6,20 +6,23 @@ import { Status } from 'models';
 
 import { State } from 'store';
 
-import { GetResult } from 'store/quiz/quiz.action';
+import { Subscription } from 'rxjs';
+import { SendResult } from 'store/quiz/quiz.action';
 
 @Component({
   selector: 'app-result',
   templateUrl: './result.component.html',
   styleUrls: ['./result.component.css']
 })
-export class ResultComponent implements OnInit {
+export class ResultComponent implements OnInit, OnDestroy, AfterViewInit {
   public totalScore = 0;
   public totalQuestions = 0;
   public correctAnswers = 0;
   public status: Status = Status.Init;
 
   private userToken: string;
+  private storeSubscription: Subscription;
+  private routerSubscription: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,12 +31,11 @@ export class ResultComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(`ON INIT RESULT`);
-    this.route.paramMap.subscribe(params => {
+    this.routerSubscription = this.route.paramMap.subscribe(params => {
       this.userToken = params.get('userToken');
     });
 
-    this.store.select('quiz').subscribe(({lastSessionResults, getResultStatus}) => {
+    this.storeSubscription = this.store.select('quiz').subscribe(({lastSessionResults, getResultStatus}) => {
       this.status = getResultStatus;
 
       this.totalScore = lastSessionResults ? lastSessionResults.totalScore : 0;
@@ -42,7 +44,18 @@ export class ResultComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit() {
+    if (this.status === 0 || this.status === 3) {
+      this.router.navigate(['./home', this.userToken]);
+    }
+  }
+
   public onClick() {
     this.router.navigate(['./home', this.userToken]);
+  }
+
+  ngOnDestroy() {
+    this.storeSubscription.unsubscribe();
+    this.routerSubscription.unsubscribe();
   }
 }

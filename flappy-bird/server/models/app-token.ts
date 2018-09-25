@@ -8,6 +8,11 @@ export interface AppToken {
 }
 
 export const AppTokenModel: SequelizeStaticAndInstance['Model'] = db.connect.define(dbConfig.appTokenModel, {
+    id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
     token: {
         type: Sequelize.STRING,
         primaryKey: true

@@ -1,6 +1,6 @@
 import { controller, httpPost } from 'inversify-express-utils';
 import { Request, Response } from 'express';
-import { AppTokenRepository } from 'service/app-token';
+import { AppTokenService } from 'service/app-token';
 import { RoomService } from 'service/room';
 
 import { inject } from 'inversify';
@@ -9,14 +9,14 @@ import { technicalErr } from 'errors';
 @controller('/api')
 export class RoomController {
     public constructor(
-        @inject(AppTokenRepository) private appTokenRepository: AppTokenRepository,
+        @inject(AppTokenService) private appTokenService: AppTokenService,
         @inject(RoomService) private roomService: RoomService) {
     }
 
     @httpPost('/start-new-room')
     public async startNewRoom(request: Request, response: Response): Promise<void | Response> {
         try {
-            const appToken = await this.appTokenRepository.getAppToken();
+            const appToken = 'Bearer ' + (await this.appTokenService.getAppToken()).token;
 
             if (request.headers.authorization === appToken) {
                 const roomToken = this.roomService.createToken();
