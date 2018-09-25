@@ -7,7 +7,7 @@ export * from './players-bind';
 export * from './question';
 export * from './quiz';
 export * from './room';
-export * from './send-answer';
+export * from './save-answer';
 export * from './start-game';
 export * from './user';
 export * from './services-registration';

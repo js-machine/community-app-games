@@ -143,7 +143,7 @@ export class QuestionRepositoryImplementation implements QuestionRepository {
     }
   }
 
-  public async getMyRightAnswers(userId: number): Promise<QuestionMarkTableRow[]> {
+  public async getUserRightAnswers(userId: number): Promise<QuestionMarkTableRow[]> {
     try {
       const myRightAnswers = await QuestionMarkModel.findAll({
         where: {
@@ -152,15 +152,9 @@ export class QuestionRepositoryImplementation implements QuestionRepository {
         }
       });
 
-      const update = await QuestionMarkModel.update({ session: 0, isRight: 0 }, {
-        where: {
-          userId
-        }
-      });
-
       return myRightAnswers;
     } catch {
-      const error = technicalErr.questionRepository_Implementation.getMyRightAnswers.msg;
+      const error = technicalErr.questionRepository_Implementation.getUserRightAnswers.msg;
 
       this.loggerService.errorLog(error);
       throw new Error(error);
@@ -171,6 +165,7 @@ export class QuestionRepositoryImplementation implements QuestionRepository {
     try {
       const sizeOfQuiz = await QuestionMarkModel.count({
         where: {
+          userId,
           session: 1
         }
       });
@@ -205,7 +200,7 @@ export class QuestionRepositoryImplementation implements QuestionRepository {
     }
   }
 
-  public async updateQuestionMarkTable(userId: number, questionId: number): Promise<boolean> {
+  public async markCorrectAnswer(userId: number, questionId: number): Promise<boolean> {
     try {
       const isUpdate = await QuestionMarkModel.update({ isRight: 1 }, {
         where: {
@@ -221,6 +216,27 @@ export class QuestionRepositoryImplementation implements QuestionRepository {
       return false;
     } catch {
       const error = technicalErr.questionRepository_Implementation.updateQuestionMarkTable.msg;
+
+      this.loggerService.errorLog(error);
+      throw new Error(error);
+    }
+  }
+
+  public async refreshSession(userId: number): Promise<boolean> {
+    try {
+      const isUpdate = await QuestionMarkModel.update({ session: 0, isRight: 0 }, {
+        where: {
+          userId
+        }
+      });
+
+      if (isUpdate) {
+        return true;
+      }
+
+      return false;
+    } catch {
+      const error = technicalErr.questionRepository_Implementation.refreshSession.msg;
 
       this.loggerService.errorLog(error);
       throw new Error(error);

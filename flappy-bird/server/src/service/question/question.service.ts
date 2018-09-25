@@ -12,6 +12,32 @@ export class QuestionService {
         @inject(QuestionRepository) private questionRepository: QuestionRepository
     ) { }
 
+    public async addUserToQuestionMarkTable(userId: number, questionsId: number[]): Promise<boolean> {
+        try {
+            const isAdd = await this.questionRepository.addUserToQuestionMarkTable(userId, questionsId);
+
+            return isAdd;
+        } catch {
+            const error = technicalErr.questionRepository.addUserToQuestionMarkTable.msg;
+
+            this.loggerService.errorLog(error);
+            throw new Error(error);
+        }
+    }
+
+    public async checkQuestionMarkTableForNewUser(userId: number): Promise<number> {
+        try {
+            const count = await this.questionRepository.checkQuestionMarkTableForNewUser(userId);
+
+            return count;
+        } catch {
+            const error = technicalErr.questionRepository.checkQuestionMarkTableForNewUser.msg;
+
+            this.loggerService.errorLog(error);
+            throw new Error(error);
+        }
+    }
+
     public async getQuestions(): Promise<Question[]> {
         try {
             const questions = await this.questionRepository.getQuestions();
@@ -38,7 +64,7 @@ export class QuestionService {
         }
     }
 
-    public async getQuestion(userId: number, countOfQuestion: number): Promise<Question> {
+    public async getQuestion(userId: number): Promise<Question> {
         let unAnsweredQuestions: QuestionMarkTableRow[];
         let isRefresh: boolean;
 
@@ -111,13 +137,13 @@ export class QuestionService {
         }
     }
 
-    public async getMyRightAnswers(userId: number): Promise<QuestionMarkTableRow[]> {
+    public async getUserRightAnswers(userId: number): Promise<QuestionMarkTableRow[]> {
         try {
-            const myRightAnswers = await this.questionRepository.getMyRightAnswers(userId);
+            const myRightAnswers = await this.questionRepository.getUserRightAnswers(userId);
 
             return myRightAnswers;
         } catch {
-            const error = technicalErr.questionRepository.getMyRightAnswers.msg;
+            const error = technicalErr.questionRepository.getUserRightAnswers.msg;
 
             this.loggerService.errorLog(error);
             throw new Error(error);
@@ -137,39 +163,26 @@ export class QuestionService {
         }
     }
 
-    public async updateQuestionMarkTable(userId: number, questionId: number): Promise<boolean> {
+    public async markCorrectAnswer(userId: number, questionId: number): Promise<boolean> {
         try {
-            const isUpdate = await this.questionRepository.updateQuestionMarkTable(userId, questionId);
+            const isUpdate = await this.questionRepository.markCorrectAnswer(userId, questionId);
 
             return isUpdate;
         } catch {
-            const error = technicalErr.questionRepository.updateQuestionMarkTable.msg;
+            const error = technicalErr.questionRepository.markCorrectAnswer.msg;
 
             this.loggerService.errorLog(error);
             throw new Error(error);
         }
     }
 
-    public async checkQuestionMarkTableForNewUser(userId: number): Promise<number> {
+    public async refreshSession(userId: number): Promise<boolean> {
         try {
-            const count = await this.questionRepository.checkQuestionMarkTableForNewUser(userId);
+            const isUpdate = await this.questionRepository.refreshSession(userId);
 
-            return count;
+            return isUpdate;
         } catch {
-            const error = technicalErr.questionRepository.checkQuestionMarkTableForNewUser.msg;
-
-            this.loggerService.errorLog(error);
-            throw new Error(error);
-        }
-    }
-
-    public async addUserToQuestionMarkTable(userId: number, questionsId: number[]): Promise<boolean> {
-        try {
-            const isAdd = await this.questionRepository.addUserToQuestionMarkTable(userId, questionsId);
-
-            return isAdd;
-        } catch {
-            const error = technicalErr.questionRepository.addUserToQuestionMarkTable.msg;
+            const error = technicalErr.questionRepository.refreshSession.msg;
 
             this.loggerService.errorLog(error);
             throw new Error(error);

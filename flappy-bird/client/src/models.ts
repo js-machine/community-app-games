@@ -16,6 +16,7 @@ export interface EndGameStatistic {
   userToken: string;
   score: number;
   question: number;
+  createdAt: Date;
 }
 export interface Quiz {
   question: string;
@@ -25,10 +26,16 @@ export interface Quiz {
 export interface QuizAnswers {
   userToken: string;
   quiz: Quiz[];
+  updatedAt: Date;
 }
 
 export interface FinalResult {
   totalScore: number;
   totalQuestions: number;
   correctAnswers: number;
+}
+
+export interface Result {
+  userToken: string;
+  isAfterQuiz: boolean;
 }

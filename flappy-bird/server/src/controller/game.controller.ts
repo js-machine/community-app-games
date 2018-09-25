@@ -17,9 +17,10 @@ export class GameController {
         const userToken: string = request.body.userToken;
         const score: number = request.body.score;
         const question: number = request.body.question;
+        const createdAt: Date = request.body.createdAt;
 
         try {
-            const isSaveResults = await this.gameService.saveGameResult(userToken, score, question);
+            const isSaveResults = await this.gameService.saveGameResult(userToken, score, question, createdAt);
 
             if (isSaveResults) {
                 return response.status(200).send(isSaveResults);

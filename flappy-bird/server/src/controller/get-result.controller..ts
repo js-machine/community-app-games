@@ -4,7 +4,6 @@ import { GetResultService } from 'service/get-result';
 
 import { inject } from 'inversify';
 import { technicalErr } from 'errors';
-import { Quiz } from 'model';
 
 @controller('/api')
 export class GetResultController {

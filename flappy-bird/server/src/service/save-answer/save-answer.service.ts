@@ -7,9 +7,9 @@ import { AnswerService } from '../answer';
 import { GameService } from '../game';
 
 import { Answer, Quiz, QuestionMarkTableRow, FinalResult } from 'model';
-import { technicalErr } from '../../../errors';
+import { technicalErr } from 'errors';
 @injectable()
-export class SendAnswerService {
+export class SaveAnswerService {
     constructor(
         @inject(LoggerService) private loggerService: LoggerService,
         @inject(UserService) private userService: UserService,
@@ -19,16 +19,26 @@ export class SendAnswerService {
 
     ) { }
 
-    public async sendAnswers(userToken: string, quiz: Quiz[]): Promise<boolean> {
+    public async saveAnswers(userToken: string, quiz: Quiz[], updatedAt: Date): Promise<boolean> {
         let questionId: number;
         let rightAnswers: string[];
         let userId: number;
         let isUpdateQuestionMarkTable: boolean;
+        let isUpdateGameSession: boolean;
 
         try {
             userId = (await this.userService.getUser(userToken)).id;
         } catch {
             const error = technicalErr.userService.getUser.msg;
+
+            this.loggerService.errorLog(error);
+            throw new Error(error);
+        }
+
+        try {
+            isUpdateGameSession = await this.gameService.updateGameSession(updatedAt, userId);
+        } catch {
+            const error = technicalErr.gameService.updateGameSession.msg;
 
             this.loggerService.errorLog(error);
             throw new Error(error);
@@ -63,9 +73,9 @@ export class SendAnswerService {
 
             if (isRight) {
                 try {
-                    isUpdateQuestionMarkTable = await this.questionService.updateQuestionMarkTable(userId, questionId);
+                    isUpdateQuestionMarkTable = await this.questionService.markCorrectAnswer(userId, questionId);
                 } catch {
-                    const error = technicalErr.questionService.updateQuestionMarkTable.msg;
+                    const error = technicalErr.questionService.markCorrectAnswer.msg;
 
                     this.loggerService.errorLog(error);
                     throw new Error(error);

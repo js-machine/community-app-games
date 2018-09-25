@@ -14,13 +14,14 @@ export class GameRepositoryImplementation implements GameRepository {
         @inject(LoggerService) private loggerService: LoggerService,
     ) { }
 
-    public async saveGameResults(userId: number, score: number, question: number): Promise<boolean> {
+    public async saveGameResults(userId: number, score: number, question: number, createdAt: Date): Promise<boolean> {
 
         try {
             const isAdd = await GameModel.upsert({
                 userId,
                 score,
-                question
+                question,
+                createdAt
             });
 
             if (isAdd) {
@@ -51,6 +52,34 @@ export class GameRepositoryImplementation implements GameRepository {
             return lastGame;
         } catch {
             const error = technicalErr.gameRepository_Implementation.getLastGame.msg;
+
+            this.loggerService.errorLog(error);
+            throw new Error(error);
+        }
+    }
+
+    public async updateGameSession(updatedAt: Date, userId: number): Promise<boolean> {
+
+        try {
+            const lastGameId = await GameModel.max(
+                'id',
+                { where: { userId } }
+            );
+
+            const isUpdate = await GameModel.update(
+                { updatedAt }, {
+                    where: { id: lastGameId }
+                }
+            );
+
+            if (isUpdate) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch {
+            const error = technicalErr.gameRepository_Implementation.updateGameSession.msg;
 
             this.loggerService.errorLog(error);
             throw new Error(error);

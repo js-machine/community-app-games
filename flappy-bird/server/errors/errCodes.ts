@@ -16,6 +16,9 @@ export const technicalErrCodes = {
     },
     getLastGame: {
       code: 8044
+    },
+    updateGameSession: {
+      code: 8057
     }
   },
   getResultService: {
@@ -34,6 +37,11 @@ export const technicalErrCodes = {
   sendAnswerService: {
     sendAnswer: {
       code: 8005
+    }
+  },
+  sendResultService: {
+    sendResult: {
+      code: 8063
     }
   },
   startGameService: {
@@ -57,10 +65,10 @@ export const technicalErrCodes = {
     getQuestionId: {
       code: 8011
     },
-    updateQuestionMarkTable: {
+    markCorrectAnswer: {
       code: 8012
     },
-    getMyRightAnswers: {
+    getUserRightAnswers: {
       code: 8049
     },
     getQuestionById: {
@@ -68,6 +76,9 @@ export const technicalErrCodes = {
     },
     getSizeOfQuiz: {
       code: 8055
+    },
+    refreshSession: {
+      code: 8060
     }
   },
   quizService: {
@@ -102,6 +113,9 @@ export const technicalErrCodes = {
     },
     getLastGame: {
       code: 8046
+    },
+    updateGameSession: {
+      code: 8058
     }
   },
   questionRepository: {
@@ -126,10 +140,10 @@ export const technicalErrCodes = {
     refreshUserAnswersQuestionMarkTable: {
       code: 8025
     },
-    updateQuestionMarkTable: {
+    markCorrectAnswer: {
       code: 8026
     },
-    getMyRightAnswers: {
+    getUserRightAnswers: {
       code: 8047
     },
     getQuestionById: {
@@ -137,6 +151,9 @@ export const technicalErrCodes = {
     },
     getSizeOfQuiz: {
       code: 8054
+    },
+    refreshSession: {
+      code: 8061
     }
   },
   userRepository: {
@@ -161,6 +178,9 @@ export const technicalErrCodes = {
     },
     getLastGame: {
       code: 8045
+    },
+    updateGameSession: {
+      code: 8059
     }
   },
   questionRepository_Implementation: {
@@ -188,7 +208,7 @@ export const technicalErrCodes = {
     updateQuestionMarkTable: {
       code: 8038
     },
-    getMyRightAnswers: {
+    getUserRightAnswers: {
       code: 8048
     },
     getQuestionById: {
@@ -196,6 +216,9 @@ export const technicalErrCodes = {
     },
     getSizeOfQuiz: {
       code: 8053
+    },
+    refreshSession: {
+      code: 8062
     }
   },
   userRepository_Implementation: {

@@ -11,12 +11,11 @@ import { MaterialModule } from './material.module';
 import { TodoEffects, TodosService } from 'store/todo';
 import { QuizEffects, QuizService } from 'store/quiz';
 
-import { Router } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { reducers } from 'store/store.config';
-
+import { TimerService } from './services';
 import { HomeComponent, PathNotFoundComponent, QuizComponent, ResultComponent } from './components';
 
 @NgModule({
@@ -47,8 +46,9 @@ import { HomeComponent, PathNotFoundComponent, QuizComponent, ResultComponent } 
   ],
   providers: [
     TodosService,
-    QuizService
+    QuizService,
+    TimerService
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

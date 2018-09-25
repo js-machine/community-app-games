@@ -3,28 +3,25 @@ import { inject, injectable } from 'inversify';
 import { LoggerService } from '../logger';
 import { UserService } from '../user';
 import { QuestionService } from '../question';
-import { AnswerService } from '../answer';
 import { GameService } from '../game';
 
-import { Answer, Quiz, QuestionMarkTableRow, FinalResult } from 'model';
-import { technicalErr } from '../../../errors';
+import { QuestionMarkTableRow, FinalResult, Game } from 'model';
+import { technicalErr } from 'errors';
+
 @injectable()
 export class GetResultService {
     constructor(
         @inject(LoggerService) private loggerService: LoggerService,
         @inject(UserService) private userService: UserService,
         @inject(QuestionService) private questionService: QuestionService,
-        @inject(AnswerService) private answerService: AnswerService,
         @inject(GameService) private gameService: GameService,
-
     ) { }
 
     public async getResult(userToken: string): Promise<FinalResult> {
         let userId: number;
         let myRightAnswers: number[];
-        let score: number;
+        let lastGame: Game;
         let scoreFromQuiz: number = 0;
-        let quiz: number;
 
         try {
             userId = (await this.userService.getUser(userToken)).id;
@@ -36,16 +33,7 @@ export class GetResultService {
         }
 
         try {
-            quiz = (await this.questionService.getSizeOfQuiz(userId));
-        } catch {
-            const error = technicalErr.questionService.getSizeOfQuiz.msg;
-
-            this.loggerService.errorLog(error);
-            throw new Error(error);
-        }
-
-        try {
-            score = (await this.gameService.getLastGame(userId)).score;
+            lastGame = await this.gameService.getLastGame(userId);
         } catch {
             const error = technicalErr.gameService.getLastGame.msg;
 
@@ -54,9 +42,9 @@ export class GetResultService {
         }
 
         try {
-            myRightAnswers = (await this.questionService.getMyRightAnswers(userId)).map((row: QuestionMarkTableRow) => row.questionId);
+            myRightAnswers = (await this.questionService.getUserRightAnswers(userId)).map((row: QuestionMarkTableRow) => row.questionId);
         } catch {
-            const error = technicalErr.questionService.getMyRightAnswers.msg;
+            const error = technicalErr.questionService.getUserRightAnswers.msg;
 
             this.loggerService.errorLog(error);
             throw new Error(error);
@@ -77,8 +65,8 @@ export class GetResultService {
         }
 
         const result: FinalResult = {
-            totalScore: score + scoreFromQuiz,
-            totalQuestions: quiz,
+            totalScore: lastGame.score + scoreFromQuiz,
+            totalQuestions: lastGame.question,
             correctAnswers: myRightAnswers.length
         };
 

@@ -21,9 +21,13 @@
 import { Subject } from 'rxjs';
 export const onGameEnd = new Subject();
 export const onGetQuiz = new Subject();
+export const onRetry = new Subject();
+
+var createdAt;
 
 
 export const gameCore = () => {
+
   var debugmode = false;
 
   var states = Object.freeze({
@@ -66,7 +70,7 @@ export const gameCore = () => {
 
   var isQuestion = false;
   var isAddQuestion = false; //(Valiantsin) add this global variable for control updating question variable 
-                             // IF we delete this variable, every time when you touch question picture, question variable will update so many time as you locate in her 
+  // IF we delete this variable, every time when you touch question picture, question variable will update so many time as you locate in her 
   var isQuiz = false;
 
   $(document).ready(function () {
@@ -132,6 +136,7 @@ export const gameCore = () => {
   }
 
   function startGame() {
+    createdAt = new Date;
     currentstate = states.GameScreen;
 
     //fade out the splash
@@ -149,10 +154,10 @@ export const gameCore = () => {
     }
 
     //start up our loops
+
     var updaterate = 1000.0 / 60.0; //60 times a second
     loopGameloop = setInterval(gameloop, updaterate);
     loopPipeloop = setInterval(updatePipes, 1000);
-
     //jump from the start!
     playerJump();
     $(".questionScore").css("display", "block");
@@ -277,7 +282,7 @@ export const gameCore = () => {
       var pictureLeft = nextQuestion.offset().left - 2;
       var pictureRight = pipeleft + 60;
 
-      if(!isAddQuestion) {
+      if (!isAddQuestion) {
         if (boxleft > pictureLeft) {
           if (boxtop < pictureBottom && boxtop > pictureTop) {
             nextQuestion.css("display", "none");
@@ -445,7 +450,7 @@ export const gameCore = () => {
     }
 
     initialize();
-    onGameEnd.next({score, question})
+    onGameEnd.next({ score, question, createdAt })
   }
 
   function initialize() {
@@ -506,6 +511,7 @@ export const gameCore = () => {
   }
 
   $("#replay").click(function () {
+    onRetry.next();
     //make sure we can only click once
     if (!replayclickable)
       return;

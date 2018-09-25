@@ -33,7 +33,7 @@ export const quizReducer = (state: State = initialState, action: QuizActions): S
                 getQuizStatus: Status.Init,
                 startGameStatus: Status.Fetching,
                 getResultStatus: Status.Init,
-                sendAnswersStatus: Status.Init,
+                saveQuizAnswersStatus: Status.Init,
                 lastSessionResults: null
             };
 
@@ -71,24 +71,24 @@ export const quizReducer = (state: State = initialState, action: QuizActions): S
                 getQuizStatus: Status.Error
             };
 
-        case QuizActionTypes.SendQuizAnswers:
+        case QuizActionTypes.SaveQuizAnswers:
             return {
                 ...state,
                 quiz: [],
-                sendAnswersStatus: Status.Fetching
+                saveQuizAnswersStatus: Status.Fetching
             };
 
-        case QuizActionTypes.SendQuizAnswersSuccess:
+        case QuizActionTypes.SaveQuizAnswersSuccess:
             return {
                 ...state,
-                sendAnswersStatus: Status.Success,
+                saveQuizAnswersStatus: Status.Success,
                 getQuizStatus: Status.Init
             };
 
-        case QuizActionTypes.SendQuizAnswersError:
+        case QuizActionTypes.SaveQuizAnswersError:
             return {
                 ...state,
-                sendAnswersStatus: Status.Error
+                saveQuizAnswersStatus: Status.Error
             };
 
         case QuizActionTypes.GetResult:

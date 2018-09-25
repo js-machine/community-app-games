@@ -469,16 +469,16 @@
     width: 25px;
     height: 25px;
     position: absolute;
-    top: 25px;
-    left: 130px;
+    top: 63px;
+    left: 100px;
     z-index: 100;
   }
   
   .pipeScoreImages {
     display: none;
     position: absolute;
-    top: 25px;
-    left: 50px;
+    top: 65px;
+    left: 30px;
   }
   
   .pipeScore {
