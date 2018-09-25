@@ -4,7 +4,7 @@ import { AppTokenRepository } from 'service/app-token';
 import { RoomService } from 'service/room';
 
 import { inject } from 'inversify';
-import { technicalErr } from './../../errors';
+import { technicalErr } from 'errors';
 
 @controller('/api')
 export class RoomController {

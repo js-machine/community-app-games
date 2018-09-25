@@ -4,8 +4,9 @@ import { LoggerService } from '../logger';
 import { UserService } from '../user';
 import { QuestionService } from '../question';
 import { AnswerService } from '../answer';
+import { GameService } from '../game';
 
-import { Answer } from '../../model';
+import { Answer, Quiz, QuestionMarkTableRow, FinalResult } from 'model';
 import { technicalErr } from '../../../errors';
 @injectable()
 export class SendAnswerService {
@@ -14,12 +15,13 @@ export class SendAnswerService {
         @inject(UserService) private userService: UserService,
         @inject(QuestionService) private questionService: QuestionService,
         @inject(AnswerService) private answerService: AnswerService,
+        @inject(GameService) private gameService: GameService,
+
     ) { }
 
-    public async sendAnswer(question: string, answers: string[], userToken: string): Promise<boolean> {
+    public async sendAnswers(userToken: string, quiz: Quiz[]): Promise<boolean> {
         let questionId: number;
         let rightAnswers: string[];
-        let isRight: boolean = false;
         let userId: number;
         let isUpdateQuestionMarkTable: boolean;
 
@@ -32,39 +34,46 @@ export class SendAnswerService {
             throw new Error(error);
         }
 
-        try {
-            questionId = await this.questionService.getQuestionId(question);
-        } catch {
-            const error = technicalErr.questionService.getQuestionId.msg;
+        for (let i = 0; i < quiz.length; i++) {
+            const question = quiz[i].question;
+            const answers = quiz[i].answers;
+            let isRight: boolean = false;
 
-            this.loggerService.errorLog(error);
-            throw new Error(error);
-        }
-
-        try {
-            rightAnswers = (await this.answerService.getRightAnswers(questionId)).map((answer: Answer) => answer.answer);
-        } catch {
-            const error = technicalErr.answerService.getRightAnswers.msg;
-
-            this.loggerService.errorLog(error);
-            throw new Error(error);
-        }
-
-        if (answers.length === rightAnswers.length) {
-            isRight = rightAnswers.every((answer: string) => answers.indexOf(answer) >= 0);
-        }
-
-        if (isRight) {
             try {
-                isUpdateQuestionMarkTable = await this.questionService.updateQuestionMarkTable(userId, questionId);
+                questionId = await this.questionService.getQuestionId(question);
             } catch {
-                const error = technicalErr.questionService.updateQuestionMarkTable.msg;
+                const error = technicalErr.questionService.getQuestionId.msg;
 
                 this.loggerService.errorLog(error);
                 throw new Error(error);
             }
+
+            try {
+                rightAnswers = (await this.answerService.getRightAnswers(questionId)).map((answer: Answer) => answer.answer);
+            } catch {
+                const error = technicalErr.answerService.getRightAnswers.msg;
+
+                this.loggerService.errorLog(error);
+                throw new Error(error);
+            }
+
+            if (answers.length === rightAnswers.length) {
+                isRight = rightAnswers.every((answer: string) => answers.indexOf(answer) >= 0);
+            }
+
+            if (isRight) {
+                try {
+                    isUpdateQuestionMarkTable = await this.questionService.updateQuestionMarkTable(userId, questionId);
+                } catch {
+                    const error = technicalErr.questionService.updateQuestionMarkTable.msg;
+
+                    this.loggerService.errorLog(error);
+                    throw new Error(error);
+                }
+            }
+
         }
 
-        return isRight;
+        return true;
     }
 }

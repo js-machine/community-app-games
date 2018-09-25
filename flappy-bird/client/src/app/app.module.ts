@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { reducers } from '../store/store.config';
+import { reducers } from 'store/store.config';
 
 import { HomeComponent, PathNotFoundComponent, QuizComponent, ResultComponent } from './components';
 
@@ -51,8 +51,4 @@ import { HomeComponent, PathNotFoundComponent, QuizComponent, ResultComponent } 
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-  constructor(router: Router) {
-    console.log('Routes', JSON.stringify(router.config, undefined, 2));
-  }
-}
+export class AppModule {}

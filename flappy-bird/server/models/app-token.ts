@@ -1,6 +1,6 @@
 import Sequelize from 'sequelize';
 import { db } from './SequelizeConnect';
-import { dbConfig } from '../config/dbconfig';
+import { dbConfig } from '../config';
 import { SequelizeStaticAndInstance } from 'sequelize';
 
 export interface AppToken {

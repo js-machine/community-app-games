@@ -6,7 +6,7 @@ import { QuestionService } from '../question';
 import { AnswerService } from '../answer';
 import { GameService } from '../game';
 
-import { Answer, Question } from '../../model';
+import { Answer, Question } from 'model';
 
 interface Quiz {
     question: string;

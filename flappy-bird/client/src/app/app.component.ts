@@ -6,12 +6,4 @@ import { Component, ViewEncapsulation } from '@angular/core';
   styleUrls: ['./app.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class AppComponent {
-  public onActivate($event) {
-    console.log(`Activated Component`, $event);
-  }
-
-  public onDeactivate($event) {
-    console.log(`Deactivated Component`, $event);
-  }
-}
+export class AppComponent {}

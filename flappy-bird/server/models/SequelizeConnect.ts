@@ -1,5 +1,5 @@
 import Sequelize from 'sequelize';
-import { dbConfig } from '../config/dbconfig';
+import { dbConfig } from '../config';
 
 import { DbConfig } from '../src/model';
 

@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { StartGameService } from 'service/start-game';
 
 import { inject } from 'inversify';
-import { technicalErr } from './../../errors';
+import { technicalErr } from 'errors';
 
 @controller('/api')
 export class StartGameController {
@@ -18,11 +18,7 @@ export class StartGameController {
         try {
             const isAdd = await this.startGameService.startGame(userToken);
 
-            if (isAdd) {
-                return response.status(200).send(isAdd);
-            } else {
-                return response.status(400).send(isAdd);
-            }
+            return response.status(200).send(isAdd);
 
         } catch {
             response.status(400).json({

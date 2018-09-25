@@ -1,3 +1,31 @@
-<p>
-  result works!
-</p>
+<div class="result__container">
+  <ng-container *ngIf="status === 2">
+    <div class="result__content-container">
+
+      <h2 class="result__content-title">YOUR SCORE</h2>
+      <div class="result__total-score">{{totalScore}}</div>
+
+      <h3 class="result__statistics">Total Questions : {{totalQuestions}}</h3>
+      <h3 class="result__statistics">Correct Answers : {{correctAnswers}}</h3>
+
+      <h3 class="result__content">
+        If you answered all the questions correctly or learned from your mistakes then you understand the basic rules. If not, please
+        go back and try again or review your answers with your parents.
+      </h3>
+    </div>
+
+    <button mat-button class="form__submit" (click)="onClick()">Try Again</button>
+  </ng-container>
+
+  <div class="sk-cube-grid" *ngIf="status !== 2">
+    <div class="sk-cube sk-cube1"></div>
+    <div class="sk-cube sk-cube2"></div>
+    <div class="sk-cube sk-cube3"></div>
+    <div class="sk-cube sk-cube4"></div>
+    <div class="sk-cube sk-cube5"></div>
+    <div class="sk-cube sk-cube6"></div>
+    <div class="sk-cube sk-cube7"></div>
+    <div class="sk-cube sk-cube8"></div>
+    <div class="sk-cube sk-cube9"></div>
+  </div>
+</div>

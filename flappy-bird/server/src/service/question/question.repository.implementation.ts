@@ -1,11 +1,11 @@
 import { injectable, inject } from 'inversify';
 
-import { LoggerService } from '../logger/logger.service';
-import { Question, UnAnsweredQuestion } from '../../model';
+import { LoggerService } from '../logger';
+import { Question, QuestionMarkTableRow } from 'model';
 import { QuestionMarkModel, QuizQuestionsModel } from 'models';
 
 import { QuestionRepository } from './question.repository';
-import { technicalErr } from './../../../errors';
+import { technicalErr } from 'errors';
 @injectable()
 export class QuestionRepositoryImplementation implements QuestionRepository {
   constructor(
@@ -18,7 +18,8 @@ export class QuestionRepositoryImplementation implements QuestionRepository {
         userId,
         questionId,
         status: false,
-        session: false
+        session: false,
+        isRight: false
       };
     });
 
@@ -51,9 +52,9 @@ export class QuestionRepositoryImplementation implements QuestionRepository {
     }
   }
 
-  public async getUnansweredQuestions(userId: number): Promise<UnAnsweredQuestion[]> {
+  public async getUnansweredQuestions(userId: number): Promise<QuestionMarkTableRow[]> {
     try {
-      const questions: UnAnsweredQuestion[] = await QuestionMarkModel.findAll({
+      const questions: QuestionMarkTableRow[] = await QuestionMarkModel.findAll({
         where: {
           userId,
           status: 0,
@@ -77,6 +78,23 @@ export class QuestionRepositoryImplementation implements QuestionRepository {
       return questions;
     } catch {
       const error = technicalErr.questionRepository_Implementation.getQuestions.msg;
+
+      this.loggerService.errorLog(error);
+      throw new Error(error);
+    }
+  }
+
+  public async getQuestionById(id: number): Promise<Question> {
+    try {
+      const question: Question = await QuizQuestionsModel.findOne({
+        where: {
+          id
+        }
+      });
+
+      return question;
+    } catch {
+      const error = technicalErr.questionRepository_Implementation.getQuestionById.msg;
 
       this.loggerService.errorLog(error);
       throw new Error(error);
@@ -125,6 +143,47 @@ export class QuestionRepositoryImplementation implements QuestionRepository {
     }
   }
 
+  public async getMyRightAnswers(userId: number): Promise<QuestionMarkTableRow[]> {
+    try {
+      const myRightAnswers = await QuestionMarkModel.findAll({
+        where: {
+          userId,
+          isRight: 1
+        }
+      });
+
+      const update = await QuestionMarkModel.update({ session: 0, isRight: 0 }, {
+        where: {
+          userId
+        }
+      });
+
+      return myRightAnswers;
+    } catch {
+      const error = technicalErr.questionRepository_Implementation.getMyRightAnswers.msg;
+
+      this.loggerService.errorLog(error);
+      throw new Error(error);
+    }
+  }
+
+  public async getSizeOfQuiz(userId: number): Promise<number> {
+    try {
+      const sizeOfQuiz = await QuestionMarkModel.count({
+        where: {
+          session: 1
+        }
+      });
+
+      return sizeOfQuiz;
+    } catch {
+      const error = technicalErr.questionRepository_Implementation.getSizeOfQuiz.msg;
+
+      this.loggerService.errorLog(error);
+      throw new Error(error);
+    }
+  }
+
   public async refreshUserAnswersQuestionMarkTable(userId: number): Promise<boolean> {
     try {
       const isUpdate = await QuestionMarkModel.update({ status: 0 }, {
@@ -148,7 +207,7 @@ export class QuestionRepositoryImplementation implements QuestionRepository {
 
   public async updateQuestionMarkTable(userId: number, questionId: number): Promise<boolean> {
     try {
-      const isUpdate = await QuestionMarkModel.update({ status: 1 }, {
+      const isUpdate = await QuestionMarkModel.update({ isRight: 1 }, {
         where: {
           userId,
           questionId

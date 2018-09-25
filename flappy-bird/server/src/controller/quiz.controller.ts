@@ -2,9 +2,9 @@ import { controller, httpPost } from 'inversify-express-utils';
 import { Request, Response } from 'express';
 
 import { inject } from 'inversify';
-import { QuizService } from '../service/quiz';
+import { QuizService } from 'service/quiz';
 
-import { technicalErr } from './../../errors';
+import { technicalErr } from 'errors';
 
 @controller('/api')
 export class QuizController {
@@ -15,7 +15,6 @@ export class QuizController {
     @httpPost('/get-quiz')
     public async getQuiz(request: Request, response: Response): Promise<void | Response> {
         const userToken: string = request.body.userToken;
-
         try {
             const quiz = await this.quizService.getQuiz(userToken);
 

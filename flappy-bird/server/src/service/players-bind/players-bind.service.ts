@@ -1,12 +1,12 @@
 import { inject, injectable } from 'inversify';
 
 import { LoggerService } from '../logger';
-import { PlayersBind } from './../../model';
+import { PlayersBind } from 'model';
 
 import { PlayerBindRepository } from './players-bind.repository';
 import { RoomService } from 'service/room';
 
-import { technicalErr } from './../../../errors';
+import { technicalErr } from 'errors';
 @injectable()
 export class PlayersBindService {
     constructor(

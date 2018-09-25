@@ -18,6 +18,11 @@ export const technicalErrCodes = {
       code: 8044
     }
   },
+  getResultService: {
+    getResult: {
+      code: 8056
+    }
+  },
   playerBindService: {
     noRoomToken: {
       code: 8003
@@ -54,6 +59,15 @@ export const technicalErrCodes = {
     },
     updateQuestionMarkTable: {
       code: 8012
+    },
+    getMyRightAnswers: {
+      code: 8049
+    },
+    getQuestionById: {
+      code: 8050
+    },
+    getSizeOfQuiz: {
+      code: 8055
     }
   },
   quizService: {
@@ -114,6 +128,15 @@ export const technicalErrCodes = {
     },
     updateQuestionMarkTable: {
       code: 8026
+    },
+    getMyRightAnswers: {
+      code: 8047
+    },
+    getQuestionById: {
+      code: 8051
+    },
+    getSizeOfQuiz: {
+      code: 8054
     }
   },
   userRepository: {
@@ -164,6 +187,15 @@ export const technicalErrCodes = {
     },
     updateQuestionMarkTable: {
       code: 8038
+    },
+    getMyRightAnswers: {
+      code: 8048
+    },
+    getQuestionById: {
+      code: 8052
+    },
+    getSizeOfQuiz: {
+      code: 8053
     }
   },
   userRepository_Implementation: {

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, } from '@angular/common/http';
 import { Response } from '@angular/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Quiz } from 'models';
+import { Quiz, QuizAnswers, FinalResult } from 'models';
 
 @Injectable()
 export class QuizService {
@@ -37,5 +37,20 @@ export class QuizService {
                 return (response.json ? response.json() : response);
             })
         );
+    }
+
+    sendQuizAnswers(quizAnswers: QuizAnswers): Observable<Object> {
+        const body = {
+            userToken: quizAnswers.userToken,
+            quiz: quizAnswers.quiz
+        };
+
+        return this.http.post(this.serverUrl + 'send-quiz-answer', body);
+    }
+
+    getResult(userToken: string): Observable<Object> {
+        const body = { userToken };
+
+        return this.http.post(this.serverUrl + 'get-result', body);
     }
 }

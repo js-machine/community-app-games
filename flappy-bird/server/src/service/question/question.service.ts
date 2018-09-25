@@ -1,10 +1,10 @@
 import { inject, injectable } from 'inversify';
 
 import { LoggerService } from '../logger';
-import { Question, UnAnsweredQuestion } from '../../model';
+import { Question, QuestionMarkTableRow } from 'model';
 
 import { QuestionRepository } from './question.repository';
-import { technicalErr } from '../../../errors';
+import { technicalErr } from 'errors';
 @injectable()
 export class QuestionService {
     constructor(
@@ -25,8 +25,21 @@ export class QuestionService {
         }
     }
 
+    public async getQuestionById(questionId: number): Promise<Question> {
+        try {
+            const question = await this.questionRepository.getQuestionById(questionId);
+
+            return question;
+        } catch {
+            const error = technicalErr.questionRepository.getQuestionById.msg;
+
+            this.loggerService.errorLog(error);
+            throw new Error(error);
+        }
+    }
+
     public async getQuestion(userId: number, countOfQuestion: number): Promise<Question> {
-        let unAnsweredQuestions: UnAnsweredQuestion[];
+        let unAnsweredQuestions: QuestionMarkTableRow[];
         let isRefresh: boolean;
 
         try {
@@ -92,6 +105,32 @@ export class QuestionService {
             return (await this.questionRepository.getQuestionId(question)).id;
         } catch {
             const error = technicalErr.questionRepository.getQuestionId.msg;
+
+            this.loggerService.errorLog(error);
+            throw new Error(error);
+        }
+    }
+
+    public async getMyRightAnswers(userId: number): Promise<QuestionMarkTableRow[]> {
+        try {
+            const myRightAnswers = await this.questionRepository.getMyRightAnswers(userId);
+
+            return myRightAnswers;
+        } catch {
+            const error = technicalErr.questionRepository.getMyRightAnswers.msg;
+
+            this.loggerService.errorLog(error);
+            throw new Error(error);
+        }
+    }
+
+    public async getSizeOfQuiz(userId: number): Promise<number> {
+        try {
+            const size = await this.questionRepository.getSizeOfQuiz(userId);
+
+            return size;
+        } catch {
+            const error = technicalErr.questionRepository.getSizeOfQuiz.msg;
 
             this.loggerService.errorLog(error);
             throw new Error(error);

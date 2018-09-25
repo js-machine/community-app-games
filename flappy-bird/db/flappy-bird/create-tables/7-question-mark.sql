@@ -4,6 +4,7 @@ CREATE TABLE `question_mark` (
   `questionId` int(10) unsigned NOT NULL,
   `status` boolean NOT NULL,
   `session` boolean NOT NULL,
+  `isRight` boolean NOT NULL,
   `createdAt` datetime DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),

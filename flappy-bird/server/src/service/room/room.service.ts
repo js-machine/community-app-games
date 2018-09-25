@@ -6,7 +6,7 @@ import {
     ResultStatus,
     RoomStatus,
     Room
-} from './../../model';
+} from 'model';
 
 import { RoomRepository } from 'service/room/room.repository';
 
