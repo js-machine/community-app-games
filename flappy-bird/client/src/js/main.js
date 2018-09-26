@@ -342,7 +342,6 @@ export const gameCore = () => {
   }
 
   function screenClick() {
-    console.log('1');
     if (currentstate == states.GameScreen) {
       playerJump();
     }

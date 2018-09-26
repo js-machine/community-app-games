@@ -6,7 +6,6 @@ import { Store } from '@ngrx/store';
 import { State } from 'store';
 import { StartGame, SaveGameResults, GetQuiz, SendResultBeforeQuiz } from 'store/quiz/quiz.action';
 import { Subscription } from 'rxjs';
-import { Status } from 'models';
 
 interface EndGameData {
     score: number;

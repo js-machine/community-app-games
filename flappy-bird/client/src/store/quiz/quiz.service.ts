@@ -3,7 +3,7 @@ import { HttpClient, } from '@angular/common/http';
 import { Response } from '@angular/http';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Quiz, QuizAnswers, FinalResult, Result } from 'models';
+import { Quiz, QuizAnswers } from 'models';
 
 @Injectable()
 export class QuizService {
