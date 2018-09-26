@@ -15,6 +15,12 @@ export const technicalErr = {
             msg: 'Problem with Answer Service [getRightAnswers]'
         }
     },
+    appTokenService: {
+        getAppToken: {
+            code: technicalErrCodes.appTokenService.getAppToken.code,
+            msg: 'Problem with Answer Service [getAnswers]'
+        }
+    },
     gameService: {
         saveResults: {
             code: technicalErrCodes.gameService.saveResults.code,
@@ -131,10 +137,14 @@ export const technicalErr = {
             msg: 'Problem with Answer Repository [getRightAnswers]',
         }
     },
-    applicationTokenRepository: {
+    appTokenRepository: {
         getAppToken: {
             code: technicalErrCodes.applicationTokenRepository.getAppToken.code,
             msg: 'Problem with Application Token Repository [getAppToken]'
+        },
+        saveAppToken: {
+            code: technicalErrCodes.applicationTokenRepository.saveAppToken.code,
+            msg: 'Problem with Application Token Repository [saveAppToken]'
         }
     },
     gameRepository: {
@@ -219,6 +229,16 @@ export const technicalErr = {
         getRightAnswers: {
             code: technicalErrCodes.answerRepository_Implementation.getRightAnswers.code,
             msg: 'Problem with getting right answers from quiz_answer table',
+        }
+    },
+    applicationTokenRepository_Implementation: {
+        getAppToken: {
+            code: technicalErrCodes.applicationTokenRepository_Implementation.getAppToken.code,
+            msg: 'Problem with getting app token from app_token table'
+        },
+        saveAppToken: {
+            code: technicalErrCodes.applicationTokenRepository_Implementation.saveAppToken.code,
+            msg: 'Problem with saving app token in app_token table'
         }
     },
     gameRepository_Implementation: {

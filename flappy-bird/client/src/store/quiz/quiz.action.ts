@@ -18,9 +18,17 @@ export enum QuizActionTypes {
     GetResult = '[quiz] Send Get Result',
     GetResultSuccess = '[quiz] Get Result (Success)',
     GetResultError = '[quiz] Get Result (Error)',
-    SendResult = '[quiz] Send Result',
-    SendResultSuccess = '[quiz] Send Result (Success)',
-    SendResultError = '[quiz] Send Result (Error)'
+    // SendResult = '[quiz] Send Result',
+    // SendResultSuccess = '[quiz] Send Result (Success)',
+    // SendResultError = '[quiz] Send Result (Error)'
+    SendResultBeforeQuiz = '[quiz] Send Result Before Quiz',
+    SendResultBeforeQuizSuccess = '[quiz] Send Result Before Quiz (Success)',
+    SendResultBeforeQuizError = '[quiz] Send Result Before Quiz (Error)',
+    SendResultAfterQuiz = '[quiz] Send Result After Quiz',
+    SendResultAfterQuizSuccess = '[quiz] Send Result After Quiz (Success)',
+    SendResultAfterQuizError = '[quiz] Send Result After Quiz (Error)',
+
+
 }
 
 export class SaveGameResults implements Action {
@@ -109,20 +117,54 @@ export class GetResultError implements Action {
     constructor(public payload: Error) { }
 }
 
-export class SendResult implements Action {
-    public readonly type = QuizActionTypes.SendResult;
+// export class SendResult implements Action {
+//     public readonly type = QuizActionTypes.SendResult;
 
-    constructor(public payload: Result) { }
+//     constructor(public payload: Result) { }
+// }
+
+// export class SendResultSuccess implements Action {
+//     public readonly type = QuizActionTypes.SendResultSuccess;
+
+//     constructor(public userToken: string) {}
+// }
+
+// export class SendResultError implements Action {
+//     public readonly type = QuizActionTypes.SendResultError;
+
+//     constructor(public payload: Error) { }
+// }
+
+export class SendResultBeforeQuiz implements Action {
+    public readonly type = QuizActionTypes.SendResultBeforeQuiz;
+
+    constructor(public userToken: string) { }
 }
 
-export class SendResultSuccess implements Action {
-    public readonly type = QuizActionTypes.SendResultSuccess;
+export class SendResultBeforeQuizSuccess implements Action {
+    public readonly type = QuizActionTypes.SendResultBeforeQuizSuccess;
+}
+
+export class SendResultBeforeQuizError implements Action {
+    public readonly type = QuizActionTypes.SendResultBeforeQuizError;
+
+    constructor(public payload: Error) { }
+}
+
+export class SendResultAfterQuiz implements Action {
+    public readonly type = QuizActionTypes.SendResultAfterQuiz;
+
+    constructor(public userToken: string) { }
+}
+
+export class SendResultAfterQuizSuccess implements Action {
+    public readonly type = QuizActionTypes.SendResultAfterQuizSuccess;
 
     constructor(public userToken: string) {}
 }
 
-export class SendResultError implements Action {
-    public readonly type = QuizActionTypes.SendResultError;
+export class SendResultAfterQuizError implements Action {
+    public readonly type = QuizActionTypes.SendResultAfterQuizError;
 
     constructor(public payload: Error) { }
 }
@@ -143,6 +185,9 @@ export type QuizActions =
     | GetResult
     | GetResultSuccess
     | GetResultError
-    | SendResult
-    | SendResultSuccess
-    | SendResultError;
+    | SendResultBeforeQuiz
+    | SendResultBeforeQuizSuccess
+    | SendResultBeforeQuizError
+    | SendResultAfterQuiz
+    | SendResultAfterQuizSuccess
+    | SendResultAfterQuizError;

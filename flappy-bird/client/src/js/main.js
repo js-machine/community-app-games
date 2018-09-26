@@ -23,11 +23,23 @@ export const onGameEnd = new Subject();
 export const onGetQuiz = new Subject();
 export const onRetry = new Subject();
 
+var intervals = [];
+var onStopAllActiveGames = [];
 var createdAt;
 
+export const stopAllActiveGames = () => {
+  for (let i = 0; i < intervals.length; i++) {
+    const intervalID = intervals[i];
+    clearInterval(intervalID);
+  }
+  for (let i = 0; i < onStopAllActiveGames.length; i++) {
+    onStopAllActiveGames[i]();
+  }
+  intervals = [];
+  onStopAllActiveGames = [];
+}
 
 export const gameCore = () => {
-
   var debugmode = false;
 
   var states = Object.freeze({
@@ -158,6 +170,8 @@ export const gameCore = () => {
     var updaterate = 1000.0 / 60.0; //60 times a second
     loopGameloop = setInterval(gameloop, updaterate);
     loopPipeloop = setInterval(updatePipes, 1000);
+    intervals.push(loopGameloop);
+    intervals.push(loopPipeloop);
     //jump from the start!
     playerJump();
     $(".questionScore").css("display", "block");
@@ -299,25 +313,36 @@ export const gameCore = () => {
     }
   }
 
+
+  var doc = $(document);
   //Handle space bar
-  $(document).keydown(function (e) {
-    //space bar!
-    if (e.keyCode == 32) {
-      //in ScoreScreen, hitting space should click the "replay" button. else it's just a regular spacebar hit
-      if (currentstate == states.ScoreScreen)
-        $("#replay").click();
-      else
-        screenClick();
-    }
-  });
+  doc.on("keydown", keyDown);
 
   //Handle mouse down OR touch start
   if ("ontouchstart" in window)
-    $(document).on("touchstart", screenClick);
+    doc.on("touchstart", screenClick);
   else
-    $(document).on("mousedown", screenClick);
+    doc.on("mousedown", screenClick);
+
+  onStopAllActiveGames.push(function() {
+    doc.off("keydown", keyDown);
+    doc.off("touchstart", screenClick);
+    doc.off("mousedown", screenClick);
+  });
+
+  function keyDown (e) {
+      //space bar!
+      if (e.keyCode == 32) {
+        //in ScoreScreen, hitting space should click the "replay" button. else it's just a regular spacebar hit
+        if (currentstate == states.ScoreScreen)
+          $("#replay").click();
+        else
+          screenClick();
+      }
+  }
 
   function screenClick() {
+    console.log('1');
     if (currentstate == states.GameScreen) {
       playerJump();
     }

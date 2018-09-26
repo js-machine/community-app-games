@@ -1,3 +1,4 @@
+export * from './app-token.controller';
 export * from './game.controller';
 export * from './get-result.controller.';
 export * from './player-bind.controller';
