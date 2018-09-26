@@ -6,7 +6,7 @@ import { AppTokenModel } from '../../../models';
 import { technicalErr } from 'errors';
 import { AppToken } from 'model';
 @injectable()
-export class AppTokenRepository {
+export class AppTokenRepositoryImplementation {
 
     constructor(
         @inject(LoggerService) private loggerService: LoggerService,
@@ -22,7 +22,23 @@ export class AppTokenRepository {
 
             return token;
         } catch {
-            const error = technicalErr.applicationTokenRepository.getAppToken.msg;
+            const error = technicalErr.applicationTokenRepository_Implementation.getAppToken.msg;
+
+            this.loggerService.errorLog(error);
+            throw new Error(error);
+        }
+    }
+
+    public async saveAppToken(token: string): Promise<boolean> {
+        try {
+            await AppTokenModel.upsert({
+                id: 1,
+                token
+            });
+
+            return true;
+        } catch {
+            const error = technicalErr.applicationTokenRepository_Implementation.saveAppToken.msg;
 
             this.loggerService.errorLog(error);
             throw new Error(error);

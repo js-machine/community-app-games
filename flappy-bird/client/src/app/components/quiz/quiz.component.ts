@@ -67,11 +67,11 @@ export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
       this.router.navigate(['./home', this.userToken]);
     }
 
-    // this.startTimer();
+    this.startTimer();
   }
 
   public onSubmit() {
-    // this.timerService.end(this.timer);
+    this.timerService.end(this.timer);
     const selectedOrderIds = this.form.value.answers
       .map((v, i) => v ? this.answers[i] : null)
       .filter(v => v !== null);
@@ -87,9 +87,9 @@ export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
       this.question = this.quiz[this.currentQuiz].question;
 
       this.createControls(this.answers);
-      // this.startTimer();
+      this.startTimer();
     } else {
-      // this.timerService.end(this.timer);
+      this.timerService.end(this.timer);
 
       this.store.select('quiz')
         .subscribe(({ getResultStatus }) => {
@@ -119,7 +119,6 @@ export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
       (distance) => {
         const roundDistance = Math.round(distance / 1000);
         this.currentTime = roundDistance;
-        console.log(roundDistance);
       },
       () => {
         this.onSubmit();
@@ -129,7 +128,7 @@ export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {
-    // this.timerService.end(this.timer);
+    this.timerService.end(this.timer);
 
     this.storeSubscription.unsubscribe();
     this.routerSubscription.unsubscribe();

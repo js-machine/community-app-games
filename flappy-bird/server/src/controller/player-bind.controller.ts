@@ -36,7 +36,7 @@ export class PlayerBindController {
             }
         } catch (err) {
             return response.status(400)
-                .json(technicalErr.applicationTokenRepository.getAppToken.msg);
+                .json(technicalErr.appTokenService.getAppToken.msg);
         }
     }
 }

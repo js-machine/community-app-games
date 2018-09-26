@@ -1,10 +1,10 @@
 import { Component, ViewEncapsulation, AfterViewInit, OnInit, OnDestroy } from '@angular/core';
-import { gameCore, onGameEnd, onGetQuiz, onRetry } from 'js/main';
+import { gameCore, onGameEnd, onGetQuiz, onRetry, stopAllActiveGames } from 'js/main';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { State } from 'store';
-import { StartGame, SaveGameResults, GetQuiz, SendResult } from 'store/quiz/quiz.action';
+import { StartGame, SaveGameResults, GetQuiz, SendResultBeforeQuiz } from 'store/quiz/quiz.action';
 import { Subscription } from 'rxjs';
 import { Status } from 'models';
 
@@ -33,7 +33,8 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
         private route: ActivatedRoute,
         private store: Store<State>,
         private router: Router
-    ) { }
+    ) {
+    }
 
     public ngOnInit() {
         this.routerSubscription = this.route.paramMap.subscribe(params => {
@@ -61,7 +62,7 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
             );
 
         this.onRetrySubscription = onRetry
-            .subscribe(() => this.store.dispatch(new SendResult({ userToken: this.userToken, isAfterQuiz: false })));
+            .subscribe(() => this.store.dispatch(new SendResultBeforeQuiz(this.userToken)));
 
         this.onGetQuizSubscription = onGetQuiz.subscribe(() => {
             this.store.dispatch(new GetQuiz(this.userToken));
@@ -74,6 +75,7 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
         this.onGetQuizSubscription.unsubscribe();
         this.routerSubscription.unsubscribe();
         this.onRetrySubscription.unsubscribe();
+        stopAllActiveGames();
     }
 }
 

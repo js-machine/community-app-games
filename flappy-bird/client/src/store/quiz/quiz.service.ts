@@ -56,12 +56,15 @@ export class QuizService {
         return this.http.post(this.serverUrl + 'get-result', body);
     }
 
-    sendResult(data: Result): Observable<Object> {
-        const body = {
-            userToken: data.userToken,
-            isAfterQuiz: data.isAfterQuiz
-        };
+    sendResultBeforeQuiz(userToken: string): Observable<Object> {
+        const body = {userToken};
 
-        return this.http.post(this.serverUrl + 'send-result', body);
+        return this.http.post(this.serverUrl + 'send-result/' + 'before-quiz', body);
+    }
+
+    sendResultAfterQuiz(userToken: string): Observable<Object> {
+        const body = {userToken};
+
+        return this.http.post(this.serverUrl + 'send-result/' + 'after-quiz', body);
     }
 }

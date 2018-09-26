@@ -3,7 +3,7 @@ import getDecorators from 'inversify-inject-decorators';
 
 import { AnswerRepository, AnswerRepositoryImplementation, AnswerService } from './answer';
 
-import { AppTokenService, AppTokenRepository } from './app-token';
+import { AppTokenService, AppTokenRepositoryImplementation } from './app-token';
 import { GameRepository, GameRepositoryImplementation, GameService } from './game';
 import { GetResultRepository, GetResultRepositoryImplementation, GetResultService } from './get-result';
 import { LoggerService, LoggerServiceImplementation } from './logger';
@@ -33,7 +33,7 @@ CONTAINER.bind<SendResultService>(SendResultService).to(SendResultService);
 CONTAINER.bind<UserService>(UserService).to(UserService);
 
 CONTAINER.bind<AnswerRepository>(AnswerRepository).to(AnswerRepositoryImplementation);
-CONTAINER.bind<AppTokenRepository>(AppTokenRepository).to(AppTokenRepository);
+CONTAINER.bind<AppTokenRepositoryImplementation>(AppTokenRepositoryImplementation).to(AppTokenRepositoryImplementation);
 CONTAINER.bind<GameRepository>(GameRepository).to(GameRepositoryImplementation);
 CONTAINER.bind<GetResultRepository>(GetResultRepository).to(GetResultRepositoryImplementation);
 CONTAINER.bind<PlayerBindRepository>(PlayerBindRepository).to(PlayerBindRepositoryImplementation);

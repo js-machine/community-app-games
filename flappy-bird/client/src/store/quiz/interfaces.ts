@@ -6,6 +6,8 @@ export interface QuizState {
     getQuizStatus: Status;
     saveQuizAnswersStatus: Status;
     getResultStatus: Status;
+    sendResultBeforeQuizStatus: Status;
+    sendResultAfterQuizStatus: Status;
     quiz: Quiz[];
     lastSessionResults: FinalResult;
 }

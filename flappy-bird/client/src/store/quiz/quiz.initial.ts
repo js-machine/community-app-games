@@ -10,6 +10,8 @@ export const initialState: State = {
     getQuizStatus: Status.Init,
     saveQuizAnswersStatus: Status.Init,
     getResultStatus: Status.Init,
+    sendResultBeforeQuizStatus: Status.Init,
+    sendResultAfterQuizStatus: Status.Init,
     quiz: [],
     lastSessionResults: null
 };

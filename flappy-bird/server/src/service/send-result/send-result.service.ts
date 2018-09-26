@@ -8,7 +8,6 @@ import { QuestionService } from '../question';
 import { GameService } from '../game';
 import { AppTokenService } from '../app-token';
 
-
 import { Answer, Quiz, QuestionMarkTableRow, FinalResult, Game } from 'model';
 import { technicalErr } from 'errors';
 @injectable()
@@ -43,7 +42,7 @@ export class SendResultService {
         try {
             appToken = 'Bearer ' + (await this.appTokenService.getAppToken()).token;
         } catch {
-            const error = technicalErr.questionService.getUserRightAnswers.msg;
+            const error = technicalErr.appTokenService.getAppToken.msg;
 
             this.loggerService.errorLog(error);
             throw new Error(error);

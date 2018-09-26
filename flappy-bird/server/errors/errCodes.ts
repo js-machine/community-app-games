@@ -10,6 +10,11 @@ export const technicalErrCodes = {
       code: 8002
     }
   },
+  appTokenService: {
+    getAppToken: {
+      code: 8067
+    }
+  },
   gameService: {
     saveResults: {
       code: 8041
@@ -105,6 +110,9 @@ export const technicalErrCodes = {
   applicationTokenRepository: {
     getAppToken: {
       code: 8018
+    },
+    saveAppToken: {
+      code: 8064
     }
   },
   gameRepository: {
@@ -170,6 +178,14 @@ export const technicalErrCodes = {
     },
     getRightAnswers: {
       code: 8030
+    }
+  },
+  applicationTokenRepository_Implementation: {
+    getAppToken: {
+      code: 8066
+    },
+    saveAppToken: {
+      code: 8065
     }
   },
   gameRepository_Implementation: {

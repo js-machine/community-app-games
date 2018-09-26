@@ -1,16 +1,42 @@
 import { inject, injectable } from 'inversify';
-import { AppTokenRepository } from './app-token.repository';
+import { AppTokenRepositoryImplementation } from './app-token.repository';
 import { AppToken } from 'model';
+import { LoggerService } from '../logger';
+
+import { technicalErr } from 'errors';
+
 @injectable()
 export class AppTokenService {
 
     public constructor(
-        @inject(AppTokenRepository) private appTokenRepository: AppTokenRepository) {
+        @inject(LoggerService) private loggerService: LoggerService,
+        @inject(AppTokenRepositoryImplementation) private appTokenRepositoryImplementation: AppTokenRepositoryImplementation) {
     }
 
     public async getAppToken(): Promise<AppToken> {
-        const token = await this.appTokenRepository.getAppToken();
+        try {
+            const token = await this.appTokenRepositoryImplementation.getAppToken();
 
-        return token;
+            return token;
+        } catch {
+            const error = technicalErr.applicationTokenRepository_Implementation.getAppToken.msg;
+
+            this.loggerService.errorLog(error);
+            throw new Error(error);
+        }
+
+    }
+
+    public async saveAppToken(appToken: string): Promise<boolean> {
+        try {
+            const isSave = await this.appTokenRepositoryImplementation.saveAppToken(appToken);
+
+            return true;
+        } catch {
+            const error = technicalErr.applicationTokenRepository_Implementation.saveAppToken.msg;
+
+            this.loggerService.errorLog(error);
+            throw new Error(error);
+        }
     }
 }
