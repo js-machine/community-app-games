@@ -18,9 +18,6 @@ export enum QuizActionTypes {
     GetResult = '[quiz] Send Get Result',
     GetResultSuccess = '[quiz] Get Result (Success)',
     GetResultError = '[quiz] Get Result (Error)',
-    // SendResult = '[quiz] Send Result',
-    // SendResultSuccess = '[quiz] Send Result (Success)',
-    // SendResultError = '[quiz] Send Result (Error)'
     SendResultBeforeQuiz = '[quiz] Send Result Before Quiz',
     SendResultBeforeQuizSuccess = '[quiz] Send Result Before Quiz (Success)',
     SendResultBeforeQuizError = '[quiz] Send Result Before Quiz (Error)',
@@ -116,24 +113,6 @@ export class GetResultError implements Action {
 
     constructor(public payload: Error) { }
 }
-
-// export class SendResult implements Action {
-//     public readonly type = QuizActionTypes.SendResult;
-
-//     constructor(public payload: Result) { }
-// }
-
-// export class SendResultSuccess implements Action {
-//     public readonly type = QuizActionTypes.SendResultSuccess;
-
-//     constructor(public userToken: string) {}
-// }
-
-// export class SendResultError implements Action {
-//     public readonly type = QuizActionTypes.SendResultError;
-
-//     constructor(public payload: Error) { }
-// }
 
 export class SendResultBeforeQuiz implements Action {
     public readonly type = QuizActionTypes.SendResultBeforeQuiz;

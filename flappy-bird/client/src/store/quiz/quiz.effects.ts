@@ -22,7 +22,6 @@ import {
     SendResultBeforeQuiz,
     SendResultBeforeQuizSuccess,
     SendResultBeforeQuizError,
-    SendResultAfterQuiz,
     SendResultAfterQuizSuccess,
     SendResultAfterQuizError
 
@@ -103,29 +102,6 @@ export class QuizEffects {
             )
         )
     );
-
-    // @Effect() public sendResult$: Observable<SendResultSuccess | SendResultError> = this.actions$.pipe(
-    //     ofType<SendResult>(QuizActionTypes.SendResult),
-    //     switchMap(({ payload }) => this.quizService.sendResult(payload)
-    //         .pipe(
-    //             map((token: string) => new SendResultSuccess(token)),
-    //             catchError((error: Error) => of(new SendResultError(error)))
-    //         )
-    //     )
-    // );
-
-
-
-
-    // @Effect() public saveQuizAnswerSuccess$: Observable<GetResultSuccess | GetResultError> = this.actions$.pipe(
-    //     ofType<SaveQuizAnswersSuccess>(QuizActionTypes.SaveQuizAnswersSuccess),
-    //     switchMap(({ userToken }) => this.quizService.getResult(userToken)
-    //         .pipe(
-    //             map((result: FinalResult) => new GetResultSuccess(result)),
-    //             catchError((error: Error) => of(new GetResultError(error)))
-    //         )
-    //     )
-    // );
 
     public constructor(
         private actions$: Actions,

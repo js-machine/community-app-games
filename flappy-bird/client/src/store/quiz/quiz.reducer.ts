@@ -1,6 +1,6 @@
 import { QuizState } from './interfaces';
 import { initialState } from './quiz.initial';
-import { QuizActionTypes, QuizActions, SendResultBeforeQuiz, SendResultBeforeQuizSuccess, SendResultBeforeQuizError } from './quiz.action';
+import { QuizActionTypes, QuizActions } from './quiz.action';
 import { Status } from 'models';
 
 type State = QuizState;

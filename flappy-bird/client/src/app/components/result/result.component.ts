@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -7,7 +7,6 @@ import { Status } from 'models';
 import { State } from 'store';
 
 import { Subscription } from 'rxjs';
-import { SendResult } from 'store/quiz/quiz.action';
 
 @Component({
   selector: 'app-result',
