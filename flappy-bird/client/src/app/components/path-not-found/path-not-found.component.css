@@ -1,0 +1,31 @@
+@font-face {
+    font-family: Pixel;
+    src: url(../../../assets/fonts/PressStart2P-Regular.ttf);
+  }
+
+.path-not-found__text {
+    color: #f4b33a;
+    margin: 60px 0 60px 0;
+    padding: 10px;
+    font-family: 'Pixel';
+    font-size: 30px;
+    line-height: 1.5em;
+    text-align: center;
+    text-shadow: 4px 4px 2px rgba(150, 150, 150, 1);
+  }
+  
+.path-not-found__container {
+    overflow: scroll;
+    width: 100%;
+    height: 100vh;
+    text-align: center;
+    color: #fff;
+    background-color: #4ec0ca;
+    font-weight: bold;
+  }
+
+  .path-not-found__picture {
+    width: 60%;
+    margin: 0 auto;
+  }
+

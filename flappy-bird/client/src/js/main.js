@@ -23,10 +23,11 @@ export const onGameEnd = new Subject();
 export const onGetQuiz = new Subject();
 export const onRetry = new Subject();
 
-var redirectAppUrl = 'http://localhost:3000/#/battles';
+var redirectAppUrl = 'http://localhost:80/#/battles';
 var intervals = [];
 var onStopAllActiveGames = [];
 var createdAt;
+var isBackToCA = false;
 
 export const stopAllActiveGames = () => {
   for (let i = 0; i < intervals.length; i++) {
@@ -42,6 +43,7 @@ export const stopAllActiveGames = () => {
 
 export const gameCore = () => {
   $("#back-to-ca").click(function () {
+    isBackToCA = true;
     window.location.replace(redirectAppUrl)
   });
   var debugmode = false;
@@ -328,21 +330,21 @@ export const gameCore = () => {
   else
     doc.on("mousedown", screenClick);
 
-  onStopAllActiveGames.push(function() {
+  onStopAllActiveGames.push(function () {
     doc.off("keydown", keyDown);
     doc.off("touchstart", screenClick);
     doc.off("mousedown", screenClick);
   });
 
-  function keyDown (e) {
-      //space bar!
-      if (e.keyCode == 32) {
-        //in ScoreScreen, hitting space should click the "replay" button. else it's just a regular spacebar hit
-        if (currentstate == states.ScoreScreen)
-          $("#replay").click();
-        else
-          screenClick();
-      }
+  function keyDown(e) {
+    //space bar!
+    if (e.keyCode == 32) {
+      //in ScoreScreen, hitting space should click the "replay" button. else it's just a regular spacebar hit
+      if (currentstate == states.ScoreScreen)
+        $("#replay").click();
+      else
+        screenClick();
+    }
   }
 
   function screenClick() {
@@ -526,14 +528,14 @@ export const gameCore = () => {
       soundSwoosh.play();
       $("#replay").transition({ y: '0px', opacity: 1 }, 600, 'ease');
 
-      if(question > 0) {
+      if (question > 0) {
         $("#startQuiz").css("display", "block");
 
         $("#startQuiz").transition({ y: '0px', opacity: 1 }, 600, 'ease');
       } else {
         $("#startQuiz").css("display", "none");
       }
-       
+
       //also animate in the MEDAL! WOO!
       if (wonmedal) {
         $("#medal").css({ scale: 2, opacity: 0 });
