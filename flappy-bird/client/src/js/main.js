@@ -23,6 +23,7 @@ export const onGameEnd = new Subject();
 export const onGetQuiz = new Subject();
 export const onRetry = new Subject();
 
+var redirectAppUrl = 'http://localhost:3000/#/battles';
 var intervals = [];
 var onStopAllActiveGames = [];
 var createdAt;
@@ -40,6 +41,9 @@ export const stopAllActiveGames = () => {
 }
 
 export const gameCore = () => {
+  $("#back-to-ca").click(function () {
+    window.location.replace(redirectAppUrl)
+  });
   var debugmode = false;
 
   var states = Object.freeze({
@@ -61,7 +65,7 @@ export const gameCore = () => {
   var question = 0;
   var highscore = 0;
 
-  var pipeheight = 130;
+  var pipeheight = 100;
   var pipewidth = 52;
   var pipes = new Array();
 
@@ -521,8 +525,15 @@ export const gameCore = () => {
       soundSwoosh.stop();
       soundSwoosh.play();
       $("#replay").transition({ y: '0px', opacity: 1 }, 600, 'ease');
-      question ? $("#startQuiz").transition({ y: '0px', opacity: 1 }, 600, 'ease') : null;
 
+      if(question > 0) {
+        $("#startQuiz").css("display", "block");
+
+        $("#startQuiz").transition({ y: '0px', opacity: 1 }, 600, 'ease');
+      } else {
+        $("#startQuiz").css("display", "none");
+      }
+       
       //also animate in the MEDAL! WOO!
       if (wonmedal) {
         $("#medal").css({ scale: 2, opacity: 0 });

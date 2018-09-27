@@ -9,7 +9,7 @@ import { SaveQuizAnswers } from 'store/quiz/quiz.action';
 import { Subscription } from 'rxjs';
 import { TimerService } from '../../services';
 
-const QUIZ_TIME = 15000;
+const QUIZ_TIME = 20000;
 @Component({
   selector: 'app-quiz',
   templateUrl: './quiz.component.html',
@@ -29,7 +29,9 @@ export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
   private currentQuiz = 0;
   private userAnswers: Quiz[] = [];
   private userToken: string;
-  private storeSubscription: Subscription;
+  private storeSubscription1: Subscription;
+  private storeSubscription2: Subscription;
+
   private routerSubscription: Subscription;
   private timer;
 
@@ -49,13 +51,13 @@ export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
       this.userToken = params.get('userToken');
     });
 
-    this.storeSubscription = this.store.select('quiz').subscribe((quiz) => {
+    this.storeSubscription1 = this.store.select('quiz').subscribe((quiz) => {
 
       this.quiz = quiz.quiz;
       this.status = quiz.getQuizStatus;
 
       if (this.quiz[this.currentQuiz]) {
-        this.answers = this.quiz[this.currentQuiz].answers;
+        this.answers = this.shuffleArray(this.quiz[this.currentQuiz].answers);
         this.question = this.quiz[this.currentQuiz].question;
         this.createControls(this.answers);
       }
@@ -83,7 +85,7 @@ export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (this.currentQuiz < this.quiz.length - 1) {
       this.currentQuiz += 1;
-      this.answers = [...this.quiz[this.currentQuiz].answers];
+      this.answers = this.shuffleArray(this.quiz[this.currentQuiz].answers);
       this.question = this.quiz[this.currentQuiz].question;
 
       this.createControls(this.answers);
@@ -91,7 +93,7 @@ export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.timerService.end(this.timer);
 
-      this.store.select('quiz')
+      this.storeSubscription2 = this.store.select('quiz')
         .subscribe(({ getResultStatus }) => {
           if (getResultStatus === 2) {
             this.router.navigate(['./result', this.userToken]);
@@ -127,10 +129,26 @@ export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
     );
   }
 
+
+  private shuffleArray(array: string[]) {
+    const newArray: string[] = [...array];
+
+    for (let i = newArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const temp = newArray[i];
+      newArray[i] = newArray[j];
+      newArray[j] = temp;
+    }
+
+    return newArray;
+  }
+
   ngOnDestroy() {
     this.timerService.end(this.timer);
+    if (this.storeSubscription1) { this.storeSubscription1.unsubscribe(); }
 
-    this.storeSubscription.unsubscribe();
-    this.routerSubscription.unsubscribe();
+    if (this.storeSubscription2) { this.storeSubscription2.unsubscribe(); }
+
+    if (this.routerSubscription) { this.routerSubscription.unsubscribe(); }
   }
 }

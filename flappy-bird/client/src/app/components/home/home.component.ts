@@ -70,10 +70,11 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.onGameEndSubscription.unsubscribe();
-        this.onGetQuizSubscription.unsubscribe();
-        this.routerSubscription.unsubscribe();
-        this.onRetrySubscription.unsubscribe();
+        if (this.onGameEndSubscription) { this.onGameEndSubscription.unsubscribe(); }
+        if (this.onGetQuizSubscription) { this.onGetQuizSubscription.unsubscribe(); }
+        if (this.routerSubscription) { this.routerSubscription.unsubscribe(); }
+        if (this.onRetrySubscription) { this.onRetrySubscription.unsubscribe(); }
+
         stopAllActiveGames();
     }
 }

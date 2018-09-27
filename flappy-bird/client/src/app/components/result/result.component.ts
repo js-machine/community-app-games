@@ -34,7 +34,7 @@ export class ResultComponent implements OnInit, OnDestroy, AfterViewInit {
       this.userToken = params.get('userToken');
     });
 
-    this.storeSubscription = this.store.select('quiz').subscribe(({lastSessionResults, getResultStatus}) => {
+    this.storeSubscription = this.store.select('quiz').subscribe(({ lastSessionResults, getResultStatus }) => {
       this.status = getResultStatus;
 
       this.totalScore = lastSessionResults ? lastSessionResults.totalScore : 0;
@@ -54,7 +54,7 @@ export class ResultComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {
-    this.storeSubscription.unsubscribe();
-    this.routerSubscription.unsubscribe();
+    if (this.storeSubscription) { this.storeSubscription.unsubscribe(); }
+    if (this.routerSubscription) { this.routerSubscription.unsubscribe(); }
   }
 }

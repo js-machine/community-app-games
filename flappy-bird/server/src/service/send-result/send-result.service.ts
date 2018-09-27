@@ -57,7 +57,7 @@ export class SendResultService {
             throw new Error(error);
         }
 
-        const playedTime = (lastGame.updatedAt.getTime() - lastGame.createdAt.getTime()) / 1000;
+        const playedTime = Number(((lastGame.updatedAt.getTime() - lastGame.createdAt.getTime()) / 60 / 1000).toFixed(1));
 
         if (isAfterQuiz) {
             try {
@@ -92,7 +92,7 @@ export class SendResultService {
             userToken,
             playedTime,
             scores,
-            resultStatus: ResultStatus.Win,
+            resultStatus: (scores > 0) ? ResultStatus.Win : ResultStatus.Lose,
             participationStatus: ParticipationStatus.Play,
         };
 
