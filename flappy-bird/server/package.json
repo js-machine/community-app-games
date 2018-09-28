@@ -6,9 +6,7 @@
     "build": "webpack --config webpack.config.js --env=dev",
     "start": "npm run build -- --watch",
     "install-database": "node ./install-database.js",
-    "preprod": "npm test",
     "prod": "webpack --config webpack.config.js --env=prod",
-    "test": "jest --config jest.config.json --forceExit",
     "lint": "tslint \"src/**/*.ts\"",
     "tslint-fix": "tslint --fix -p tsconfig.json"
   },
