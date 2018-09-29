@@ -312,6 +312,11 @@
     background-color: #DED895;
     color: #FC7858;
   }
+
+  
+  #questionStatistic h3 {
+    font-size: 19px;
+  }
   
   #questionCount {
     text-align: center;
