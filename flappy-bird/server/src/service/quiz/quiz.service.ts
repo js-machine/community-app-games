@@ -57,7 +57,7 @@ export class QuizService {
             this.loggerService.errorLog(error);
             throw new Error(error);
         }
-
+        countOfQuestion = Math.min(countOfQuestion, 36);
         for (let i = 0; i < countOfQuestion; i++) {
 
             try {

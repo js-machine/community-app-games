@@ -124,6 +124,7 @@ export const gameCore = () => {
   }
 
   function showSplash() {
+    $("#back-to-ca").css("display", "block");
     currentstate = states.SplashScreen;
 
     //set the defaults (again)
@@ -154,6 +155,7 @@ export const gameCore = () => {
   }
 
   function startGame() {
+    $("#back-to-ca").css("display", "none");
     createdAt = new Date;
     currentstate = states.GameScreen;
 
@@ -490,6 +492,7 @@ export const gameCore = () => {
 
   function showScore() {
     //unhide us
+    $("#back-to-ca").css("display", "block");
     $("#scoreboard").css("display", "block");
     $(".questionScore").css("display", "none");
     $(".pipeScoreImages").css("display", "none");
@@ -521,7 +524,6 @@ export const gameCore = () => {
     //show the scoreboard
     $("#scoreboard").css({ y: '40px', opacity: 0 }); //move it down so we can slide it up
     $("#replay").css({ y: '40px', opacity: 0 });
-    $("#startQuiz").css({ y: '40px', opacity: 0 });
     $("#scoreboard").transition({ y: '0px', opacity: 1 }, 600, 'ease', function () {
       //When the animation is done, animate in the replay button and SWOOSH!
       soundSwoosh.stop();
@@ -531,6 +533,7 @@ export const gameCore = () => {
       if (question > 0) {
         $("#startQuiz").css("display", "block");
 
+        $("#startQuiz").css({ y: '40px', opacity: 0 });
         $("#startQuiz").transition({ y: '0px', opacity: 1 }, 600, 'ease');
       } else {
         $("#startQuiz").css("display", "none");

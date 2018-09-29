@@ -350,6 +350,7 @@
   
   #startQuiz
   {
+    display: none;
     opacity: 0.8;
     margin-top: 2px;
     height: 45px;
@@ -370,6 +371,7 @@
   }
 
   #back-to-ca {
+    display: block;
     padding-top: 10px;
     opacity: 0.8;
     margin: 0 auto;

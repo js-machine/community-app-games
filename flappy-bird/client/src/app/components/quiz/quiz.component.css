@@ -1,11 +1,31 @@
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #4EC0CA; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #51E991; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
 .quiz-container {
   width: 100%;
   height: 100vh;
   background-color: #4ec0ca;
+  overflow: scroll;
+  overflow-x: hidden;
 }
 
 .quiz-form__container {
-  overflow: scroll;
   width: 100%;
   height: 100vh;
   text-align: center;
@@ -44,11 +64,11 @@
 }
 
 .mat-button {
+  margin: 0 auto;
   margin-top: 10px;
   margin-bottom: 20px;
   padding: 20px;
   width: 80%;
-  margin: 0 auto;
   font-size: 40px;
   text-transform: uppercase;
   letter-spacing: 0.7rem;
@@ -154,10 +174,11 @@
 }
 
 .mat-button {
+  margin: 0 auto;
+  margin-bottom: 20px;
   margin-top: 10px;
   padding: 20px;
   width: 80%;
-  margin: 0 auto;
   font-size: 35px;
   text-transform: uppercase;
   letter-spacing: 0.7rem;
@@ -209,10 +230,11 @@
 }
 
 .mat-button {
+  margin: 0 auto;
   margin-top: 10px;
+  margin-bottom: 20px;
   padding: 20px;
   width: 80%;
-  margin: 0 auto;
   font-size: 45px;
   text-transform: uppercase;
   letter-spacing: 0.7rem;
@@ -255,10 +277,11 @@
 }
 
 .mat-button {
+  margin: 0 auto;
   margin-top: 10px;
+  margin-bottom: 20px;
   padding: 20px;
   width: 80%;
-  margin: 0 auto;
   font-size: 60px;
   text-transform: uppercase;
   letter-spacing: 0.7rem;
