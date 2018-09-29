@@ -125,6 +125,7 @@ export const gameCore = () => {
 
   function showSplash() {
     $("#back-to-ca").css("display", "block");
+    $("#startQuiz").css("display", "none");
     currentstate = states.SplashScreen;
 
     //set the defaults (again)
