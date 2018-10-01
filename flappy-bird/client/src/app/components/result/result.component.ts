@@ -14,7 +14,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./result.component.css']
 })
 export class ResultComponent implements OnInit, OnDestroy, AfterViewInit {
-  public readonly Success: Status = Status.Success;
+  public readonly Status = Status;
 
   public totalScore = 0;
   public totalQuestions = 0;

@@ -17,7 +17,7 @@ const QUIZ_TIME = 20000;
 })
 
 export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
-  public readonly Success: Status = Status.Success;
+  public readonly Status = Status;
 
   public form: FormGroup;
   public question: string;
