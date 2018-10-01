@@ -22,11 +22,7 @@ interface EndGameData {
 
 export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
     private userToken: string;
-    private onGameEndSubscription: Subscription;
-    private onGetQuizSubscription: Subscription;
-    private routerSubscription: Subscription;
-    private onRetrySubscription: Subscription;
-
+    private subscriptions: Subscription[] = [];
 
     public constructor(
         private route: ActivatedRoute,
@@ -36,9 +32,9 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
     }
 
     public ngOnInit() {
-        this.routerSubscription = this.route.paramMap.subscribe(params => {
+        this.subscriptions.push(this.route.paramMap.subscribe(params => {
             this.userToken = params.get('userToken');
-        });
+        }));
 
         this.store.dispatch(new StartGame(this.userToken));
 
@@ -50,7 +46,7 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
     }
 
     private endGame() {
-        this.onGameEndSubscription = onGameEnd
+        this.subscriptions.push(onGameEnd
             .subscribe((data: EndGameData) =>
                 this.store.dispatch(new SaveGameResults({
                     userToken: this.userToken,
@@ -58,23 +54,21 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
                     question: data.question,
                     createdAt: data.createdAt
                 }))
-            );
+            )
+        );
 
-        this.onRetrySubscription = onRetry
-            .subscribe(() => this.store.dispatch(new SendResultBeforeQuiz(this.userToken)));
+        this.subscriptions.push(onRetry
+            .subscribe(() => this.store.dispatch(new SendResultBeforeQuiz(this.userToken)))
+        );
 
-        this.onGetQuizSubscription = onGetQuiz.subscribe(() => {
+        this.subscriptions.push(onGetQuiz.subscribe(() => {
             this.store.dispatch(new GetQuiz(this.userToken));
             this.router.navigate(['./quiz', this.userToken]);
-        });
+        }));
     }
 
     ngOnDestroy() {
-        if (this.onGameEndSubscription) { this.onGameEndSubscription.unsubscribe(); }
-        if (this.onGetQuizSubscription) { this.onGetQuizSubscription.unsubscribe(); }
-        if (this.routerSubscription) { this.routerSubscription.unsubscribe(); }
-        if (this.onRetrySubscription) { this.onRetrySubscription.unsubscribe(); }
-
+        this.subscriptions.forEach((subscription: Subscription) => subscription.unsubscribe());
         stopAllActiveGames();
     }
 }
