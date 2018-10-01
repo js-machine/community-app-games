@@ -42,10 +42,19 @@ export const stopAllActiveGames = () => {
 }
 
 export const gameCore = () => {
-  $("#back-to-ca").click(function () {
-    isBackToCA = true;
-    window.location.replace(redirectAppUrl)
+  $("#back-to-ca").on("mousedown", backToCa);
+  $("#back-to-ca").on("touchstart", backToCa);
+
+  function backToCa(e) {
+    e.stopPropagation();
+    window.location.replace(redirectAppUrl);
+  }
+
+  onStopAllActiveGames.push(function() {
+    $("#back-to-ca").off("mousedown", backToCA);
+    $("#back-to-ca").off("touchstart", backToCA);
   });
+
   var debugmode = false;
 
   var states = Object.freeze({
