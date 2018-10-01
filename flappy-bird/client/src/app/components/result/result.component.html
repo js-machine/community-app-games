@@ -1,5 +1,5 @@
 <div class="result__container">
-  <ng-container *ngIf="status === 2">
+  <ng-container *ngIf="status === Success">
     <div class="result__content-container">
 
       <h2 class="result__content-title">YOUR SCORE</h2>
@@ -17,7 +17,7 @@
     <button mat-button class="form__submit" (click)="onClick()">Try Again</button>
   </ng-container>
 
-  <div class="sk-cube-grid" *ngIf="status !== 2">
+  <div class="sk-cube-grid" *ngIf="status !== Success">
     <div class="sk-cube sk-cube1"></div>
     <div class="sk-cube sk-cube2"></div>
     <div class="sk-cube sk-cube3"></div>

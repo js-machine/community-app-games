@@ -14,6 +14,8 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./result.component.css']
 })
 export class ResultComponent implements OnInit, OnDestroy, AfterViewInit {
+  public readonly Success: Status = Status.Success;
+
   public totalScore = 0;
   public totalQuestions = 0;
   public correctAnswers = 0;
@@ -44,7 +46,7 @@ export class ResultComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if (this.status === 0 || this.status === 3) {
+    if (this.status === Status.Init || this.status === Status.Error) {
       this.router.navigate(['./home', this.userToken]);
     }
   }

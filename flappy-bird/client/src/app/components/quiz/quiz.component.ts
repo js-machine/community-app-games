@@ -16,16 +16,16 @@ const QUIZ_TIME = 20000;
   styleUrls: ['./quiz.component.css'],
 })
 
-
-
 export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
+  public readonly Success: Status = Status.Success;
+
   public form: FormGroup;
   public question: string;
   public answers: string[];
   public status: Status = Status.Init;
-
   public quiz: Quiz[] = [];
   public currentTime: number;
+
   private currentQuiz = 0;
   private userAnswers: Quiz[] = [];
   private userToken: string;
@@ -62,10 +62,17 @@ export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
         this.createControls(this.answers);
       }
     });
+
+    this.storeSubscription2 = this.store.select('quiz')
+      .subscribe(({ getResultStatus }) => {
+        if (getResultStatus === 2) {
+          this.router.navigate(['./result', this.userToken]);
+        }
+      });
   }
 
   ngAfterViewInit() {
-    if (this.status === 0 || this.status === 3) {
+    if (this.status === Status.Init || this.status === Status.Error) {
       this.router.navigate(['./home', this.userToken]);
     }
 
@@ -91,14 +98,8 @@ export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
       this.createControls(this.answers);
       this.startTimer();
     } else {
+      this.status = Status.Fetching;
       this.timerService.end(this.timer);
-
-      this.storeSubscription2 = this.store.select('quiz')
-        .subscribe(({ getResultStatus }) => {
-          if (getResultStatus === 2) {
-            this.router.navigate(['./result', this.userToken]);
-          }
-        });
 
       this.store.dispatch(new SaveQuizAnswers({
         userToken: this.userToken,

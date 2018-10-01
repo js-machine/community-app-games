@@ -1,5 +1,5 @@
 <div class="quiz-container" >
-  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="quiz-form" *ngIf="status === 2">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="quiz-form" *ngIf="status === Success">
     <div class="quiz-form__container">
       <div class="timer">{{currentTime}}</div>
       <div class="quiz-form__question-text" formQuestionName="questions">{{question}}</div>
@@ -14,7 +14,7 @@
     </div>
     
   </form>
-  <div class="sk-cube-grid" *ngIf="status !== 2">
+  <div class="sk-cube-grid" *ngIf="status !== Success">
     <div class="sk-cube sk-cube1"></div>
     <div class="sk-cube sk-cube2"></div>
     <div class="sk-cube sk-cube3"></div>
