@@ -22,8 +22,7 @@ export class ResultComponent implements OnInit, OnDestroy, AfterViewInit {
   public status: Status = Status.Init;
 
   private userToken: string;
-  private storeSubscription: Subscription;
-  private routerSubscription: Subscription;
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -32,17 +31,17 @@ export class ResultComponent implements OnInit, OnDestroy, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.routerSubscription = this.route.paramMap.subscribe(params => {
+    this.subscriptions.push(this.route.paramMap.subscribe(params => {
       this.userToken = params.get('userToken');
-    });
+    }));
 
-    this.storeSubscription = this.store.select('quiz').subscribe(({ lastSessionResults, getResultStatus }) => {
+    this.subscriptions.push(this.store.select('quiz').subscribe(({ lastSessionResults, getResultStatus }) => {
       this.status = getResultStatus;
 
       this.totalScore = lastSessionResults ? lastSessionResults.totalScore : 0;
       this.totalQuestions = lastSessionResults ? lastSessionResults.totalQuestions : 0;
       this.correctAnswers = lastSessionResults ? lastSessionResults.correctAnswers : 0;
-    });
+    }));
   }
 
   ngAfterViewInit() {
@@ -56,7 +55,6 @@ export class ResultComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {
-    if (this.storeSubscription) { this.storeSubscription.unsubscribe(); }
-    if (this.routerSubscription) { this.routerSubscription.unsubscribe(); }
+    this.subscriptions.forEach((subscription: Subscription) => subscription.unsubscribe());
   }
 }
