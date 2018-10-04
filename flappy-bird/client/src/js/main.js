@@ -51,8 +51,8 @@ export const gameCore = () => {
   }
 
   onStopAllActiveGames.push(function() {
-    $("#back-to-ca").off("mousedown", backToCA);
-    $("#back-to-ca").off("touchstart", backToCA);
+    $("#back-to-ca").off("mousedown", backToCa);
+    $("#back-to-ca").off("touchstart", backToCa);
   });
 
   var debugmode = false;
