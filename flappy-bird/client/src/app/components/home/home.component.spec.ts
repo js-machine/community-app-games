@@ -9,7 +9,7 @@ import { State } from 'store';
 import { StartGame, SaveGameResults, GetQuiz, SendResultBeforeQuiz } from 'store/quiz/quiz.action';
 
 import { HomeComponent } from './home.component';
-import { ActivatedRouteStub } from '../../testing/activated-route-stub';
+import { ActivatedRouteStub } from '../../spec/activated-route-stub';
 
 describe('HomeComponent', () => {
     const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
