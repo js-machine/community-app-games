@@ -17,7 +17,6 @@ import { AppComponent } from './app.component';
 import { reducers } from 'store/store.config';
 import { TimerService } from './services';
 import { HomeComponent, PathNotFoundComponent, QuizComponent, ResultComponent } from './components';
-
 @NgModule({
   declarations: [
     AppComponent,
