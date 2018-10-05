@@ -8,8 +8,8 @@ import { reducers } from 'store/store.config';
 import { State } from 'store';
 import { StartGame, SaveGameResults, GetQuiz, SendResultBeforeQuiz } from 'store/quiz/quiz.action';
 
-import { HomeComponent } from './home.component';
-import { ActivatedRouteStub } from '../../spec/activated-route-stub';
+import { HomeComponent } from '../components';
+import { ActivatedRouteStub } from './activated-route-stub';
 
 describe('HomeComponent', () => {
     const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
