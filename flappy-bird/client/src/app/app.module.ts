@@ -16,14 +16,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { reducers } from 'store/store.config';
 import { TimerService } from './services';
-import { HomeComponent, PathNotFoundComponent, QuizComponent, ResultComponent } from './components';
+import { HomeComponent, PathNotFoundComponent, QuizComponent, ResultComponent, SpinnerComponent } from './components';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     PathNotFoundComponent,
     QuizComponent,
-    ResultComponent
+    ResultComponent,
+    SpinnerComponent
   ],
   imports: [
     MatButtonModule,

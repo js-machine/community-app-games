@@ -24,7 +24,7 @@ describe('HomeComponent', () => {
     let component: HomeComponent;
     let dispatchSpy;
 
-    beforeEach((() => {
+    beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [HomeComponent],
             providers: [
@@ -46,7 +46,7 @@ describe('HomeComponent', () => {
         component = fixture.componentInstance;
         fixture.detectChanges();
         dispatchSpy = spyOn(store, 'dispatch');
-    }));
+    });
 
 
     it('Should be created', () => {

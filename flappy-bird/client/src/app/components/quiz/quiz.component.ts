@@ -58,15 +58,11 @@ export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
         this.question = this.quiz[this.currentQuiz].question;
         this.createControls(this.answers);
       }
-    }));
 
-    this.subscriptions.push(this.store.select('quiz')
-      .subscribe(({ getResultStatus }) => {
-        if (getResultStatus === 2) {
-          this.router.navigate(['./result', this.userToken]);
-        }
-      })
-    );
+      if (quiz.getResultStatus === 2) {
+        this.router.navigate(['./result', this.userToken]);
+      }
+    }));
   }
 
   ngAfterViewInit() {
