@@ -21,7 +21,7 @@ interface EndGameData {
 })
 
 export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
-    private userToken: string;
+    public userToken: string;
     private subscriptions: Subscription[] = [];
 
     public constructor(
@@ -38,14 +38,14 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
 
         this.store.dispatch(new StartGame(this.userToken));
 
-        this.endGame();
+        this.createSubscriptions();
     }
 
     public ngAfterViewInit() {
         gameCore();
     }
 
-    private endGame() {
+    private createSubscriptions() {
         this.subscriptions.push(onGameEnd
             .subscribe((data: EndGameData) =>
                 this.store.dispatch(new SaveGameResults({

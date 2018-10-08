@@ -1,6 +1,6 @@
-// import * as $ from 'jquery';
-// import 'jquery.transit';
-// import * as buzz from 'buzz';
+import * as $ from 'jquery';
+import 'jquery.transit';
+import * as buzz from 'buzz';
 
 /*
    Copyright 2014 Nebez Briefkani
