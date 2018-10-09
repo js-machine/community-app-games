@@ -24,7 +24,7 @@ describe('HomeComponent', () => {
     let component: HomeComponent;
     let dispatchSpy;
 
-    beforeEach((() => {
+    beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [HomeComponent],
             providers: [
@@ -46,7 +46,7 @@ describe('HomeComponent', () => {
         component = fixture.componentInstance;
         fixture.detectChanges();
         dispatchSpy = spyOn(store, 'dispatch');
-    }));
+    });
 
 
     it('Should be created', () => {
@@ -112,7 +112,6 @@ describe('HomeComponent', () => {
 
     it('should make redirect after onGetQuiz.next()', () => {
         onGetQuiz.next();
-
         const navArg = routerSpy.navigate.calls.first().args[0];
 
         expect(navArg[0]).toEqual('./quiz');

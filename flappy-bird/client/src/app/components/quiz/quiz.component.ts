@@ -48,7 +48,7 @@ export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
       this.userToken = params.get('userToken');
     }));
 
-    this.subscriptions.push(this.store.select('quiz').subscribe((quiz) => {
+    this.subscriptions.push(this.store.select(s => s.quiz).subscribe((quiz) => {
 
       this.quiz = quiz.quiz;
       this.status = quiz.getQuizStatus;
@@ -58,15 +58,11 @@ export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
         this.question = this.quiz[this.currentQuiz].question;
         this.createControls(this.answers);
       }
-    }));
 
-    this.subscriptions.push(this.store.select('quiz')
-      .subscribe(({ getResultStatus }) => {
-        if (getResultStatus === 2) {
-          this.router.navigate(['./result', this.userToken]);
-        }
-      })
-    );
+      if (quiz.getResultStatus === 2) {
+        this.router.navigate(['./result', this.userToken]);
+      }
+    }));
   }
 
   ngAfterViewInit() {
@@ -144,6 +140,8 @@ export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy() {
     this.timerService.end(this.timer);
-    this.subscriptions.forEach((subscription: Subscription) => subscription.unsubscribe());
+    if (this.subscriptions.length > 0) {
+      this.subscriptions.forEach((subscription: Subscription) => subscription.unsubscribe());
+    }
   }
 }

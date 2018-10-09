@@ -55,6 +55,8 @@ export class ResultComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach((subscription: Subscription) => subscription.unsubscribe());
+    if (this.subscriptions.length > 0) {
+      this.subscriptions.forEach((subscription: Subscription) => subscription.unsubscribe());
+    }
   }
 }
