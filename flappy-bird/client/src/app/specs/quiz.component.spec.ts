@@ -10,7 +10,7 @@ import { ActivatedRouteStub } from './activated-route-stub';
 import { QuizComponent } from '../components';
 import { TimerService } from '../services';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormsModule } from '@angular/forms';
 
 describe('Quiz Component', () => {
     const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
@@ -37,18 +37,19 @@ describe('Quiz Component', () => {
             ],
             imports: [
                 ReactiveFormsModule,
+                FormsModule,
                 StoreModule.forRoot(reducers, {
                     initialState: {
                         quiz: {
                             saveGameResultsStatus: Status.Success,
                             startGameStatus: Status.Success,
-                            getQuizStatus: Status.Success,
+                            getQuizStatus: Status.Init,
                             saveQuizAnswersStatus: Status.Init,
                             getResultStatus: Status.Init,
                             sendResultBeforeQuizStatus: Status.Init,
                             sendResultAfterQuizStatus: Status.Init,
                             quiz: [
-                                { question: '2 + 2', answers: ['1', '2', '3'] }
+                                { question: '2 + 2', answers: ['1', '2', '3', '4'] }
                             ],
                             lastSessionResults: null
                         }
@@ -83,8 +84,22 @@ describe('Quiz Component', () => {
     });
 
     it('should work select from store', () => {
+        component.ngOnInit();
+
         store.select('quiz').subscribe((quiz) => {
-            console.log(quiz);
+            expect(quiz.quiz.length).toBeGreaterThan(0);
         });
+    });
+
+    it('should start timer after view init', () => {
+        component.ngAfterViewInit();
+
+        expect(timerServiceSpy.start).toHaveBeenCalled();
+    });
+
+    it('should end timer after component destroy', () => {
+        component.ngOnDestroy();
+
+        expect(timerServiceSpy.end).toHaveBeenCalled();
     });
 });

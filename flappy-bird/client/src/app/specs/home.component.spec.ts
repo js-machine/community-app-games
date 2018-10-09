@@ -112,7 +112,6 @@ describe('HomeComponent', () => {
 
     it('should make redirect after onGetQuiz.next()', () => {
         onGetQuiz.next();
-
         const navArg = routerSpy.navigate.calls.first().args[0];
 
         expect(navArg[0]).toEqual('./quiz');
