@@ -3,9 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { Status } from 'models';
 
-import {
-  QuizFacade
-} from 'store';
+import { QuizFacade } from 'store';
 
 import { Subscription } from 'rxjs';
 

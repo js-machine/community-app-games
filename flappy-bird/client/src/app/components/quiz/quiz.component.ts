@@ -3,9 +3,7 @@ import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Quiz, Status } from 'models';
-import {
-  QuizFacade
-} from 'store';
+import { QuizFacade } from 'store';
 import { Subscription } from 'rxjs';
 import { TimerService } from '../../services';
 
@@ -50,14 +48,14 @@ export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.subscriptions.push(
       this.quizFacade.getQuiz$.subscribe(quiz => {
-      this.quiz = quiz;
+        this.quiz = quiz;
 
-      if (this.quiz[this.currentQuiz]) {
-        this.answers = this.shuffleArray(this.quiz[this.currentQuiz].answers);
-        this.question = this.quiz[this.currentQuiz].question;
-        this.createControls(this.answers);
-      }
-    }));
+        if (this.quiz[this.currentQuiz]) {
+          this.answers = this.shuffleArray(this.quiz[this.currentQuiz].answers);
+          this.question = this.quiz[this.currentQuiz].question;
+          this.createControls(this.answers);
+        }
+      }));
 
     this.subscriptions.push(this.quizFacade.getQuizStatus$.subscribe(status => {
       this.status = status;

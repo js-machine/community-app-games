@@ -50,7 +50,7 @@ export class QuizFacade {
         this.store.dispatch(new SendResultBeforeQuiz(userToken));
     }
 
-    getQuiz(userToken: string) {
+    loadQuiz(userToken: string) {
         this.store.dispatch(new GetQuiz(userToken));
     }
 

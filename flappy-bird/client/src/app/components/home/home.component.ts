@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation, AfterViewInit, OnInit, OnDestroy } from '
 import { gameCore, onGameEnd, onGetQuiz, onRetry, stopAllActiveGames } from 'js/main';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import {QuizFacade } from 'store';
+import { QuizFacade } from 'store';
 import { Subscription } from 'rxjs';
 
 interface EndGameData {
@@ -56,7 +56,7 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
         );
 
         this.subscriptions.push(onGetQuiz.subscribe(() => {
-            this.quizFacade.getQuiz(this.userToken);
+            this.quizFacade.loadQuiz(this.userToken);
             this.router.navigate(['./quiz', this.userToken]);
         }));
     }
