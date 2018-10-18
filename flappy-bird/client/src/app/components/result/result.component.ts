@@ -1,10 +1,9 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Status } from 'models';
 
-import { State } from 'store';
+import { QuizFacade } from 'store';
 
 import { Subscription } from 'rxjs';
 
@@ -26,8 +25,8 @@ export class ResultComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(
     private route: ActivatedRoute,
-    private store: Store<State>,
-    private router: Router
+    private router: Router,
+    private quizFacade: QuizFacade
   ) { }
 
   ngOnInit() {
@@ -35,12 +34,14 @@ export class ResultComponent implements OnInit, OnDestroy, AfterViewInit {
       this.userToken = params.get('userToken');
     }));
 
-    this.subscriptions.push(this.store.select('quiz').subscribe(({ lastSessionResults, getResultStatus }) => {
-      this.status = getResultStatus;
+    this.subscriptions.push(this.quizFacade.getResultStatus$.subscribe(status => {
+      this.status = status;
+    }));
 
-      this.totalScore = lastSessionResults ? lastSessionResults.totalScore : 0;
-      this.totalQuestions = lastSessionResults ? lastSessionResults.totalQuestions : 0;
-      this.correctAnswers = lastSessionResults ? lastSessionResults.correctAnswers : 0;
+    this.subscriptions.push(this.quizFacade.getLastSessionResult$.subscribe(result => {
+      this.totalScore = result ? result.totalScore : 0;
+      this.totalQuestions = result ? result.totalQuestions : 0;
+      this.correctAnswers = result ? result.correctAnswers : 0;
     }));
   }
 

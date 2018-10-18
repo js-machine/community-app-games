@@ -9,7 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { TodoEffects, TodosService } from 'store/todo';
-import { QuizEffects, QuizService } from 'store/quiz';
+import { QuizEffects, QuizService, QuizFacade } from 'store/quiz';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -47,7 +47,8 @@ import { HomeComponent, PathNotFoundComponent, QuizComponent, ResultComponent, S
   providers: [
     TodosService,
     QuizService,
-    TimerService
+    TimerService,
+    QuizFacade
   ],
   bootstrap: [AppComponent]
 })
