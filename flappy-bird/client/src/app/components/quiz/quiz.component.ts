@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
-import { Store } from '@ngrx/store';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Quiz, Status } from 'models';
-import { State } from 'store';
-import { SaveQuizAnswers } from 'store/quiz/quiz.action';
+import {
+  QuizFacade
+} from 'store';
 import { Subscription } from 'rxjs';
 import { TimerService } from '../../services';
 
@@ -35,9 +35,9 @@ export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private store: Store<State>,
     private router: Router,
-    private timerService: TimerService
+    private timerService: TimerService,
+    private quizFacade: QuizFacade
   ) {
   }
 
@@ -48,18 +48,23 @@ export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
       this.userToken = params.get('userToken');
     }));
 
-    this.subscriptions.push(this.store.select(s => s.quiz).subscribe((quiz) => {
-
-      this.quiz = quiz.quiz;
-      this.status = quiz.getQuizStatus;
+    this.subscriptions.push(
+      this.quizFacade.getQuiz$.subscribe(quiz => {
+      this.quiz = quiz;
 
       if (this.quiz[this.currentQuiz]) {
         this.answers = this.shuffleArray(this.quiz[this.currentQuiz].answers);
         this.question = this.quiz[this.currentQuiz].question;
         this.createControls(this.answers);
       }
+    }));
 
-      if (quiz.getResultStatus === 2) {
+    this.subscriptions.push(this.quizFacade.getQuizStatus$.subscribe(status => {
+      this.status = status;
+    }));
+
+    this.subscriptions.push(this.quizFacade.getResultStatus$.subscribe(status => {
+      if (status === 2) {
         this.router.navigate(['./result', this.userToken]);
       }
     }));
@@ -95,11 +100,7 @@ export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
       this.status = Status.Fetching;
       this.timerService.end(this.timer);
 
-      this.store.dispatch(new SaveQuizAnswers({
-        userToken: this.userToken,
-        quiz: this.userAnswers,
-        updatedAt: new Date()
-      }));
+      this.quizFacade.saveQuizAnswers(this.userToken, this.userAnswers, new Date());
     }
   }
 

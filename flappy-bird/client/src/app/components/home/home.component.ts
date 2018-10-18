@@ -1,10 +1,8 @@
 import { Component, ViewEncapsulation, AfterViewInit, OnInit, OnDestroy } from '@angular/core';
 import { gameCore, onGameEnd, onGetQuiz, onRetry, stopAllActiveGames } from 'js/main';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Store } from '@ngrx/store';
 
-import { State } from 'store';
-import { StartGame, SaveGameResults, GetQuiz, SendResultBeforeQuiz } from 'store/quiz/quiz.action';
+import {QuizFacade } from 'store';
 import { Subscription } from 'rxjs';
 
 interface EndGameData {
@@ -26,8 +24,8 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
 
     public constructor(
         private route: ActivatedRoute,
-        private store: Store<State>,
-        private router: Router
+        private router: Router,
+        private quizFacade: QuizFacade
     ) {
     }
 
@@ -35,8 +33,7 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
         this.subscriptions.push(this.route.paramMap.subscribe(params => {
             this.userToken = params.get('userToken');
         }));
-
-        this.store.dispatch(new StartGame(this.userToken));
+        this.quizFacade.startNewGame(this.userToken);
 
         this.createSubscriptions();
     }
@@ -48,21 +45,18 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
     private createSubscriptions() {
         this.subscriptions.push(onGameEnd
             .subscribe((data: EndGameData) =>
-                this.store.dispatch(new SaveGameResults({
-                    userToken: this.userToken,
-                    score: data.score,
-                    question: data.question,
-                    createdAt: data.createdAt
-                }))
+                this.quizFacade.saveGameResult(data, this.userToken)
             )
         );
 
         this.subscriptions.push(onRetry
-            .subscribe(() => this.store.dispatch(new SendResultBeforeQuiz(this.userToken)))
+            .subscribe(() =>
+                this.quizFacade.sendResultBeforeQuiz(this.userToken)
+            )
         );
 
         this.subscriptions.push(onGetQuiz.subscribe(() => {
-            this.store.dispatch(new GetQuiz(this.userToken));
+            this.quizFacade.getQuiz(this.userToken);
             this.router.navigate(['./quiz', this.userToken]);
         }));
     }
