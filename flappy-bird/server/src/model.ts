@@ -116,7 +116,7 @@ export interface FinalResult {
     totalScore: number;
     totalQuestions: number;
     correctAnswers: number;
-    questionsAndAnwers: QuestionAnswer[];
+    questionsAndAnswers: QuestionAnswer[];
 }
 
 export interface GameResult {

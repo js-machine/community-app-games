@@ -16,8 +16,8 @@
     <div class="result__content-container result__content-container--answers">
       <h2 class="result__content-title">YOUR ANSWERS</h2>
 
-      <h3 class="result__statistics">Correct Answers : {{totalQuestions}}</h3>
-      <h3 class="result__statistics">Wrong Answers : {{correctAnswers}}</h3>
+      <h3 *ngFor="let answer of questionsAndAnswers; let i = index" class="result__statistics">{{answer[i]}} </h3>
+      
 
     </div>
 
