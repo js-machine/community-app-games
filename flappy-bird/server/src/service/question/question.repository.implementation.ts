@@ -242,4 +242,22 @@ export class QuestionRepositoryImplementation implements QuestionRepository {
       throw new Error(error);
     }
   }
+
+  public async getAllUsersAnswers(userId: number): Promise<QuestionMarkTableRow[]> {
+    try {
+      const allUserAnswers = await QuestionMarkModel.findAll({
+        where: {
+          userId,
+          session: 1
+        }
+      });
+
+      return allUserAnswers;
+    } catch {
+      const error = technicalErr.questionRepository_Implementation.getUserRightAnswers.msg;
+
+      this.loggerService.errorLog(error);
+      throw new Error(error);
+    }
+  }
 }

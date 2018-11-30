@@ -188,4 +188,17 @@ export class QuestionService {
             throw new Error(error);
         }
     }
+
+    public async getAllUsersAnswers(userId: number): Promise<QuestionMarkTableRow[]> {
+        try {
+            const allUsersAnswers = await this.questionRepository.getAllUsersAnswers(userId);
+            
+            return allUsersAnswers;
+        } catch {
+            const error = technicalErr.questionRepository.getUserRightAnswers.msg;
+
+            this.loggerService.errorLog(error);
+            throw new Error(error);
+        }
+    }
 }

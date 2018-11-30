@@ -107,10 +107,16 @@ export interface Quiz {
     answers: string[];
 }
 
+export interface QuestionAnswer {
+    question: string;
+    answer: number[];
+}
+
 export interface FinalResult {
     totalScore: number;
     totalQuestions: number;
     correctAnswers: number;
+    questionsAndAnwers: QuestionAnswer[];
 }
 
 export interface GameResult {
