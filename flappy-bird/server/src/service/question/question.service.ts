@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify';
 
 import { LoggerService } from '../logger';
-import { Question, QuestionMarkTableRow } from 'model';
+import { Question, QuestionMarkTableRow, Answer } from 'model';
 
 import { QuestionRepository } from './question.repository';
 import { technicalErr } from 'errors';
@@ -189,10 +189,23 @@ export class QuestionService {
         }
     }
 
+    public async getAllAnswers(): Promise<Answer[]> {
+        try {
+            const allAnswers = await this.questionRepository.getAllAnswers();
+
+            return allAnswers;
+        } catch {
+            const error = technicalErr.questionRepository.getUserRightAnswers.msg;
+
+            this.loggerService.errorLog(error);
+            throw new Error(error);
+        }
+    }
+
     public async getAllUsersAnswers(userId: number): Promise<QuestionMarkTableRow[]> {
         try {
             const allUsersAnswers = await this.questionRepository.getAllUsersAnswers(userId);
-            
+
             return allUsersAnswers;
         } catch {
             const error = technicalErr.questionRepository.getUserRightAnswers.msg;
