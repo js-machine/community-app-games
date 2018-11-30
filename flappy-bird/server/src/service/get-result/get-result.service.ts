@@ -5,7 +5,7 @@ import { UserService } from '../user';
 import { QuestionService } from '../question';
 import { GameService } from '../game';
 
-import { QuestionMarkTableRow, FinalResult, Game } from 'model';
+import { QuestionMarkTableRow, FinalResult, Game, Question } from 'model';
 import { technicalErr } from 'errors';
 
 @injectable()
@@ -22,6 +22,8 @@ export class GetResultService {
         let myRightAnswers: number[];
         let lastGame: Game;
         let scoreFromQuiz: number = 0;
+        let allUserAnswers: any;
+        let allQuestions: Question[];
 
         try {
             userId = (await this.userService.getUser(userToken)).id;
@@ -50,6 +52,25 @@ export class GetResultService {
             throw new Error(error);
         }
 
+        try {
+            allUserAnswers = (await this.questionService.getAllUsersAnswers(userId)).map((row: QuestionMarkTableRow) => row.questionId);
+        } catch {
+            const error = technicalErr.questionService.getUserRightAnswers.msg;
+
+            this.loggerService.errorLog(error);
+            throw new Error(error);
+        }
+
+        try {
+            allQuestions = await (this.questionService.getQuestions());
+            
+        } catch {
+            const error = technicalErr.questionService.getUserRightAnswers.msg;
+
+            this.loggerService.errorLog(error);
+            throw new Error(error);
+        }
+
         if (myRightAnswers.length > 0) {
             for (let i = 0; i < myRightAnswers.length; i++) {
                 try {
@@ -64,10 +85,28 @@ export class GetResultService {
             }
         }
 
+        let findCorrect = (questArr: string[], correctAns: number[]) => {
+            const resultArr = questArr.filter((item, index) => {
+              return correctAns.indexOf(index + 1) !== -1
+            });
+            return resultArr;
+        };
+
+        const answeredQuestionsText = findCorrect(allQuestions.map((item) => item.question), allUserAnswers);
+
+        console.log('From question service: answered -----' + allUserAnswers);
+        console.log('From question service: answered length -----' + allUserAnswers.length);
+        console.log('From question service: answered length -----' + allUserAnswers.length);
+        console.log('From question service: questions length -----' + allQuestions.map((item) => item.question).length);
+        console.log('From question service: filtred questions array -----' + answeredQuestionsText);
+
+        const questionsAndAnwers: any[] = answeredQuestionsText;
+
         const result: FinalResult = {
             totalScore: lastGame.score + scoreFromQuiz,
             totalQuestions: lastGame.question,
-            correctAnswers: myRightAnswers.length
+            correctAnswers: myRightAnswers.length,
+            questionsAndAnwers
         };
 
         return result;

@@ -13,4 +13,5 @@ export abstract class QuestionRepository {
     public abstract markCorrectAnswer(userId: number, questionId: number): Promise<boolean>;
     public abstract refreshSession(userId: number): Promise<boolean>;
     public abstract refreshUserAnswersQuestionMarkTable(userId: number): Promise<boolean>;
+    public abstract getAllUsersAnswers(userId: number): Promise<QuestionMarkTableRow[]>;
 }
