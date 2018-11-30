@@ -1,8 +1,8 @@
 import { injectable, inject } from 'inversify';
 
 import { LoggerService } from '../logger';
-import { Question, QuestionMarkTableRow } from 'model';
-import { QuestionMarkModel, QuizQuestionsModel } from 'models';
+import { Question, QuestionMarkTableRow, Answer } from 'model';
+import { QuestionMarkModel, QuizQuestionsModel, QuizAnswersModel } from 'models';
 
 import { QuestionRepository } from './question.repository';
 import { technicalErr } from 'errors';
@@ -253,6 +253,19 @@ export class QuestionRepositoryImplementation implements QuestionRepository {
       });
 
       return allUserAnswers;
+    } catch {
+      const error = technicalErr.questionRepository_Implementation.getUserRightAnswers.msg;
+
+      this.loggerService.errorLog(error);
+      throw new Error(error);
+    }
+  }
+
+  public async getAllAnswers(): Promise<Answer[]> {
+    try {
+      const allAnswers = await QuizAnswersModel.findAll({});
+
+      return allAnswers;
     } catch {
       const error = technicalErr.questionRepository_Implementation.getUserRightAnswers.msg;
 
