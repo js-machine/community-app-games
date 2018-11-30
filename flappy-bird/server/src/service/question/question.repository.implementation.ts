@@ -263,13 +263,39 @@ export class QuestionRepositoryImplementation implements QuestionRepository {
 
   public async getAllAnswers(): Promise<Answer[]> {
     try {
-      const allAnswers = await QuizAnswersModel.findAll({
+      console.warn('*****************');
+      console.log('*****************');
+      console.log('*****************');
+      console.log('getAllAnswers Implementation 1')
+      console.warn('*****************');
+      console.log('*****************');
+      console.log('*****************');
+      let allAnswers = {} as any;
+      await QuizAnswersModel.findAll({
         where: {
           isCorrect: 1
         }
-      });
+      })
+        .each((item: any) => {
+          if (!allAnswers[item.questionId]) {
+            allAnswers[item.questionId] = { answers: [] };
+          }
+          allAnswers[item.questionId].answers.push(item.answer);
+        });
 
-      return allAnswers;
+      console.warn('*****************');
+      console.log('*****************');
+      console.log('*****************');
+      console.log('getAllAnswers Implementation 2')
+      console.warn('*****************');
+      console.log('*****************');
+      console.log('*****************');
+
+      return Object.keys(allAnswers)
+        .map((key) => ({
+          questionId: key,
+          answers: allAnswers[key].answers
+        })) as any
     } catch {
       const error = technicalErr.questionRepository_Implementation.getUserRightAnswers.msg;
 

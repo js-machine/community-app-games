@@ -18,6 +18,7 @@ export class GetResultService {
     ) { }
 
     public async getResult(userToken: string): Promise<FinalResult> {
+
         let userId: number;
         let myRightAnswers: number[];
         let lastGame: Game;
@@ -54,7 +55,7 @@ export class GetResultService {
         }
 
         try {
-            allUserAnswers = (await this.questionService.getAllUsersAnswers(userId)).map((row: QuestionMarkTableRow) => row.questionId);
+            allUserAnswers = (await this.questionService.getAllUsersAnswers(userId));
         } catch {
             const error = technicalErr.questionService.getUserRightAnswers.msg;
 
@@ -83,55 +84,67 @@ export class GetResultService {
         }
 
         if (myRightAnswers.length > 0) {
-            for (let i = 0; i < myRightAnswers.length; i++) {
-                try {
-                    const scoreFromQuestion = (await this.questionService.getQuestionById(myRightAnswers[i])).points;
-                    scoreFromQuiz += scoreFromQuestion;
-                } catch {
-                    const error = technicalErr.questionService.getQuestionById.msg;
+        for (let i = 0; i < myRightAnswers.length; i++) {
+                 try {
+                     const scoreFromQuestion = (await this.questionService.getQuestionById(myRightAnswers[i])).points;
+                     scoreFromQuiz += scoreFromQuestion;
+                 } catch {
+                     const error = technicalErr.questionService.getQuestionById.msg;
 
-                    this.loggerService.errorLog(error);
-                    throw new Error(error);
-                }
-            }
-        }
-
-        let findCorrect = (questArr: any[], correctAns: number[]) => {
-            const resultArr = questArr.filter((item, index) => {
-              return correctAns.indexOf(index + 1) !== -1;
-            });
-            return resultArr;
+                     this.loggerService.errorLog(error);
+                     throw new Error(error);
+                 }
+             }
         };
 
-        const answeredQuestionsText = findCorrect(allQuestions.map((item) => item.question), allUserAnswers);
-
-        console.log('From question service: answered -----' + allUserAnswers);
-        console.log('From question service: answered length -----' + allUserAnswers.length);
-        console.log('From question service: answered length -----' + allUserAnswers.length);
-        console.log('From question service: questions length -----' + allQuestions.map((item) => item.question).length);
-        console.log('From question service: filtred questions array -----' + answeredQuestionsText);
-
-        allAnswers = allAnswers.map(item => {
-            return {id: item.questionId, answer: item.answer};
-        });
+        let findCorrect = (questArr: any[], correctAns: number[]) => {
+             const resultArr = questArr.filter((item, index) => {
+                 return correctAns.indexOf(index + 1) !== -1;
+             });
+             return resultArr;
+        };
 
         console.log(allAnswers);
 
-        const questionsAndAnwers: any[] = answeredQuestionsText.map((item, index) => {
-            return {
-                question: item,
-                answers: ['xxx', 'yyy', 'zzz'],
-                isRight: 1
-            };
-        });
+        // allUserAnswers = allUserAnswers.map((row: QuestionMarkTableRow) => row.questionId);
+        // console.log(allUserAnswers);
+        // const answeredQuestionsText = findCorrect(allQuestions.map((item) => item.question), allUserAnswers)
+        //     .map(item => {
+        //         return { question: item }
+        //     });
+        // console.log(answeredQuestionsText);
 
-        console.dir('From question service: answer output -----' + allAnswers.length);
+        // // allAnswers = allAnswers.map(item => {
+        // //     return {id: item.questionId, answer: [item.answer]};
+        // // });
+        // console.log(allAnswers);
 
-        const result: FinalResult = {
+        // const answersForRender = allAnswers.filter((item) => {
+        //     return allUserAnswers.indexOf(item.id) !== -1;
+        // });
+        // console.log(answersForRender);
+
+        // let assignOfAnswersAndQuestions = (questionsArray: any[], answersArray: any) => {
+        //     let output = [];
+        //     for (let i = 0; i < questionsArray.length; i++) {
+        //         output.push(Object.assign(questionsArray[i], answersArray[i]));
+        //     }
+        //     return output;
+        // };
+
+        // const questionsAndAnwers: any[] = answeredQuestionsText.map((item) => {
+        //     return {
+        //         question: item,
+        //         answer: ['xxx', 'yyy', 'zzz'],
+        //         isRight: 1
+        //     };
+        // });
+
+        const result: any = {
             totalScore: lastGame.score + scoreFromQuiz,
             totalQuestions: lastGame.question,
             correctAnswers: myRightAnswers.length,
-            questionsAndAnwers
+            /* questionsAndAnwers */
         };
 
         return result;
