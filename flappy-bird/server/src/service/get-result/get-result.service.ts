@@ -24,6 +24,7 @@ export class GetResultService {
         let scoreFromQuiz: number = 0;
         let allUserAnswers: any;
         let allQuestions: Question[];
+        let allAnswers;
 
         try {
             userId = (await this.userService.getUser(userToken)).id;
@@ -63,7 +64,17 @@ export class GetResultService {
 
         try {
             allQuestions = await (this.questionService.getQuestions());
-            
+
+        } catch {
+            const error = technicalErr.questionService.getUserRightAnswers.msg;
+
+            this.loggerService.errorLog(error);
+            throw new Error(error);
+        }
+
+        try {
+            allAnswers = await (this.questionService.getAllAnswers());
+
         } catch {
             const error = technicalErr.questionService.getUserRightAnswers.msg;
 
@@ -87,7 +98,7 @@ export class GetResultService {
 
         let findCorrect = (questArr: string[], correctAns: number[]) => {
             const resultArr = questArr.filter((item, index) => {
-              return correctAns.indexOf(index + 1) !== -1
+              return correctAns.indexOf(index + 1) !== -1;
             });
             return resultArr;
         };
@@ -100,7 +111,15 @@ export class GetResultService {
         console.log('From question service: questions length -----' + allQuestions.map((item) => item.question).length);
         console.log('From question service: filtred questions array -----' + answeredQuestionsText);
 
-        const questionsAndAnwers: any[] = answeredQuestionsText;
+        const questionsAndAnwers: any[] = answeredQuestionsText.map((item, index) => {
+            return {
+                question: item,
+                answer: ['xxx', 'yyy', 'zzz'],
+                isRight: 1
+            };
+        });
+
+        console.dir('From question service: full output -----' + questionsAndAnwers);
 
         const result: FinalResult = {
             totalScore: lastGame.score + scoreFromQuiz,
