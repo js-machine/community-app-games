@@ -47,7 +47,7 @@ export class ResultComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     if (this.status === Status.Init || this.status === Status.Error) {
-      this.router.navigate(['./home', this.userToken]);
+      this.router.navigate(['./result', this.userToken]);
     }
   }
 

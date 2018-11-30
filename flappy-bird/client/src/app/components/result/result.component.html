@@ -1,5 +1,5 @@
 <div class="result__container">
-  <ng-container *ngIf="status === Status.Success">
+  <ng-container>       <!-- *ngIf="status === Status.Success" -->
     <div class="result__content-container">
 
       <h2 class="result__content-title">YOUR SCORE</h2>
@@ -13,8 +13,15 @@
         go back and try again or review your answers with your parents.
       </h3>
     </div>
+    <div class="result__content-container result__content-container--answers">
+      <h2 class="result__content-title">YOUR ANSWERS</h2>
+
+      <h3 class="result__statistics">Correct Answers : {{totalQuestions}}</h3>
+      <h3 class="result__statistics">Wrong Answers : {{correctAnswers}}</h3>
+
+    </div>
 
     <button mat-button class="form__submit" (click)="onClick()">Try Again</button>
   </ng-container>
-  <app-spinner *ngIf="status !== Status.Success"></app-spinner>
+  <!-- <app-spinner *ngIf="status !== Status.Success"></app-spinner> -->
 </div>

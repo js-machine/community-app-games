@@ -44,6 +44,10 @@
   font-weight: normal;
 }
 
+.result__content-container--answers {
+  background-color: #48c77d;
+}
+
 .result__title {
   margin-top: 10px;
   margin-bottom: 20px;
