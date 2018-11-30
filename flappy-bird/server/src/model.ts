@@ -109,7 +109,8 @@ export interface Quiz {
 
 export interface QuestionAnswer {
     question: string;
-    answer: number[];
+    answers: number[];
+    isRight: boolean;
 }
 
 export interface FinalResult {

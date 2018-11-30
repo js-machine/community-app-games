@@ -263,7 +263,11 @@ export class QuestionRepositoryImplementation implements QuestionRepository {
 
   public async getAllAnswers(): Promise<Answer[]> {
     try {
-      const allAnswers = await QuizAnswersModel.findAll({});
+      const allAnswers = await QuizAnswersModel.findAll({
+        where: {
+          isCorrect: 1
+        }
+      });
 
       return allAnswers;
     } catch {

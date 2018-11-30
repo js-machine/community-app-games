@@ -96,7 +96,7 @@ export class GetResultService {
             }
         }
 
-        let findCorrect = (questArr: string[], correctAns: number[]) => {
+        let findCorrect = (questArr: any[], correctAns: number[]) => {
             const resultArr = questArr.filter((item, index) => {
               return correctAns.indexOf(index + 1) !== -1;
             });
@@ -111,15 +111,21 @@ export class GetResultService {
         console.log('From question service: questions length -----' + allQuestions.map((item) => item.question).length);
         console.log('From question service: filtred questions array -----' + answeredQuestionsText);
 
+        allAnswers = allAnswers.map(item => {
+            return {id: item.questionId, answer: item.answer};
+        });
+
+        console.log(allAnswers);
+
         const questionsAndAnwers: any[] = answeredQuestionsText.map((item, index) => {
             return {
                 question: item,
-                answer: ['xxx', 'yyy', 'zzz'],
+                answers: ['xxx', 'yyy', 'zzz'],
                 isRight: 1
             };
         });
 
-        console.dir('From question service: full output -----' + questionsAndAnwers);
+        console.dir('From question service: answer output -----' + allAnswers.length);
 
         const result: FinalResult = {
             totalScore: lastGame.score + scoreFromQuiz,
