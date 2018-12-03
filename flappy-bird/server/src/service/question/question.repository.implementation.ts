@@ -6,6 +6,7 @@ import { QuestionMarkModel, QuizQuestionsModel, QuizAnswersModel } from 'models'
 
 import { QuestionRepository } from './question.repository';
 import { technicalErr } from 'errors';
+
 @injectable()
 export class QuestionRepositoryImplementation implements QuestionRepository {
   constructor(
@@ -263,13 +264,13 @@ export class QuestionRepositoryImplementation implements QuestionRepository {
 
   public async getAllAnswers(): Promise<Answer[]> {
     try {
-      const allAnswers = {} as any;
+      const allAnswers: any = {};
       await QuizAnswersModel.findAll({
         where: {
           isCorrect: 1
         }
       })
-        .each((item: any) => {
+        .each((item: Answer) => {
           if (!allAnswers[item.questionId]) {
             allAnswers[item.questionId] = { answers: [] };
           }

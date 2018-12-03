@@ -17,6 +17,10 @@
   background: #555; 
 }
 
+.form__submit {
+  width: 50%
+}
+
 .result__container {
   overflow: scroll;
   overflow-x: hidden;
@@ -95,13 +99,13 @@
   margin-bottom: 20px;
 }
 
-.result__statistics {
-  margin-bottom: 20px;
+.result__try-again-button{
+  width: 100px;
 }
 
 .mat-button {
   padding: 10px 10px;
-  width: 85%;
+  width: 35%;
   margin: 0 auto;
   font-size: 38px;
   text-transform: uppercase;
