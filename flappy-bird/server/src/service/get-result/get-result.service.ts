@@ -18,6 +18,7 @@ export class GetResultService {
     ) { }
 
     public async getResult(userToken: string): Promise<FinalResult> {
+
         let userId: number;
         let myRightAnswers: number[];
         let lastGame: Game;
@@ -54,7 +55,7 @@ export class GetResultService {
         }
 
         try {
-            allUserAnswers = (await this.questionService.getAllUsersAnswers(userId)).map((row: QuestionMarkTableRow) => row.questionId);
+            allUserAnswers = (await this.questionService.getAllUsersAnswers(userId)).map(item => item.questionId);
         } catch {
             const error = technicalErr.questionService.getUserRightAnswers.msg;
 
@@ -83,45 +84,50 @@ export class GetResultService {
         }
 
         if (myRightAnswers.length > 0) {
-            for (let i = 0; i < myRightAnswers.length; i++) {
-                try {
-                    const scoreFromQuestion = (await this.questionService.getQuestionById(myRightAnswers[i])).points;
-                    scoreFromQuiz += scoreFromQuestion;
-                } catch {
-                    const error = technicalErr.questionService.getQuestionById.msg;
+        for (let i = 0; i < myRightAnswers.length; i++) {
+                 try {
+                     const scoreFromQuestion = (await this.questionService.getQuestionById(myRightAnswers[i])).points;
+                     scoreFromQuiz += scoreFromQuestion;
+                 } catch {
+                     const error = technicalErr.questionService.getQuestionById.msg;
 
-                    this.loggerService.errorLog(error);
-                    throw new Error(error);
-                }
-            }
-        }
-
-        let findCorrect = (questArr: string[], correctAns: number[]) => {
-            const resultArr = questArr.filter((item, index) => {
-              return correctAns.indexOf(index + 1) !== -1;
-            });
-            return resultArr;
+                     this.loggerService.errorLog(error);
+                     throw new Error(error);
+                 }
+             }
         };
 
-        const answeredQuestionsText = findCorrect(allQuestions.map((item) => item.question), allUserAnswers);
+        let findCorrect = (questArr: any[], correctAns: number[]) => {
+             const resultArr = questArr.filter((item, index) => {
+                 return correctAns.indexOf(index + 1) !== -1;
+             });
+             return resultArr;
+        };
 
-        console.log('From question service: answered -----' + allUserAnswers);
-        console.log('From question service: answered length -----' + allUserAnswers.length);
-        console.log('From question service: answered length -----' + allUserAnswers.length);
-        console.log('From question service: questions length -----' + allQuestions.map((item) => item.question).length);
-        console.log('From question service: filtred questions array -----' + answeredQuestionsText);
+        console.log(allAnswers);
+        console.log(allUserAnswers);
 
-        const questionsAndAnswers: any[] = answeredQuestionsText.map((item, index) => {
-            return {
-                question: item,
-                answer: ['xxx', 'yyy', 'zzz'],
-                isRight: 1
-            };
+        const answersForRender = allAnswers.filter((item) => allUserAnswers.indexOf(+item.questionId) !== -1 );
+        console.log(answersForRender);
+
+        const answeredQuestionsText = findCorrect(allQuestions.map((item) => item.question), allUserAnswers)
+        .map((item) => {
+        return { question: item };
         });
+        console.log(answeredQuestionsText);
 
-        console.dir('From question service: full output -----' + questionsAndAnswers);
+        let assignOfAnswersAndQuestions = (questionsTxtArr: any[], ansArr: any) => {
+             let output = [];
+             for (let i = 0; i < questionsTxtArr.length; i++) {
+                output.push(Object.assign(questionsTxtArr[i], ansArr[i]), {isRight: 1});
+             }
+             return output;
+        };
 
-        const result: FinalResult = {
+        const questionsAndAnwers = assignOfAnswersAndQuestions(answeredQuestionsText, answersForRender);
+        console.log(questionsAndAnwers);
+
+        const result: any = {
             totalScore: lastGame.score + scoreFromQuiz,
             totalQuestions: lastGame.question,
             correctAnswers: myRightAnswers.length,
