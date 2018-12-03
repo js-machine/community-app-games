@@ -21,8 +21,8 @@
       <div class="result__content-questions">
         <div *ngFor="let question of questionsAndAnswers" class="result__content-answers">
           <span>
-            <fa-icon [icon]="faCheck" *ngIf="question.isRight"></fa-icon>
-            <fa-icon [icon]="faTimes" *ngIf="!question.isRight" style="color: #ef5350"></fa-icon>
+            <fa-icon [icon]="faCheck" *ngIf="question.isRight" style="color: #1b5e20"></fa-icon>
+            <fa-icon [icon]="faTimes" *ngIf="!question.isRight" style="color: #b71c1c"></fa-icon>
           </span>
           <h3 class="result__content-question-text">
             {{question.question}}
