@@ -119,13 +119,13 @@ export class GetResultService {
         let assignOfAnswersAndQuestions = (questionsTxtArr: any[], ansArr: any) => {
              let output = [];
              for (let i = 0; i < questionsTxtArr.length; i++) {
-                output.push(Object.assign(questionsTxtArr[i], ansArr[i]), {isRight: 1});
+                output.push(Object.assign(questionsTxtArr[i], ansArr[i]));
              }
              return output;
         };
 
-        const questionsAndAnwers = assignOfAnswersAndQuestions(answeredQuestionsText, answersForRender);
-        console.log(questionsAndAnwers);
+        const questionsAndAnswers = assignOfAnswersAndQuestions(answeredQuestionsText, answersForRender);
+        console.log(questionsAndAnswers);
 
         const result: any = {
             totalScore: lastGame.score + scoreFromQuiz,

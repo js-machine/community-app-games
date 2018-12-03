@@ -51,12 +51,10 @@
   border-top: none;
 }
 
-.result__content-questions {
-  display: block;
-}
-
 .result__content-answer {
   width: 50%;
+  text-align: left;
+  margin-left: 150px
 }
 
 ul {
@@ -65,6 +63,11 @@ ul {
 
 .result__content-question-text {
   text-align: left;
+  margin: 20px 0 15px 100px;
+}
+
+.ng-fa-icon {
+  color: #51E991;
 }
 
 .result__title {
@@ -155,6 +158,12 @@ ul {
     font-weight: bold;
     margin-top: 10px;
     margin-bottom: 20px;
+  }
+
+  .result__content-answer {
+    width: 100%;
+    text-align: left;
+    margin-left: 20px;
   }
 
   .result__statistics {

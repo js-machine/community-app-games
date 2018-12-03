@@ -1,6 +1,5 @@
 <div class="result__container">
-  <ng-container>
-    <!-- *ngIf="status === Status.Success" -->
+  <ng-container *ngIf="status === Status.Success">
     <div class="result__content-container">
 
       <h2 class="result__content-title">YOUR SCORE</h2>
@@ -17,18 +16,18 @@
     </div>
 
     <div class="result__content-container result__content-container--transparent">
-      <h2 class="result__content-title">YOUR ANSWERS</h2>
+      <h2 class="result__content-title">RIGHT ANSWERS</h2>
 
       <div class="result__content-questions">
-        <ul *ngFor="let question of questionsAndAnswers" class="result__content-answers">
+        <div *ngFor="let question of questionsAndAnswers" class="result__content-answers">
           <h3 class="result__content-question-text">{{question.question}} </h3>
-          <li *ngFor="let ans of question.answer; let i = index" class="result__content-answer">{{question.answer[i]}}</li>
-        </ul>
+          <p *ngFor="let ans of question.answers; let i = index" class="result__content-answer"><fa-icon [icon]="faCheck"></fa-icon> {{ans}}</p>
+        </div>
       </div>
 
     </div>
 
     <button mat-button class="form__submit" (click)="onClick()">Try Again</button>
   </ng-container>
-  <!-- <app-spinner *ngIf="status !== Status.Success"></app-spinner> -->
+  <app-spinner *ngIf="status !== Status.Success"></app-spinner>
 </div>
