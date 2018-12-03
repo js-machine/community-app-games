@@ -107,7 +107,7 @@ export interface Quiz {
     answers: string[];
 }
 
-export interface QuestionAnswer {
+export interface QuestionAndAnswers {
     question: string;
     answers: number[];
     isRight: boolean;
@@ -117,7 +117,7 @@ export interface FinalResult {
     totalScore: number;
     totalQuestions: number;
     correctAnswers: number;
-    questionsAndAnswers: QuestionAnswer[];
+    questionsAndAnswers: QuestionAndAnswers[];
 }
 
 export interface GameResult {

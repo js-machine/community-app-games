@@ -5,7 +5,7 @@ import { UserService } from '../user';
 import { QuestionService } from '../question';
 import { GameService } from '../game';
 
-import { QuestionMarkTableRow, FinalResult, Game, Question } from 'model';
+import { QuestionMarkTableRow, FinalResult, Game, Question, Answer } from 'model';
 import { technicalErr } from 'errors';
 
 @injectable()
@@ -22,10 +22,10 @@ export class GetResultService {
         let userId: number;
         let myRightAnswers: number[];
         let lastGame: Game;
-        let scoreFromQuiz: number = 0;
+        let scoreFromQuiz: number;
         let allUserAnswers: QuestionMarkTableRow[];
         let allQuestions: Question[];
-        let allAnswers;
+        let allAnswers: Answer[];
 
         try {
             userId = (await this.userService.getUser(userToken)).id;
@@ -98,7 +98,7 @@ export class GetResultService {
              }
         };
 
-        let findCorrect = (questArr: any[], correctAns: any[]) => {
+        const findCorrect = (questArr: any[], correctAns: any[]) => {
              const resultArr = questArr.filter((item, index) => {
                  return correctAns.indexOf(index + 1) !== -1;
              });
@@ -112,18 +112,26 @@ export class GetResultService {
         return { question: item };
         });
 
-        let assignOfAnswersAndQuestions = (questionsTxt: any[], answersArr: any) => {
-             let output = [];
-             for (let i = 0; i < questionsTxt.length; i++) {
+        const assignOfAnswersAndQuestions = (questionsTxt: any[], answersArr: any[]) => {
+            const output = [];
+            for (let i = 0; i < questionsTxt.length; i++) {
                 output.push(Object.assign(questionsTxt[i], answersArr[i]));
-             }
-             return output;
+            }
+            return output;
         };
 
-        const questionsAndAnswers = assignOfAnswersAndQuestions(assignOfAnswersAndQuestions(answeredQuestionsText, answersForRender), allUserAnswers.map(item => {return{ isRight: item.isRight}}));
+        const questionsAndAnswers = assignOfAnswersAndQuestions(
+        assignOfAnswersAndQuestions(answeredQuestionsText, answersForRender),
+        allUserAnswers.map(item => {
+            return {
+                isRight: item.isRight
+                };
+            })
+        );
+
         console.log(questionsAndAnswers);
 
-        const result: any = {
+        const result: FinalResult = {
             totalScore: lastGame.score + scoreFromQuiz,
             totalQuestions: lastGame.question,
             correctAnswers: myRightAnswers.length,
