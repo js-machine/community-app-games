@@ -20,8 +20,14 @@
 
       <div class="result__content-questions">
         <div *ngFor="let question of questionsAndAnswers" class="result__content-answers">
-          <h3 class="result__content-question-text">{{question.question}} </h3>
-          <p *ngFor="let ans of question.answers; let i = index" class="result__content-answer"><fa-icon [icon]="faCheck"></fa-icon> {{ans}}</p>
+          <span>
+            <fa-icon [icon]="faCheck" *ngIf="question.isRight"></fa-icon>
+            <fa-icon [icon]="faTimes" *ngIf="!question.isRight" style="color: #ef5350"></fa-icon>
+          </span>
+          <h3 class="result__content-question-text">
+            {{question.question}}
+          </h3>
+          <p *ngFor="let ans of question.answers; let i = index" class="result__content-answer"> {{ans}}</p>
         </div>
       </div>
 
