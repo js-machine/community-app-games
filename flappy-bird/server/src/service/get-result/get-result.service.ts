@@ -114,13 +114,13 @@ export class GetResultService {
 
         let assignOfAnswersAndQuestions = (questionsTxt: any[], answersArr: any) => {
              let output = [];
-             for (let i = 0; i < questionsTxtArr.length; i++) {
-                output.push(Object.assign(questionsTxtArr[i], ansArr[i]));
+             for (let i = 0; i < questionsTxt.length; i++) {
+                output.push(Object.assign(questionsTxt[i], answersArr[i]));
              }
              return output;
         };
 
-        const questionsAndAnswers = assignOfAnswersAndQuestions(answeredQuestionsText, answersForRender);
+        const questionsAndAnswers = assignOfAnswersAndQuestions(assignOfAnswersAndQuestions(answeredQuestionsText, answersForRender), allUserAnswers.map(item => {return{ isRight: item.isRight}}));
         console.log(questionsAndAnswers);
 
         const result: any = {
