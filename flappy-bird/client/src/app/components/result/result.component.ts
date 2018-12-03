@@ -7,6 +7,8 @@ import { QuizFacade } from 'store';
 
 import { Subscription } from 'rxjs';
 
+import {faCheck} from '@fortawesome/free-solid-svg-icons';
+
 @Component({
   selector: 'app-result',
   templateUrl: './result.component.html',
@@ -20,6 +22,9 @@ export class ResultComponent implements OnInit, OnDestroy, AfterViewInit {
   public correctAnswers = 0;
   public questionsAndAnswers: string[];
   public status: Status = Status.Init;
+  public isCorrectAnswer: boolean;
+
+  public faCheck = faCheck;
 
   private userToken: string;
   private subscriptions: Subscription[] = [];
@@ -50,7 +55,7 @@ export class ResultComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     if (this.status === Status.Init || this.status === Status.Error) {
-      this.router.navigate(['./result', this.userToken]);
+      this.router.navigate(['./home', this.userToken]);
     }
   }
 
