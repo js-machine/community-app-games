@@ -42,6 +42,8 @@ export class QuizService {
 
         try {
             countOfQuestion = (await this.gameService.getLastGame(userId)).question;
+            const questionsCount = (await this.questionService.getQuestions()).length;
+            countOfQuestion = Math.min(countOfQuestion, questionsCount);
         } catch {
             const error = technicalErr.gameService.getLastGame.msg;
 
@@ -57,7 +59,6 @@ export class QuizService {
             this.loggerService.errorLog(error);
             throw new Error(error);
         }
-        countOfQuestion = Math.min(countOfQuestion, 36);
         for (let i = 0; i < countOfQuestion; i++) {
 
             try {
