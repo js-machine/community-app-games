@@ -7,6 +7,8 @@ import { QuizFacade } from 'store';
 
 import { Subscription } from 'rxjs';
 
+import {faCheck, faTimes, faCircle} from '@fortawesome/free-solid-svg-icons';
+
 @Component({
   selector: 'app-result',
   templateUrl: './result.component.html',
@@ -18,7 +20,13 @@ export class ResultComponent implements OnInit, OnDestroy, AfterViewInit {
   public totalScore = 0;
   public totalQuestions = 0;
   public correctAnswers = 0;
+  public questionsAndAnswers: string[];
   public status: Status = Status.Init;
+  public isCorrectAnswer: boolean;
+
+  public faCheck = faCheck;
+  public faTimes = faTimes;
+  public faCircle = faCircle;
 
   private userToken: string;
   private subscriptions: Subscription[] = [];
@@ -42,6 +50,7 @@ export class ResultComponent implements OnInit, OnDestroy, AfterViewInit {
       this.totalScore = result ? result.totalScore : 0;
       this.totalQuestions = result ? result.totalQuestions : 0;
       this.correctAnswers = result ? result.correctAnswers : 0;
+      this.questionsAndAnswers = result ? result.questionsAndAnswers : [];
     }));
   }
 

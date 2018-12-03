@@ -1,11 +1,12 @@
 import { injectable, inject } from 'inversify';
 
 import { LoggerService } from '../logger';
-import { Question, QuestionMarkTableRow } from 'model';
-import { QuestionMarkModel, QuizQuestionsModel } from 'models';
+import { Question, QuestionMarkTableRow, Answer } from 'model';
+import { QuestionMarkModel, QuizQuestionsModel, QuizAnswersModel } from 'models';
 
 import { QuestionRepository } from './question.repository';
 import { technicalErr } from 'errors';
+
 @injectable()
 export class QuestionRepositoryImplementation implements QuestionRepository {
   constructor(
@@ -237,6 +238,52 @@ export class QuestionRepositoryImplementation implements QuestionRepository {
       return false;
     } catch {
       const error = technicalErr.questionRepository_Implementation.refreshSession.msg;
+
+      this.loggerService.errorLog(error);
+      throw new Error(error);
+    }
+  }
+
+  public async getAllUsersAnswers(userId: number): Promise<QuestionMarkTableRow[]> {
+    try {
+      const allUserAnswers = await QuestionMarkModel.findAll({
+        where: {
+          userId,
+          session: 1
+        }
+      });
+
+      return allUserAnswers;
+    } catch {
+      const error = technicalErr.questionRepository_Implementation.getUserRightAnswers.msg;
+
+      this.loggerService.errorLog(error);
+      throw new Error(error);
+    }
+  }
+
+  public async getAllAnswers(): Promise<Answer[]> {
+    try {
+      const allAnswers: any = {};
+      await QuizAnswersModel.findAll({
+        where: {
+          isCorrect: 1
+        }
+      })
+        .each((item: Answer) => {
+          if (!allAnswers[item.questionId]) {
+            allAnswers[item.questionId] = { answers: [] };
+          }
+          allAnswers[item.questionId].answers.push(item.answer);
+        });
+
+      return Object.keys(allAnswers)
+        .map((key) => ({
+          questionId: key,
+          answers: allAnswers[key].answers
+        })) as any
+    } catch {
+      const error = technicalErr.questionRepository_Implementation.getUserRightAnswers.msg;
 
       this.loggerService.errorLog(error);
       throw new Error(error);

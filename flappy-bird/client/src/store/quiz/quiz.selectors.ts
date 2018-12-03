@@ -50,6 +50,11 @@ const getLastSessionResults = createSelector(
     (state: QuizState) => state.lastSessionResults
 );
 
+const getQuestions = createSelector(
+    getQuizState,
+    (state: QuizState) => state.lastSessionResults.questionsAndAnswers
+);
+
 export const quizQuery = {
     getSaveGameResultsStatus,
     getStartGameStatus,
@@ -59,5 +64,6 @@ export const quizQuery = {
     getSendResultBeforeQuizStatus,
     getSendResultAfterQuizStatus,
     getQuiz,
-    getLastSessionResults
+    getLastSessionResults,
+    getQuestions
 };
