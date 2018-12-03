@@ -23,7 +23,7 @@ export class GetResultService {
         let myRightAnswers: number[];
         let lastGame: Game;
         let scoreFromQuiz: number = 0;
-        let allUserAnswers: any;
+        let allUserAnswers: QuestionMarkTableRow[];
         let allQuestions: Question[];
         let allAnswers;
 
@@ -55,7 +55,8 @@ export class GetResultService {
         }
 
         try {
-            allUserAnswers = (await this.questionService.getAllUsersAnswers(userId)).map(item => item.questionId);
+            allUserAnswers = (await this.questionService.getAllUsersAnswers(userId));
+
         } catch {
             const error = technicalErr.questionService.getUserRightAnswers.msg;
 
@@ -97,34 +98,32 @@ export class GetResultService {
              }
         };
 
-        let findCorrect = (questArr: any[], correctAns: number[]) => {
+        let findCorrect = (questArr: any[], correctAns: any[]) => {
              const resultArr = questArr.filter((item, index) => {
                  return correctAns.indexOf(index + 1) !== -1;
              });
              return resultArr;
         };
 
-        console.log(allAnswers);
         console.log(allUserAnswers);
 
-        const answersForRender = allAnswers.filter((item) => allUserAnswers.indexOf(+item.questionId) !== -1 );
+        const answersForRender = allAnswers.filter((item) => allUserAnswers.map(item => item.questionId).indexOf(+item.questionId) !== -1 );
         console.log(answersForRender);
 
-        const answeredQuestionsText = findCorrect(allQuestions.map((item) => item.question), allUserAnswers)
+        const answeredQuestionsText = findCorrect(allQuestions.map((item) => item.question), allUserAnswers.map(item => item.questionId))
         .map((item) => {
         return { question: item };
         });
-        console.log(answeredQuestionsText);
 
-        let assignOfAnswersAndQuestions = (questionsTxtArr: any[], ansArr: any) => {
+        let assignOfAnswersAndQuestions = (questionsTxt: any[], answersArr: any) => {
              let output = [];
-             for (let i = 0; i < questionsTxtArr.length; i++) {
-                output.push(Object.assign(questionsTxtArr[i], ansArr[i]));
+             for (let i = 0; i < questionsTxt.length; i++) {
+                output.push(Object.assign(questionsTxt[i], answersArr[i]));
              }
              return output;
         };
 
-        const questionsAndAnswers = assignOfAnswersAndQuestions(answeredQuestionsText, answersForRender);
+        const questionsAndAnswers = assignOfAnswersAndQuestions(assignOfAnswersAndQuestions(answeredQuestionsText, answersForRender), allUserAnswers.map(item => {return{ isRight: item.isRight}}));
         console.log(questionsAndAnswers);
 
         const result: any = {
