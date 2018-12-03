@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TodoEffects, TodosService } from 'store/todo';
 import { QuizEffects, QuizService, QuizFacade } from 'store/quiz';
 
@@ -31,6 +32,7 @@ import { HomeComponent, PathNotFoundComponent, QuizComponent, ResultComponent, S
     BrowserModule,
     FormsModule,
     MaterialModule,
+    FontAwesomeModule,
     HttpClientModule,
     StoreModule.forRoot(reducers, {}),
     EffectsModule.forRoot([
