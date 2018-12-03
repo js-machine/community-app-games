@@ -7,7 +7,7 @@ import { QuizFacade } from 'store';
 
 import { Subscription } from 'rxjs';
 
-import {faCheck} from '@fortawesome/free-solid-svg-icons';
+import {faCheck, faTimes, faCircle} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-result',
@@ -25,6 +25,8 @@ export class ResultComponent implements OnInit, OnDestroy, AfterViewInit {
   public isCorrectAnswer: boolean;
 
   public faCheck = faCheck;
+  public faTimes = faTimes;
+  public faCircle = faCircle;
 
   private userToken: string;
   private subscriptions: Subscription[] = [];

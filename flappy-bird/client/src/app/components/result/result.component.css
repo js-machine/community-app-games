@@ -53,8 +53,15 @@
 
 .result__content-answer {
   width: 50%;
+  margin: 10px 0 0 50px;
+}
+
+.result__content-answers {
   text-align: left;
-  margin-left: 150px
+}
+
+.result__content-answer::before {
+  content: "•";
 }
 
 ul {
@@ -62,8 +69,9 @@ ul {
 }
 
 .result__content-question-text {
+  display: inline-block;
   text-align: left;
-  margin: 20px 0 15px 100px;
+  margin: 30px 0 0px 10px;
 }
 
 .ng-fa-icon {
