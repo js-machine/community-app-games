@@ -33,6 +33,7 @@ export interface FinalResult {
   totalScore: number;
   totalQuestions: number;
   correctAnswers: number;
+  questionsAndAnswers: string[];
 }
 
 export interface Result {

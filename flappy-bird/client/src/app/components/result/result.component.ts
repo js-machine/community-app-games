@@ -18,6 +18,7 @@ export class ResultComponent implements OnInit, OnDestroy, AfterViewInit {
   public totalScore = 0;
   public totalQuestions = 0;
   public correctAnswers = 0;
+  public questionsAndAnswers: string[];
   public status: Status = Status.Init;
 
   private userToken: string;
@@ -42,12 +43,14 @@ export class ResultComponent implements OnInit, OnDestroy, AfterViewInit {
       this.totalScore = result ? result.totalScore : 0;
       this.totalQuestions = result ? result.totalQuestions : 0;
       this.correctAnswers = result ? result.correctAnswers : 0;
+      this.questionsAndAnswers = result ? result.questionsAndAnswers : [];
     }));
+    console.log(this.questionsAndAnswers);
   }
 
   ngAfterViewInit() {
     if (this.status === Status.Init || this.status === Status.Error) {
-      this.router.navigate(['./home', this.userToken]);
+      this.router.navigate(['./result', this.userToken]);
     }
   }
 

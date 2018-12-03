@@ -28,6 +28,7 @@ export class QuizFacade {
     getQuizStatus$ = this.store.select(quizQuery.getQuizStatus);
     getResultStatus$ = this.store.select(quizQuery.getResultStatus);
     getLastSessionResult$ = this.store.select(quizQuery.getLastSessionResults);
+    getQuestions$ = this.store.select(quizQuery.getQuestions);
 
     public constructor(
         private store: Store<QuizState>,

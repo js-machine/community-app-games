@@ -1,5 +1,6 @@
 <div class="result__container">
-  <ng-container *ngIf="status === Status.Success">
+  <ng-container>
+    <!-- *ngIf="status === Status.Success" -->
     <div class="result__content-container">
 
       <h2 class="result__content-title">YOUR SCORE</h2>
@@ -9,12 +10,25 @@
       <h3 class="result__statistics">Correct Answers : {{correctAnswers}}</h3>
 
       <h3 class="result__content">
-        If you answered all the questions correctly or learned from your mistakes then you understand the basic rules. If not, please
+        If you answered all the questions correctly or learned from your mistakes then you understand the basic rules.
+        If not, please
         go back and try again or review your answers with your parents.
       </h3>
     </div>
 
+    <div class="result__content-container result__content-container--transparent">
+      <h2 class="result__content-title">YOUR ANSWERS</h2>
+
+      <div class="result__content-questions">
+        <ul *ngFor="let question of questionsAndAnswers" class="result__content-answers">
+          <h3 class="result__content-question-text">{{question.question}} </h3>
+          <li *ngFor="let ans of question.answer; let i = index" class="result__content-answer">{{question.answer[i]}}</li>
+        </ul>
+      </div>
+
+    </div>
+
     <button mat-button class="form__submit" (click)="onClick()">Try Again</button>
   </ng-container>
-  <app-spinner *ngIf="status !== Status.Success"></app-spinner>
+  <!-- <app-spinner *ngIf="status !== Status.Success"></app-spinner> -->
 </div>

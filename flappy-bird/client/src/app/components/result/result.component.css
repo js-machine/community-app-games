@@ -42,6 +42,29 @@
   border-top: 3px solid #a5f3b8;
   border-radius: 18px;
   font-weight: normal;
+  overflow-y: auto;
+}
+
+.result__content-container--transparent {
+  max-height: 300px;
+  background-color: transparent;
+  border-top: none;
+}
+
+.result__content-questions {
+  display: block;
+}
+
+.result__content-answer {
+  width: 50%;
+}
+
+ul {
+  list-style-position: inside;
+}
+
+.result__content-question-text {
+  text-align: left;
 }
 
 .result__title {
