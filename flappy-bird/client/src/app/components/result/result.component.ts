@@ -52,7 +52,6 @@ export class ResultComponent implements OnInit, OnDestroy, AfterViewInit {
       this.correctAnswers = result ? result.correctAnswers : 0;
       this.questionsAndAnswers = result ? result.questionsAndAnswers : [];
     }));
-    console.log(this.questionsAndAnswers);
   }
 
   ngAfterViewInit() {
