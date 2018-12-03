@@ -131,7 +131,7 @@ export class GetResultService {
             totalScore: lastGame.score + scoreFromQuiz,
             totalQuestions: lastGame.question,
             correctAnswers: myRightAnswers.length,
-            questionsAndAnwers
+            questionsAndAnswers
         };
 
         return result;
