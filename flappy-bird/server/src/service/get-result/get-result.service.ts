@@ -105,10 +105,7 @@ export class GetResultService {
              return resultArr;
         };
 
-        console.log(allUserAnswers);
-
         const answersForRender = allAnswers.filter((item) => allUserAnswers.map(item => item.questionId).indexOf(+item.questionId) !== -1 );
-        console.log(answersForRender);
 
         const answeredQuestionsText = findCorrect(allQuestions.map((item) => item.question), allUserAnswers.map(item => item.questionId))
         .map((item) => {
