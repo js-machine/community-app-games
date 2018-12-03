@@ -263,13 +263,6 @@ export class QuestionRepositoryImplementation implements QuestionRepository {
 
   public async getAllAnswers(): Promise<Answer[]> {
     try {
-      console.warn('*****************');
-      console.log('*****************');
-      console.log('*****************');
-      console.log('getAllAnswers Implementation 1')
-      console.warn('*****************');
-      console.log('*****************');
-      console.log('*****************');
       let allAnswers = {} as any;
       await QuizAnswersModel.findAll({
         where: {
@@ -282,14 +275,6 @@ export class QuestionRepositoryImplementation implements QuestionRepository {
           }
           allAnswers[item.questionId].answers.push(item.answer);
         });
-
-      console.warn('*****************');
-      console.log('*****************');
-      console.log('*****************');
-      console.log('getAllAnswers Implementation 2')
-      console.warn('*****************');
-      console.log('*****************');
-      console.log('*****************');
 
       return Object.keys(allAnswers)
         .map((key) => ({

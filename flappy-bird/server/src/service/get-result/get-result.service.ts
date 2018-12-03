@@ -55,7 +55,7 @@ export class GetResultService {
         }
 
         try {
-            allUserAnswers = (await this.questionService.getAllUsersAnswers(userId));
+            allUserAnswers = (await this.questionService.getAllUsersAnswers(userId)).map(item => item.questionId);
         } catch {
             const error = technicalErr.questionService.getUserRightAnswers.msg;
 
@@ -105,46 +105,33 @@ export class GetResultService {
         };
 
         console.log(allAnswers);
+        console.log(allUserAnswers);
 
-        // allUserAnswers = allUserAnswers.map((row: QuestionMarkTableRow) => row.questionId);
-        // console.log(allUserAnswers);
-        // const answeredQuestionsText = findCorrect(allQuestions.map((item) => item.question), allUserAnswers)
-        //     .map(item => {
-        //         return { question: item }
-        //     });
-        // console.log(answeredQuestionsText);
+        const answersForRender = allAnswers.filter((item) => allUserAnswers.indexOf(+item.questionId) !== -1 );
+        console.log(answersForRender);
 
-        // // allAnswers = allAnswers.map(item => {
-        // //     return {id: item.questionId, answer: [item.answer]};
-        // // });
-        // console.log(allAnswers);
+        const answeredQuestionsText = findCorrect(allQuestions.map((item) => item.question), allUserAnswers)
+        .map((item) => {
+        return { question: item };
+        });
+        console.log(answeredQuestionsText);
 
-        // const answersForRender = allAnswers.filter((item) => {
-        //     return allUserAnswers.indexOf(item.id) !== -1;
-        // });
-        // console.log(answersForRender);
+        let assignOfAnswersAndQuestions = (questionsTxtArr: any[], ansArr: any) => {
+             let output = [];
+             for (let i = 0; i < questionsTxtArr.length; i++) {
+                output.push(Object.assign(questionsTxtArr[i], ansArr[i]), {isRight: 1});
+             }
+             return output;
+        };
 
-        // let assignOfAnswersAndQuestions = (questionsArray: any[], answersArray: any) => {
-        //     let output = [];
-        //     for (let i = 0; i < questionsArray.length; i++) {
-        //         output.push(Object.assign(questionsArray[i], answersArray[i]));
-        //     }
-        //     return output;
-        // };
-
-        // const questionsAndAnwers: any[] = answeredQuestionsText.map((item) => {
-        //     return {
-        //         question: item,
-        //         answer: ['xxx', 'yyy', 'zzz'],
-        //         isRight: 1
-        //     };
-        // });
+        const questionsAndAnwers = assignOfAnswersAndQuestions(answeredQuestionsText, answersForRender);
+        console.log(questionsAndAnwers);
 
         const result: any = {
             totalScore: lastGame.score + scoreFromQuiz,
             totalQuestions: lastGame.question,
             correctAnswers: myRightAnswers.length,
-            /* questionsAndAnwers */
+            questionsAndAnwers
         };
 
         return result;
