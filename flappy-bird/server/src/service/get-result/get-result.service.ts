@@ -22,7 +22,7 @@ export class GetResultService {
         let userId: number;
         let myRightAnswers: number[];
         let lastGame: Game;
-        let scoreFromQuiz: number;
+        let scoreFromQuiz: number = 0;
         let allUserAnswers: QuestionMarkTableRow[];
         let allQuestions: Question[];
         let allAnswers: Answer[];

@@ -76,7 +76,7 @@ export const gameCore = () => {
   var question = 0;
   var highscore = 0;
 
-  var pipeheight = 100;
+  var pipeheight = 85;
   var pipewidth = 52;
   var pipes = new Array();
 
