@@ -27,12 +27,13 @@
               {{question.question}}
             </h3>
           </div>
-          <p *ngFor="let answer of question.answers; let i = index" class="result__content-answer"> {{answer}}</p>
+          <p *ngFor="let answer of question.answers; let i = index" class="result__content-answer"> {{answer}} </p>
         </div>
-  
+
       </div>
-  
-      <button mat-button (click)="onClick()">Try Again</button>
-    </ng-container>
-    <app-spinner *ngIf="status !== Status.Success"></app-spinner>
-  </div>
+    </div>
+
+    <button mat-button (click)="onClick()">Try Again</button>
+  </ng-container>
+  <app-spinner *ngIf="status !== Status.Success"></app-spinner>
+</div>
