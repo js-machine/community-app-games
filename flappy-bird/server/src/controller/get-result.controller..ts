@@ -17,7 +17,7 @@ export class GetResultController {
 
         try {
             const result = await this.getResultService.getResult(userToken);
-            console.log(result);
+
             return response.send(result);
 
         } catch (err) {
