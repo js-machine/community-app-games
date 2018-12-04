@@ -130,7 +130,7 @@ export class GetResultService {
         );
 
         const result: FinalResult = {
-            totalScore: lastGame.score + scoreFromQuiz,
+            totalScore: scoreFromQuiz,
             totalQuestions: lastGame.question,
             correctAnswers: myRightAnswers.length,
             questionsAndAnswers
