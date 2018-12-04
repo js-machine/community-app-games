@@ -1,35 +1,33 @@
 <div class="result__container">
-    <ng-container *ngIf="status === Status.Success">
-      <div class="result__content-container">
-  
-        <h2 class="result__content-title">YOUR SCORE</h2>
-        <div class="result__total-score">{{totalScore}}</div>
-  
-        <h3 class="result__statistics">Total Questions : {{totalQuestions}}</h3>
-        <h3 class="result__statistics">Correct Answers : {{correctAnswers}}</h3>
-  
-        <h3 class="result__content">
-          If you answered all the questions correctly or learned from your mistakes then you understand the basic rules.
-          If not, please
-          go back and try again or review your answers with your parents.
-        </h3>
-      </div>
-  
-      <div class="result__content-container result__content-container--transparent">
-        <h2 class="result__content-title">RIGHT ANSWERS</h2>
-  
-        <div class="result__content-questions">
-          <div *ngFor="let question of questionsAndAnswers" class="result__content-answers">
-            <div class="result__content-wrapper">
-              <fa-icon [icon]="faCheck" *ngIf="question.isRight" style="color: #1b5e20"></fa-icon>
-              <fa-icon [icon]="faTimes" *ngIf="!question.isRight" style="color: #b71c1c"></fa-icon>
-              <h3 class="result__content-question-text">
-                {{question.question}}
-              </h3>
-            </div>
-  
-            <p *ngFor="let ans of question.answers; let i = index" class="result__content-answer"> {{ans}}</p>
+  <ng-container *ngIf="status === Status.Success">
+    <div class="result__content-container">
+
+      <h2 class="result__content-title">YOUR SCORE</h2>
+      <div class="result__total-score">{{totalScore}}</div>
+
+      <h3 class="result__statistics">Total Questions : {{totalQuestions}}</h3>
+      <h3 class="result__statistics">Correct Answers : {{correctAnswers}}</h3>
+
+      <h3 class="result__content">
+        If you answered all the questions correctly or learned from your mistakes then you understand the basic rules.
+        If not, please
+        go back and try again or review your answers with your parents.
+      </h3>
+    </div>
+
+    <div class="result__content-container result__content-container--transparent">
+      <h2 class="result__content-title">RIGHT ANSWERS</h2>
+
+      <div class="result__content-questions">
+        <div *ngFor="let question of questionsAndAnswers" class="result__content-answers">
+          <div class="result__content-wrapper">
+            <fa-icon [icon]="faCheck" *ngIf="question.isRight" style="color: #1b5e20"></fa-icon>
+            <fa-icon [icon]="faTimes" *ngIf="!question.isRight" style="color: #b71c1c"></fa-icon>
+            <h3 class="result__content-question-text">
+              {{question.question}}
+            </h3>
           </div>
+          <p *ngFor="let answer of question.answers; let i = index" class="result__content-answer"> {{answer}}</p>
         </div>
   
       </div>
