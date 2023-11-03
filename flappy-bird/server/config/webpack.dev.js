@@ -1,9 +1,9 @@
 const webpack = require('webpack');
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 const pkg = require('./../package.json');
 const NodemonPlugin = require('nodemon-webpack-plugin');
-const path = require('path');
+const path = require('node:path');
 
 let webpackConfig = merge(common, {
     output: {
@@ -12,7 +12,7 @@ let webpackConfig = merge(common, {
     plugins: [
         new NodemonPlugin({
             watch: [
-                path.resolve('../build'),
+                path.resolve('../dist'),
                 "./"
             ],
             ignore: [
@@ -20,7 +20,7 @@ let webpackConfig = merge(common, {
                 "node_modules/**/node_modules"
             ],
             verbose: true,
-            script: '../server/build/flappy-bird.app.bundle.js',
+            script: '../server/dist/flappy-bird.app.bundle.js',
         }),
     ],
 });

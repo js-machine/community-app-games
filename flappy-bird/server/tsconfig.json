@@ -13,7 +13,7 @@
       "es6",
       "dom",
     ],
-    "outDir": "build",
+    "outDir": "dist",
     "sourceMap": true,
     "baseUrl": ".",
     "moduleResolution": "node",
@@ -57,7 +57,7 @@
       ],
       "service/*": [
         "src/service/*"
-      ],  
+      ],
       "answer": [
         "src/service/answer/*"
       ],

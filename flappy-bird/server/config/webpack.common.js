@@ -1,6 +1,6 @@
-const path = require('path');
+const path = require('node:path');
 const webpack = require('webpack');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 const { root } = require('./helpers');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
@@ -16,9 +16,9 @@ let webpackConfig = {
         app: path.resolve(__dirname, root('./src/app.ts'))
     },
 
-    output: {
-        path: path.resolve(__dirname, root('./build/'))
-    },
+    // output: {
+    //     path: path.resolve(__dirname, root('./build/'))
+    // },
 
     devtool: 'source-map',
 
@@ -37,12 +37,22 @@ let webpackConfig = {
         rules: [
             {
                 test: /\.ts$/,
-                loader: 'awesome-typescript-loader',
+                use: [
+                    {
+                        loader: 'ts-loader',
+                        options: {
+                            transpileOnly: true
+                        }
+                    }
+                ]
             },
         ]
     },
     plugins: [
-        new CleanWebpackPlugin([path.resolve(__dirname, root('./build/'))], cleanOptions)
+        new CleanWebpackPlugin({
+            cleanAfterEveryBuildPatterns: [path.resolve(__dirname, root('./dist/'))]
+        })
+        // new CleanWebpackPlugin([path.resolve(__dirname, root('./build/'))], cleanOptions)
     ],
     target: 'node',
     // need to work with __dirname and filename

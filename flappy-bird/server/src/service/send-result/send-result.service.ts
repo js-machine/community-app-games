@@ -1,6 +1,10 @@
 import { inject, injectable } from 'inversify';
-import { CommunityLayer, GameResult, ResultStatus, ParticipationStatus } from 'community-layer';
-const communityLayer = new CommunityLayer();
+// import { CommunityLayer, GameResult, ResultStatus, ParticipationStatus } from 'community-layer';
+// const communityLayer = new CommunityLayer();
+import {  createRoomToken } from 'community-layer';
+const roomToken = createRoomToken();
+
+console.log(roomToken);
 
 import { LoggerService } from '../logger';
 import { UserService } from '../user';
@@ -92,13 +96,13 @@ export class SendResultService {
             userToken,
             playedTime,
             scores,
-            resultStatus: (scores > 0) ? ResultStatus.Win : ResultStatus.Lose,
-            participationStatus: ParticipationStatus.Play,
+            // resultStatus: (scores > 0) ? ResultStatus.Win : ResultStatus.Lose,
+            // participationStatus: ParticipationStatus.Play,
         };
 
-        const userStatistics: GameResult[] = [];
+        // const userStatistics: GameResult[] = [];
         userStatistics.push(finalUsersStat);
-        communityLayer.gameCycle.setGameResult(userStatistics, appToken);
+        // communityLayer.gameCycle.setGameResult(userStatistics, appToken);
 
         return true;
     }
